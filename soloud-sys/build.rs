@@ -9,6 +9,11 @@ fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let mut dst = cmake::Config::new("sys");
+
+    println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-changed=sys/CMakeLists.txt");
+    println!("cargo:rerun-if-changed=sys/soloud_new.cpp");
+
     Command::new("git")
         .args(&["submodule", "update", "--init"])
         .current_dir(manifest_dir.clone())
@@ -44,4 +49,6 @@ fn main() {
         "cargo:rustc-link-search=native={}",
         out_dir.join("lib").join("Release").display()
     );
+
+    println!("cargo:rustc-link-lib=static=soloud");
 }
