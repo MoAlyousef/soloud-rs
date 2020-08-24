@@ -1,3 +1,5 @@
+#![allow(unused_variables)]
+
 use std::{
     env,
     path::PathBuf,
@@ -9,6 +11,7 @@ fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let mut dst = cmake::Config::new("sys");
+    let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
 
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=sys/CMakeLists.txt");

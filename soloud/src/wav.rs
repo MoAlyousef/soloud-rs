@@ -15,9 +15,9 @@ impl Wav {
     pub fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError> {
         unsafe {
             let path = std::ffi::CString::new(path.to_str().unwrap()).unwrap();
-            let ret = ffi::Wav_load(self._inner, path.as_ptr());
+            let ret = ffi::Wav_load(self._inner, path.into_raw());
             if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::FailedToRun))
+                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {
                 Ok(())
             }

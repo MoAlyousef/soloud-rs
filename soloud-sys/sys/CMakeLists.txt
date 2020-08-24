@@ -20,9 +20,11 @@ file(GLOB_RECURSE FILTER ${CMAKE_CURRENT_LIST_DIR}/soloud/src/filter/*.c*)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 
+set(BACKEND_SRCS ${CMAKE_CURRENT_LIST_DIR}/soloud/src/backend/miniaudio/soloud_miniaudio.cpp)
+
 set(SOLOUD_SRCS 
     ${CMAKE_CURRENT_LIST_DIR}/soloud_new.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/soloud/src/backend/miniaudio/soloud_miniaudio.cpp
+    ${BACKEND_SRCS}
     ${CMAKE_CURRENT_LIST_DIR}/soloud/src/c_api/soloud_c.cpp
     ${AUDIOSOURCE}
     ${CORE}

@@ -22,7 +22,7 @@ impl Soloud {
         unsafe {
             let ret = ffi::Soloud_init(self._inner);
             if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::FailedToRun))
+                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {
                 Ok(())
             }
@@ -35,12 +35,9 @@ impl Soloud {
 
     pub fn play(&self, sound: &crate::wav::Wav) -> Result<(), SoloudError> {
         unsafe {
-            let ret = ffi::Soloud_play(self._inner, sound.inner());
-            let msg = ffi::Soloud_getErrorString(self._inner, ret as i32);
-            let msg = std::ffi::CStr::from_ptr(msg).to_str().unwrap();
-            println!("{}", msg);
+            let ret = ffi::Soloud_play(self._inner, sound.inner()) as i32;
             if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::FailedToRun))
+                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {
                 Ok(())
             }

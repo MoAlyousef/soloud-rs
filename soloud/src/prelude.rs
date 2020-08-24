@@ -10,15 +10,22 @@ pub enum SoloudError {
 }
 
 /// Error kinds enum for SoloudError
+#[repr(i32)]
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum SoloudErrorKind {
-    FailedToRun,
-    FailedToLock,
-    FailedToSetScheme,
-    FailedOperation,
-    ResourceNotFound,
-    ImageFormatError,
-    TableError,
+    InvalidParemeter = 1, // Some parameter is invalid
+    FileNotFound = 2,     // File not found
+    FileLoadFailed = 3,   // File found, but could not be loaded
+    DllNotFound = 4,      // DLL not found, or wrong DLL
+    OutOfMemory = 5,      // Out of memory
+    NotImplemented = 6,   // Feature not implemented
+    UnknownError = 7,     // Other error
+}
+
+impl SoloudErrorKind {
+    pub fn from_i32(val: i32) -> SoloudErrorKind {
+        unsafe { std::mem::transmute(val) }
+    }
 }
 
 impl std::error::Error for SoloudError {
