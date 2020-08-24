@@ -1,0 +1,3 @@
+[submodule "soloud-sys/sys/soloud"]
+	path = soloud-sys/sys/soloud
+	url = https://github.com/jarikomppa/soloud
