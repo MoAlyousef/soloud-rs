@@ -1,0 +1,16 @@
+[package]
+name = "soloud-sys"
+version = "0.1.0"
+authors = ["MoAlyousef <may642_2000@hotmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libc = "0.2.74"
+
+[build-dependencies]
+cmake = "^0.1.44"
+
+[features]
+use-ninja = []
