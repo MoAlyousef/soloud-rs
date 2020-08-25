@@ -1,13 +1,14 @@
-use soloud_sys::soloud as ffi;
 use crate::prelude::*;
+use soloud_sys::soloud as ffi;
 
+#[derive(AudioSource)]
 pub struct Speech {
     _inner: *mut ffi::Speech,
 }
 
 impl Speech {
     pub fn default() -> Self {
-        let ptr = unsafe {ffi::Speech_create() };
+        let ptr = unsafe { ffi::Speech_create() };
         assert!(!ptr.is_null());
         Speech { _inner: ptr }
     }
@@ -26,7 +27,7 @@ impl Speech {
 
     pub fn from_text(txt: &str) -> Result<Self, SoloudError> {
         let mut temp = Speech::default();
-        if let Err(val)  = temp.set_text(txt) {
+        if let Err(val) = temp.set_text(txt) {
             Err(val)
         } else {
             Ok(temp)
@@ -34,15 +35,9 @@ impl Speech {
     }
 }
 
-impl SoundSource for Speech {
-    fn inner(&self) -> *mut *mut std::os::raw::c_void {
-        self._inner as *mut *mut std::os::raw::c_void
-    }
-}
-
 impl Drop for Speech {
     fn drop(&mut self) {
-        unsafe { 
+        unsafe {
             ffi::Speech_destroy(self._inner);
             self._inner = std::ptr::null_mut()
         }

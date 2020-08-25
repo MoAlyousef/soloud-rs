@@ -61,6 +61,83 @@ impl From<std::ffi::NulError> for SoloudError {
     }
 }
 
-pub trait SoundSource {
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
+pub enum AttenuationModels {
+    // No attenuation
+    NoAttenuation = 0,
+    // Inverse distance attenuation model
+    InverseDistance = 1,
+    // Linear distance attenuation model
+    LinearDistance = 2,
+    // Exponential distance attenuation model
+    ExponentialDistance = 3,
+}
+
+pub struct Filter {
+    _inner: *mut soloud_sys::soloud::Filter,
+}
+
+impl Filter {
+    pub fn inner(&self) -> *mut soloud_sys::soloud::Filter {
+        self._inner
+    }
+}
+
+pub struct AudioCollider {
+    _inner: *mut soloud_sys::soloud::AudioCollider,
+}
+
+impl AudioCollider {
+    pub fn inner(&self) -> *mut soloud_sys::soloud::AudioCollider {
+        self._inner
+    }
+}
+
+pub struct AudioAttenuator {
+    _inner: *mut soloud_sys::soloud::AudioAttenuator,
+}
+
+impl AudioAttenuator {
+    pub fn inner(&self) -> *mut soloud_sys::soloud::AudioAttenuator {
+        self._inner
+    }
+}
+
+pub unsafe trait AudioSource {
+    fn set_volume(&mut self, aVolume: f32);
+
+    fn set_looping(&mut self, aLoop: bool);
+
+    fn set_auto_stop(&mut self, aAutoStop: bool);
+
+    fn set_3d_min_max_distance(&mut self, aMinDistance: f32, aMaxDistance: f32);
+
+    fn set_3d_attenuation(
+        &mut self,
+        aAttenuationModel: AttenuationModels,
+        aAttenuationRolloffFactor: f32,
+    );
+
+    fn set_3d_doppler_factor(&mut self, aDopplerFactor: f32);
+
+    fn set_3d_listener_relative(&mut self, aListenerRelative: bool);
+
+    fn set_3d_distance_delay(&mut self, aDistanceDelay: i32);
+
+    fn set_3d_collider(&mut self, aCollider: Option<&mut AudioCollider>);
+
+    fn set_3d_attenuator(&mut self, aAttenuator: Option<&mut AudioAttenuator>);
+
+    fn set_inaudible_behavior(&mut self, aMustTick: bool, aKill: bool);
+
+    fn set_loop_point(&mut self, aLoopPoint: f64);
+
+    fn get_loop_point(&mut self) -> f64;
+
+    fn set_filter(&mut self, aFilterId: u32, aFilter: Option<&mut Filter>);
+
+    fn stop(&mut self);
+
     fn inner(&self) -> *mut *mut std::os::raw::c_void;
 }

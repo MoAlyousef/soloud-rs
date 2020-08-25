@@ -1,6 +1,11 @@
+#![allow(non_snake_case)]
+
 pub mod prelude;
-pub mod wav;
 pub mod speech;
+pub mod wav;
+
+#[macro_use]
+extern crate soloud_derive;
 
 pub use prelude::*;
 
@@ -34,7 +39,7 @@ impl Soloud {
 
     pub fn new() -> Result<Self, SoloudError> {
         let mut temp = Soloud::default();
-        if let Err(val)  = temp.init() {
+        if let Err(val) = temp.init() {
             Err(val)
         } else {
             Ok(temp)
@@ -42,33 +47,25 @@ impl Soloud {
     }
 
     pub fn deinit(&mut self) {
-        unsafe { 
+        unsafe {
             ffi::Soloud_deinit(self._inner);
             self._inner = std::ptr::null_mut();
         }
     }
 
-    pub fn play<T: SoundSource>(&self, sound: &T) -> Handle {
-        unsafe {
-            ffi::Soloud_play(self._inner, sound.inner())
-        }
+    pub fn play<T: AudioSource>(&self, sound: &T) -> Handle {
+        unsafe { ffi::Soloud_play(self._inner, sound.inner()) }
     }
 
     pub fn get_active_voice_count(&self) -> u32 {
-        unsafe {
-            ffi::Soloud_getActiveVoiceCount(self._inner)
-        }
+        unsafe { ffi::Soloud_getActiveVoiceCount(self._inner) }
     }
 
     pub fn get_voice_count(&self) -> u32 {
-        unsafe {
-            ffi::Soloud_getVoiceCount(self._inner)
-        }
+        unsafe { ffi::Soloud_getVoiceCount(self._inner) }
     }
 
     pub fn set_global_volume(&mut self, val: f32) {
-        unsafe {
-            ffi::Soloud_setGlobalVolume(self._inner, val)
-        }
+        unsafe { ffi::Soloud_setGlobalVolume(self._inner, val) }
     }
 }

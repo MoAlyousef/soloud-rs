@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 soloud-sys = { path = "../soloud-sys", version = "0.1.0" }
+soloud-derive = { path = "../soloud-derive", version = "0.1.0" } 
 
 [features]
 use-ninja = ["soloud-sys/use-ninja"]
