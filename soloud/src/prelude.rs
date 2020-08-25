@@ -60,3 +60,7 @@ impl From<std::ffi::NulError> for SoloudError {
         SoloudError::NullError(err)
     }
 }
+
+pub trait SoundSource {
+    fn inner(&self) -> *mut *mut std::os::raw::c_void;
+}

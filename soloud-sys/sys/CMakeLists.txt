@@ -33,7 +33,7 @@ set(SOLOUD_SRCS
 
 add_library(soloud STATIC ${SOLOUD_SRCS})
 target_include_directories(soloud PUBLIC ${CMAKE_CURRENT_LIST_DIR}/soloud/include)
-target_compile_definitions(soloud PUBLIC "WITH_MINIAUDIO=1" "WITH_TOOLS=0")
+target_compile_definitions(soloud PUBLIC "WITH_MINIAUDIO")
 
 install(TARGETS soloud
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
