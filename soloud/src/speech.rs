@@ -24,15 +24,6 @@ impl Speech {
             }
         }
     }
-
-    pub fn from_text(txt: &str) -> Result<Self, SoloudError> {
-        let mut temp = Speech::default();
-        if let Err(val) = temp.set_text(txt) {
-            Err(val)
-        } else {
-            Ok(temp)
-        }
-    }
 }
 
 impl Drop for Speech {

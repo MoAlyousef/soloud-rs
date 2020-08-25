@@ -12,8 +12,10 @@ extern crate syn;
 extern crate quote;
 
 mod audio_source;
+mod loadable;
 
 use crate::audio_source::impl_audio_source_trait;
+use crate::loadable::impl_loadable_trait;
 
 use proc_macro::TokenStream;
 
@@ -21,6 +23,12 @@ use proc_macro::TokenStream;
 pub fn audio_source_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_audio_source_trait(&ast)
+}
+
+#[proc_macro_derive(Loadable)]
+pub fn loadable_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_loadable_trait(&ast)
 }
 
 #[cfg(test)]

@@ -3,6 +3,16 @@
 pub mod prelude;
 pub mod speech;
 pub mod wav;
+pub mod ay;
+pub mod monotone;
+pub mod noise;
+pub mod openmpt;
+pub mod queue;
+pub mod sfxr;
+pub mod tedsid;
+pub mod vic;
+pub mod vizsn;
+pub mod wavstream;
 
 #[macro_use]
 extern crate soloud_derive;
@@ -18,11 +28,11 @@ pub struct Soloud {
 }
 
 impl Soloud {
-    pub fn default() -> Self {
+    pub fn default_uninit() -> std::mem::MaybeUninit<Self> {
         unsafe {
             let ptr = ffi::Soloud_create();
             assert!(!ptr.is_null());
-            Soloud { _inner: ptr }
+            std::mem::MaybeUninit::new(Soloud { _inner: ptr })
         }
     }
 
@@ -37,8 +47,8 @@ impl Soloud {
         }
     }
 
-    pub fn new() -> Result<Self, SoloudError> {
-        let mut temp = Soloud::default();
+    pub fn default() -> Result<Self, SoloudError> {
+        let mut temp = unsafe { Soloud::default_uninit().assume_init() };
         if let Err(val) = temp.init() {
             Err(val)
         } else {
@@ -54,6 +64,7 @@ impl Soloud {
     }
 
     pub fn play<T: AudioSource>(&self, sound: &T) -> Handle {
+        assert!(!self._inner.is_null());
         unsafe { ffi::Soloud_play(self._inner, sound.inner()) }
     }
 

@@ -141,3 +141,11 @@ pub unsafe trait AudioSource {
 
     fn inner(&self) -> *mut *mut std::os::raw::c_void;
 }
+
+pub unsafe trait Loadable {
+    fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError>;
+
+    fn load_mem( &mut self, data: &[u8]) -> Result<(), SoloudError>;
+
+    fn load_mem_ex( &mut self, data: &[u8], aCopy: bool, aTakeOwnership: bool) -> Result<(), SoloudError>;
+}
