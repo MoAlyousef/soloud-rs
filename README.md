@@ -1,6 +1,7 @@
 # soloud-rs
 
 Rust bindings for the soloud audio engine library.
+
 Still pre-alpha.
 
 ## Usage
