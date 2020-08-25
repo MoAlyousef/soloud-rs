@@ -23,10 +23,28 @@ impl Wav {
             }
         }
     }
+
+    pub fn from_path(path: &std::path::Path) -> Result<Self, SoloudError> {
+        let mut temp = Wav::default();
+        if let Err(val)  = temp.load(path) {
+            Err(val)
+        } else {
+            Ok(temp)
+        }
+    }
 }
 
 impl SoundSource for Wav {
     fn inner(&self) -> *mut *mut std::os::raw::c_void {
         self._inner as *mut *mut std::os::raw::c_void
+    }
+}
+
+impl Drop for Wav {
+    fn drop(&mut self) {
+        unsafe { 
+            ffi::Wav_destroy(self._inner);
+            self._inner = std::ptr::null_mut();
+        }
     }
 }

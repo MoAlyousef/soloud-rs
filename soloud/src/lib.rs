@@ -32,8 +32,20 @@ impl Soloud {
         }
     }
 
+    pub fn new() -> Result<Self, SoloudError> {
+        let mut temp = Soloud::default();
+        if let Err(val)  = temp.init() {
+            Err(val)
+        } else {
+            Ok(temp)
+        }
+    }
+
     pub fn deinit(&mut self) {
-        unsafe { ffi::Soloud_deinit(self._inner) }
+        unsafe { 
+            ffi::Soloud_deinit(self._inner);
+            self._inner = std::ptr::null_mut();
+        }
     }
 
     pub fn play<T: SoundSource>(&self, sound: &T) -> Handle {
