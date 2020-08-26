@@ -12,6 +12,12 @@ Still pre-alpha.
 ## Usage
 ```toml
 [dependencies]
+soloud = "0.1.0"
+```
+
+Or to use the latest developments:
+```toml
+[dependencies]
 soloud = { git = "https://github.com/moalyousef/soloud-rs" }
 ```
 
