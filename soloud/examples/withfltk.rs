@@ -14,10 +14,10 @@
 //     wind.show();
 
 //     but.set_callback(Box::new(move || {
-//     	   let mut wav = wav::Wav::default();
+//     	   let mut wav = audio::Wav::default();
 //         wav.load(&std::path::Path::new("sample.wav")).unwrap();
 //         sl.play(&wav);
-//         while sl.get_active_voice_count() > 0 {
+//         while sl.active_voice_count() > 0 {
 //             app.wait().unwrap();
 //         }
 //     }));

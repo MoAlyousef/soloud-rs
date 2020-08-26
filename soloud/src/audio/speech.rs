@@ -1,18 +1,12 @@
 use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 
-#[derive(AudioSource)]
+#[derive(AudioExt)]
 pub struct Speech {
     _inner: *mut ffi::Speech,
 }
 
 impl Speech {
-    pub fn default() -> Self {
-        let ptr = unsafe { ffi::Speech_create() };
-        assert!(!ptr.is_null());
-        Speech { _inner: ptr }
-    }
-
     pub fn set_text(&mut self, txt: &str) -> Result<(), SoloudError> {
         unsafe {
             let txt = std::ffi::CString::new(txt).unwrap();
@@ -22,15 +16,6 @@ impl Speech {
             } else {
                 Ok(())
             }
-        }
-    }
-}
-
-impl Drop for Speech {
-    fn drop(&mut self) {
-        unsafe {
-            ffi::Speech_destroy(self._inner);
-            self._inner = std::ptr::null_mut()
         }
     }
 }

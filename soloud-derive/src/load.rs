@@ -2,7 +2,7 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-pub fn impl_loadable_trait(ast: &DeriveInput) -> TokenStream {
+pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
     let name_str = name.to_string();
@@ -15,7 +15,7 @@ pub fn impl_loadable_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        unsafe impl Loadable for #name {
+        unsafe impl LoadExt for #name {
             fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError> {
                 unsafe {
                     let path = std::ffi::CString::new(path.to_str().unwrap()).unwrap();

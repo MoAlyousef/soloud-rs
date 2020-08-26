@@ -63,6 +63,25 @@ impl From<std::ffi::NulError> for SoloudError {
 
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
+pub enum SoloudFlags
+{
+    ClipRoundoff = 1,
+    EnableVisualization = 2,
+    LeftHanded3D = 4,
+    NoFpuRegisterChange = 8
+}
+
+impl std::ops::BitOr for SoloudFlags {
+    type Output = Self;
+
+    // rhs is the "right-hand side" of the expression `a | b`
+    fn bitor(self, rhs: Self) -> Self {
+        unsafe { std::mem::transmute(self as u32 | rhs as u32) }
+    }
+}
+
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
 pub enum AttenuationModels {
     // No attenuation
     NoAttenuation = 0,
@@ -104,7 +123,9 @@ impl AudioAttenuator {
     }
 }
 
-pub unsafe trait AudioSource {
+pub unsafe trait AudioExt {
+    fn default() -> Self;
+
     fn set_volume(&mut self, aVolume: f32);
 
     fn set_looping(&mut self, aLoop: bool);
@@ -125,27 +146,48 @@ pub unsafe trait AudioSource {
 
     fn set_3d_distance_delay(&mut self, aDistanceDelay: i32);
 
-    fn set_3d_collider(&mut self, aCollider: Option<&mut AudioCollider>);
+    fn set_3d_collider(&mut self, aCollider: Option<&AudioCollider>);
 
-    fn set_3d_attenuator(&mut self, aAttenuator: Option<&mut AudioAttenuator>);
+    fn set_3d_attenuator(&mut self, aAttenuator: Option<&AudioAttenuator>);
 
     fn set_inaudible_behavior(&mut self, aMustTick: bool, aKill: bool);
 
     fn set_loop_point(&mut self, aLoopPoint: f64);
 
-    fn get_loop_point(&mut self) -> f64;
+    fn loop_point(&mut self) -> f64;
 
-    fn set_filter(&mut self, aFilterId: u32, aFilter: Option<&mut Filter>);
+    fn set_filter<F: FilterExt>(&mut self, aFilterId: u32, aFilter: Option<&F>);
 
     fn stop(&mut self);
 
     fn inner(&self) -> *mut *mut std::os::raw::c_void;
 }
 
-pub unsafe trait Loadable {
+pub unsafe trait LoadExt {
     fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError>;
 
     fn load_mem( &mut self, data: &[u8]) -> Result<(), SoloudError>;
 
     fn load_mem_ex( &mut self, data: &[u8], aCopy: bool, aTakeOwnership: bool) -> Result<(), SoloudError>;
+}
+
+pub unsafe trait FilterExt {
+    fn inner(&self) -> *mut *mut std::os::raw::c_void;
+    
+    fn default() -> Self;
+    
+    fn param_count(&mut self) -> i32;
+
+    fn param_name( &mut self, aParamIndex: u32) -> Option<String>;
+
+    fn param_type( &mut self, aParamIndex: u32) -> crate::filter::ParamType;
+
+    fn param_max(&mut self, aParamIndex: u32) -> f32;
+
+    fn param_min(&mut self, aParamIndex: u32) -> f32;
+
+}
+
+pub trait FilterType {
+    fn to_u32(self) -> u32;
 }

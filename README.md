@@ -2,7 +2,12 @@
 
 Rust bindings for the soloud audio engine library.
 
+Supported formats: wav, mp3, ogg. The library also comes with a speech synthesizer.
+
 Still pre-alpha.
+
+- The official soloud [website](https://sol.gfxile.net/soloud/index.html)
+- The official soloud [repo](https://github.com/jarikomppa/soloud)
 
 ## Usage
 ```toml

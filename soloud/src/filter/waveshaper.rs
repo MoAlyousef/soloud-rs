@@ -1,0 +1,8 @@
+use crate::prelude::*;
+use super::ParamType;
+
+#[derive(FilterExt)]
+pub struct WaveShaperFilter {
+    _inner: *mut soloud_sys::soloud::WaveShaperFilter,
+}
+

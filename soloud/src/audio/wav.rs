@@ -1,17 +1,12 @@
 use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 
-#[derive(AudioSource, Loadable)]
+#[derive(AudioExt, LoadExt)]
 pub struct Wav {
     _inner: *mut ffi::Wav,
 }
 
 impl Wav {
-    pub fn default() -> Self {
-        let ptr = unsafe { ffi::Wav_create() };
-        assert!(!ptr.is_null());
-        Wav { _inner: ptr }
-    }
     
     pub fn load_raw_wav_8( &mut self, data: &mut [u8]) -> Result<(), SoloudError> {
         unsafe {
@@ -79,18 +74,9 @@ impl Wav {
         }
     }
     
-    pub fn get_length(&mut self) -> f64 {
+    pub fn length(&mut self) -> f64 {
         unsafe {
             ffi::Wav_getLength(self._inner)
-        }
-    }
-}
-
-impl Drop for Wav {
-    fn drop(&mut self) {
-        unsafe {
-            ffi::Wav_destroy(self._inner);
-            self._inner = std::ptr::null_mut();
         }
     }
 }

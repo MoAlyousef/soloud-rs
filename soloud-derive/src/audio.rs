@@ -2,7 +2,7 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-pub fn impl_audio_source_trait(ast: &DeriveInput) -> TokenStream {
+pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
     let name_str = name.to_string();
@@ -64,9 +64,18 @@ pub fn impl_audio_source_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let stop = Ident::new(format!("{}_{}", name_str, "stop").as_str(), name.span());
+    let destroy = Ident::new(format!("{}_{}", name_str, "destroy").as_str(), name.span());
+    let create = Ident::new(format!("{}_{}", name_str, "create").as_str(), name.span());
 
     let gen = quote! {
-        unsafe impl AudioSource for #name {
+
+        unsafe impl AudioExt for #name {
+            fn default() -> Self {
+                let ptr = unsafe { ffi::#create() };
+                assert!(!ptr.is_null());
+                #name { _inner: ptr }
+            }
+
             fn set_volume(&mut self, aVolume: f32) {
                 unsafe {
                     soloud_sys::soloud::#setVolume(self._inner, aVolume)
@@ -115,7 +124,7 @@ pub fn impl_audio_source_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_3d_collider(&mut self, aCollider: Option<&mut AudioCollider>) {
+            fn set_3d_collider(&mut self, aCollider: Option<&AudioCollider>) {
                 let aCollider = match aCollider {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
@@ -125,7 +134,7 @@ pub fn impl_audio_source_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_3d_attenuator(&mut self, aAttenuator: Option<&mut AudioAttenuator>) {
+            fn set_3d_attenuator(&mut self, aAttenuator: Option<&AudioAttenuator>) {
                 let aAttenuator = match aAttenuator {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
@@ -147,13 +156,13 @@ pub fn impl_audio_source_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn get_loop_point(&mut self) -> f64 {
+            fn loop_point(&mut self) -> f64 {
                 unsafe {
                     soloud_sys::soloud::#getLoopPoint(self._inner)
                 }
             }
 
-            fn set_filter(&mut self, aFilterId: u32, aFilter: Option<&mut Filter>) {
+            fn set_filter<F: FilterExt>(&mut self, aFilterId: u32, aFilter: Option<&F>) {
                 let aFilter = match aFilter {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
@@ -171,6 +180,15 @@ pub fn impl_audio_source_trait(ast: &DeriveInput) -> TokenStream {
 
             fn inner(&self) -> *mut *mut std::os::raw::c_void {
                 self._inner
+            }
+        }
+
+        impl Drop for #name {
+            fn drop(&mut self) {
+                unsafe {
+                    soloud_sys::soloud::#destroy(self._inner);
+                    self._inner = std::ptr::null_mut();
+                }
             }
         }
     };

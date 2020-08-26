@@ -1,6 +1,7 @@
 /target
 Cargo.lock
-# temp.*
+temp.*
 .clangd
 *.wav
 *.mp3
+*.json
