@@ -21,13 +21,13 @@ fn main() {
         .args(&["submodule", "update", "--init"])
         .current_dir(manifest_dir.clone())
         .status()
-        .expect("Git is needed to retrieve the fltk source files!");
+        .expect("Git is needed to retrieve the soloud source files!");
 
     Command::new("git")
         .args(&["checkout", "master"])
         .current_dir(manifest_dir.join("sys").join("soloud"))
         .status()
-        .expect("Git is needed to retrieve the fltk source files!");
+        .expect("Git is needed to retrieve the soloud source files!");
 
     if cfg!(feature = "use-ninja") {
         dst.generator("Ninja");
