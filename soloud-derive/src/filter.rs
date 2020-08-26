@@ -86,7 +86,7 @@ pub fn impl_filter_type_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
     let gen = quote! {
-        impl FilterType for #name {
+        impl FilterAttr for #name {
             fn to_u32(self) -> u32 {
                 self as u32
             }

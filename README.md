@@ -21,9 +21,8 @@ use soloud::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut sl = Soloud::default()?;
-    sl.set_global_volume(3.0);
 
-    let mut wav = wav::Wav::default();
+    let mut wav = audio::Wav::default();
 
     wav.load(&std::path::Path::new("sample.wav"))?;
 
@@ -51,9 +50,8 @@ use soloud::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut sl = Soloud::default()?;
-    sl.set_global_volume(4.0);
 
-    let mut speech = speech::Speech::default();
+    let mut speech = audio::Speech::default();
 
     speech.set_text("Hello World")?;
 
@@ -78,6 +76,31 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     sl.deinit();
     
+    Ok(())
+}
+```
+
+To add a filter:
+```rust
+use soloud::*;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut sl = Soloud::default()?;
+
+    let mut wav = audio::Wav::default();
+    let mut filt = filter::EchoFilter::default();
+    filt.set_params(0.2)?;
+
+    wav.load(&std::path::Path::new("sample.wav"))?;
+    wav.set_filter(0, Some(&filt));
+
+    sl.play(&wav);
+    while sl.voice_count() > 0 {
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
+
+    sl.deinit();
+
     Ok(())
 }
 ```

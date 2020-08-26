@@ -80,6 +80,20 @@ impl std::ops::BitOr for SoloudFlags {
     }
 }
 
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
+pub enum WaveForm {
+    Square = 0,
+    Saw,
+    Sin,
+    Triangle,
+    Bounce,
+    Jaws,
+    Humps,
+    FSquare,
+    FSaw,
+}
+
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
 pub enum AttenuationModels {
@@ -154,7 +168,7 @@ pub unsafe trait AudioExt {
 
     fn set_loop_point(&mut self, aLoopPoint: f64);
 
-    fn loop_point(&mut self) -> f64;
+    fn loop_point(&self) -> f64;
 
     fn set_filter<F: FilterExt>(&mut self, aFilterId: u32, aFilter: Option<&F>);
 
@@ -188,6 +202,6 @@ pub unsafe trait FilterExt {
 
 }
 
-pub trait FilterType {
+pub trait FilterAttr {
     fn to_u32(self) -> u32;
 }

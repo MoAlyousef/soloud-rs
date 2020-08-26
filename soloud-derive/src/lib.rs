@@ -40,7 +40,7 @@ pub fn filter_trait_macro(input: TokenStream) -> TokenStream {
     impl_filter_trait(&ast)
 }
 
-#[proc_macro_derive(FilterType)]
+#[proc_macro_derive(FilterAttr)]
 pub fn filter_type_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_filter_type_trait(&ast)

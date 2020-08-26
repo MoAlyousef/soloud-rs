@@ -228,109 +228,109 @@ impl Soloud {
         }
     }
 
-    pub fn count_audio_source<AS: AudioExt>(&mut self, aSound: &AS) -> i32 {
+    pub fn count_audio_source<AS: AudioExt>(&self, aSound: &AS) -> i32 {
         unsafe {
             ffi::Soloud_countAudioSource(self._inner, aSound.inner())
         }
     }
 
-    pub fn stream_time(&mut self, aVoiceHandle: Handle) -> f64 {
+    pub fn stream_time(&self, aVoiceHandle: Handle) -> f64 {
         unsafe {
             ffi::Soloud_getStreamTime(self._inner, aVoiceHandle)
         }
     }
 
-    pub fn stream_position(&mut self, aVoiceHandle: Handle) -> f64 {
+    pub fn stream_position(&self, aVoiceHandle: Handle) -> f64 {
         unsafe {
             ffi::Soloud_getStreamPosition(self._inner, aVoiceHandle)
         }
     }
 
-    pub fn pause(&mut self, aVoiceHandle: Handle) -> bool {
+    pub fn pause(&self, aVoiceHandle: Handle) -> bool {
         unsafe {
             ffi::Soloud_getPause(self._inner, aVoiceHandle) != 0
         }
     }
 
-    pub fn volume(&mut self, aVoiceHandle: Handle) -> f32 {
+    pub fn volume(&self, aVoiceHandle: Handle) -> f32 {
         unsafe {
             ffi::Soloud_getVolume(self._inner, aVoiceHandle)
         }
     }
 
-    pub fn overall_volume(&mut self, aVoiceHandle: Handle) -> f32 {
+    pub fn overall_volume(&self, aVoiceHandle: Handle) -> f32 {
         unsafe {
             ffi::Soloud_getOverallVolume(self._inner, aVoiceHandle)
         }
     }
 
-    pub fn pan(&mut self, aVoiceHandle: Handle) -> f32 {
+    pub fn pan(&self, aVoiceHandle: Handle) -> f32 {
         unsafe {
             ffi::Soloud_getPan(self._inner, aVoiceHandle)
         }
     }
 
-    pub fn sample_rate(&mut self, aVoiceHandle: Handle) -> f32 {
+    pub fn samplerate(&self, aVoiceHandle: Handle) -> f32 {
         unsafe {
             ffi::Soloud_getSamplerate(self._inner, aVoiceHandle)
         }
     }
 
-    pub fn protect_voice(&mut self, aVoiceHandle: Handle) -> bool {
+    pub fn protect_voice(&self, aVoiceHandle: Handle) -> bool {
         unsafe {
             ffi::Soloud_getProtectVoice(self._inner, aVoiceHandle) != 0
         }
     }
 
-    pub fn is_valid_voice_handle(&mut self, aVoiceHandle: Handle) -> bool {
+    pub fn is_valid_voice_handle(&self, aVoiceHandle: Handle) -> bool {
         unsafe {
             ffi::Soloud_isValidVoiceHandle(self._inner, aVoiceHandle) != 0
         }
     }
 
-    pub fn relative_play_speed(&mut self, aVoiceHandle: Handle) -> f32 {
+    pub fn relative_play_speed(&self, aVoiceHandle: Handle) -> f32 {
         unsafe {
             ffi::Soloud_getRelativePlaySpeed(self._inner, aVoiceHandle)
         }
     }
 
-    pub fn post_clip_scaler(&mut self) -> f32 {
+    pub fn post_clip_scaler(&self) -> f32 {
         unsafe {
             ffi::Soloud_getPostClipScaler(self._inner)
         }
     }
 
-    pub fn main_resampler(&mut self) -> u32 {
+    pub fn main_resampler(&self) -> u32 {
         unsafe {
             ffi::Soloud_getMainResampler(self._inner)
         }
     }
 
-    pub fn global_volume(&mut self) -> f32 {
+    pub fn global_volume(&self) -> f32 {
         unsafe {
             ffi::Soloud_getGlobalVolume(self._inner)
         }
     }
 
-    pub fn max_active_voice_count(&mut self) -> u32 {
+    pub fn max_active_voice_count(&self) -> u32 {
         unsafe {
             ffi::Soloud_getMaxActiveVoiceCount(self._inner)
         }
     }
 
-    pub fn looping(&mut self, aVoiceHandle: Handle) -> bool {
+    pub fn looping(&self, aVoiceHandle: Handle) -> bool {
         unsafe {
             ffi::Soloud_getLooping(self._inner, aVoiceHandle) != 0
         }
     }
 
-    pub fn auto_stop(&mut self, aVoiceHandle: Handle) -> bool {
+    pub fn auto_stop(&self, aVoiceHandle: Handle) -> bool {
         unsafe {
             ffi::Soloud_getAutoStop(self._inner, aVoiceHandle) != 0
         }
     }
 
-    pub fn loop_point(&mut self, aVoiceHandle: Handle) -> f64 {
+    pub fn loop_point(&self, aVoiceHandle: Handle) -> f64 {
         unsafe {
             ffi::Soloud_getLoopPoint(self._inner, aVoiceHandle)
         }
@@ -448,73 +448,73 @@ impl Soloud {
         }
     }
 
-    pub fn fade_volume(&mut self, aVoiceHandle: Handle, aTo: f32, aTime: f64) {
+    pub fn fade_volume(&self, aVoiceHandle: Handle, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_fadeVolume(self._inner, aVoiceHandle, aTo, aTime)
         }
     }
 
-    pub fn fade_pan(&mut self, aVoiceHandle: Handle, aTo: f32, aTime: f64) {
+    pub fn fade_pan(&self, aVoiceHandle: Handle, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_fadePan(self._inner, aVoiceHandle, aTo, aTime)
         }
     }
 
-    pub fn fade_relative_play_speed(&mut self, aVoiceHandle: Handle, aTo: f32, aTime: f64) {
+    pub fn fade_relative_play_speed(&self, aVoiceHandle: Handle, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_fadeRelativePlaySpeed(self._inner, aVoiceHandle, aTo, aTime)
         }
     }
 
-    pub fn fade_global_volume(&mut self, aTo: f32, aTime: f64) {
+    pub fn fade_global_volume(&self, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_fadeGlobalVolume(self._inner, aTo, aTime)
         }
     }
 
-    pub fn schedule_pause(&mut self, aVoiceHandle: Handle, aTime: f64) {
+    pub fn schedule_pause(&self, aVoiceHandle: Handle, aTime: f64) {
         unsafe {
             ffi::Soloud_schedulePause(self._inner, aVoiceHandle, aTime)
         }
     }
 
-    pub fn schedule_stope(&mut self, aVoiceHandle: Handle, aTime: f64) {
+    pub fn schedule_stope(&self, aVoiceHandle: Handle, aTime: f64) {
         unsafe {
             ffi::Soloud_scheduleStop(self._inner, aVoiceHandle, aTime)
         }
     }
 
-    pub fn oscillate_volume(&mut self, aVoiceHandle: Handle, aFrom: f32, aTo: f32, aTime: f64) {
+    pub fn oscillate_volume(&self, aVoiceHandle: Handle, aFrom: f32, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_oscillateVolume(self._inner, aVoiceHandle, aFrom, aTo, aTime)
         }
     }
 
-    pub fn oscillate_pan(&mut self, aVoiceHandle: Handle, aFrom: f32, aTo: f32, aTime: f64) {
+    pub fn oscillate_pan(&self, aVoiceHandle: Handle, aFrom: f32, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_oscillatePan(self._inner, aVoiceHandle, aFrom, aTo, aTime)
         }
     }
 
-    pub fn oscillate_relative_play_speed(&mut self, aVoiceHandle: Handle, aFrom: f32, aTo: f32, aTime: f64) {
+    pub fn oscillate_relative_play_speed(&self, aVoiceHandle: Handle, aFrom: f32, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_oscillateRelativePlaySpeed(self._inner, aVoiceHandle, aFrom, aTo, aTime)
         }
     }
 
-    pub fn oscillate_global_volume(&mut self, aFrom: f32, aTo: f32, aTime: f64) {
+    pub fn oscillate_global_volume(&self, aFrom: f32, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_oscillateGlobalVolume(self._inner, aFrom, aTo, aTime)
         }
     }
 
-    pub fn set_visualize_enable(&mut self, aEnable: bool) {
+    pub fn set_visualize_enable(&self, aEnable: bool) {
         unsafe {
             ffi::Soloud_setVisualizationEnable(self._inner, aEnable as i32)
         }
     }
 
-    pub fn calc_FFT(&mut self) -> Vec<f32> {
+    pub fn calc_FFT(&self) -> Vec<f32> {
         unsafe {
             let ret = ffi::Soloud_calcFFT(self._inner);
             let ret = std::slice::from_raw_parts(ret, 256);
@@ -522,38 +522,38 @@ impl Soloud {
         }
     }
 
-    pub fn wave(&mut self) -> Vec<f32> {
+    pub fn wave(&self) -> Vec<f32> {
         unsafe {
             let ret = ffi::Soloud_getWave(self._inner);
             let ret = std::slice::from_raw_parts(ret, 256);
             ret.to_vec()
         }
     }
-    pub fn approximate_volume(&mut self, aChannel: u32) -> f32 {
+    pub fn approximate_volume(&self, aChannel: u32) -> f32 {
         unsafe {
             ffi::Soloud_getApproximateVolume(self._inner, aChannel)
         }
     }
 
-    pub fn loop_count(&mut self, aVoiceHandle: Handle) -> u32 {
+    pub fn loop_count(&self, aVoiceHandle: Handle) -> u32 {
         unsafe {
             ffi::Soloud_getLoopCount(self._inner, aVoiceHandle)
         }
     }
 
-    pub fn info(&mut self, aVoiceHandle: Handle, aInfoKey: u32) -> f32 {
+    pub fn info(&self, aVoiceHandle: Handle, aInfoKey: u32) -> f32 {
         unsafe {
             ffi::Soloud_getInfo(self._inner, aVoiceHandle, aInfoKey)
         }
     }
 
-    pub fn create_voice_group(&mut self) -> Handle {
+    pub fn create_voice_group(&self) -> Handle {
         unsafe {
             ffi::Soloud_createVoiceGroup(self._inner)
         }
     }
 
-    pub fn destroy_voice_group(&mut self, aVoiceGroupHandle: Handle) -> Result<(), SoloudError> {
+    pub fn destroy_voice_group(&self, aVoiceGroupHandle: Handle) -> Result<(), SoloudError> {
         unsafe {
             let ret = ffi::Soloud_destroyVoiceGroup(self._inner, aVoiceGroupHandle);
             if ret != 0 {
@@ -564,7 +564,7 @@ impl Soloud {
         }
     }
 
-    pub fn add_voice_to_group(&mut self, aVoiceGroupHandle: Handle, aVoiceHandle: Handle) -> Result<(), SoloudError> {
+    pub fn add_voice_to_group(&self, aVoiceGroupHandle: Handle, aVoiceHandle: Handle) -> Result<(), SoloudError> {
         unsafe {
             let ret = ffi::Soloud_addVoiceToGroup(self._inner, aVoiceGroupHandle, aVoiceHandle);
             if ret != 0 {
@@ -575,25 +575,25 @@ impl Soloud {
         }
     }
 
-    pub fn is_voice_group(&mut self, aVoiceGroupHandle: Handle) -> bool {
+    pub fn is_voice_group(&self, aVoiceGroupHandle: Handle) -> bool {
         unsafe {
             ffi::Soloud_isVoiceGroup(self._inner, aVoiceGroupHandle) != 0
         }
     }
 
-    pub fn is_voice_group_empty(&mut self, aVoiceGroupHandle: Handle) -> bool {
+    pub fn is_voice_group_empty(&self, aVoiceGroupHandle: Handle) -> bool {
         unsafe {
             ffi::Soloud_isVoiceGroupEmpty(self._inner, aVoiceGroupHandle) != 0
         }
     }
 
-    pub fn update_3d_audio(&mut self) {
+    pub fn update_3d_audio(&self) {
         unsafe {
             ffi::Soloud_update3dAudio(self._inner)
         }
     }
 
-    pub fn set_3d_sound_speed(&mut self, aSpeed: f32) -> Result<(), SoloudError> {
+    pub fn set_3d_sound_speed(&self, aSpeed: f32) -> Result<(), SoloudError> {
         unsafe {
             let ret = ffi::Soloud_set3dSoundSpeed(self._inner, aSpeed);
             if ret != 0 {
@@ -604,7 +604,7 @@ impl Soloud {
         }
     }
 
-    pub fn get_3d_sound_speed(&mut self) -> f32 {
+    pub fn get_3d_sound_speed(&self) -> f32 {
         unsafe {
             ffi::Soloud_get3dSoundSpeed(self._inner)
         }
@@ -699,25 +699,25 @@ impl Soloud {
             ffi::Soloud_mixSigned16(self._inner, aBuffer.as_mut_ptr(), aBuffer.len() as u32)
         }
     }
-    pub fn set_filter_param(&mut self, aVoiceHandle: Handle, aFilterId: u32, aAttributeId: impl FilterType, aValue: f32) {
+    pub fn set_filter_param(&mut self, aVoiceHandle: Handle, aFilterId: u32, aAttributeId: impl FilterAttr, aValue: f32) {
         unsafe {
             ffi::Soloud_setFilterParameter(self._inner, aVoiceHandle, aFilterId, aAttributeId.to_u32(), aValue)
         }
     }
     
-    pub fn filterParam(&mut self, aVoiceHandle: Handle, aFilterId: u32, aAttributeId: impl FilterType) -> f32 {
+    pub fn filter_param(&mut self, aVoiceHandle: Handle, aFilterId: u32, aAttributeId: impl FilterAttr) -> f32 {
         unsafe {
             ffi::Soloud_getFilterParameter(self._inner, aVoiceHandle, aFilterId, aAttributeId.to_u32())
         }
     }
     
-    pub fn fade_filter_param(&mut self, aVoiceHandle: Handle, aFilterId: u32, aAttributeId: impl FilterType, aTo: f32, aTime: f64) {
+    pub fn fade_filter_param(&mut self, aVoiceHandle: Handle, aFilterId: u32, aAttributeId: impl FilterAttr, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_fadeFilterParameter(self._inner, aVoiceHandle, aFilterId, aAttributeId.to_u32(), aTo, aTime)
         }
     }
     
-    pub fn oscillate_filter_param(&mut self, aVoiceHandle: Handle, aFilterId: u32, aAttributeId: impl FilterType, aFrom: f32, aTo: f32, aTime: f64) {
+    pub fn oscillate_filter_param(&mut self, aVoiceHandle: Handle, aFilterId: u32, aAttributeId: impl FilterAttr, aFrom: f32, aTo: f32, aTime: f64) {
         unsafe {
             ffi::Soloud_oscillateFilterParameter(self._inner, aVoiceHandle, aFilterId, aAttributeId.to_u32(), aFrom, aTo, aTime)
         }

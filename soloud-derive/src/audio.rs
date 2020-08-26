@@ -156,7 +156,7 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn loop_point(&mut self) -> f64 {
+            fn loop_point(&self) -> f64 {
                 unsafe {
                     soloud_sys::soloud::#getLoopPoint(self._inner)
                 }
