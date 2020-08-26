@@ -23,9 +23,14 @@ use soloud_sys::soloud as ffi;
 
 pub type Handle = u32;
 
+#[derive(Clone)]
 pub struct Soloud {
     _inner: *mut ffi::Soloud,
 }
+
+unsafe impl Send for Soloud {}
+
+unsafe impl Sync for Soloud {}
 
 impl Soloud {
     pub fn default_uninit() -> std::mem::MaybeUninit<Self> {
