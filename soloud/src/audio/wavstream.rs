@@ -7,6 +7,7 @@ pub struct WavStream {
 }
 
 impl WavStream {
+    /// Get the length of the WavStream object
     pub fn length(&mut self) -> f64 {
         assert!(!self._inner.is_null());
         unsafe { ffi::WavStream_getLength(self._inner) }

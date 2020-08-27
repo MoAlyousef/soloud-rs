@@ -14,6 +14,7 @@ pub struct BassboostFilter {
 }
 
 impl BassboostFilter {
+    /// Set filter params
     pub fn set_params(&mut self, delay: f32) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
         unsafe {

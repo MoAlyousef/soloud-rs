@@ -32,7 +32,7 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         unsafe impl FilterExt for #name {
-            fn inner(&self) -> *mut *mut std::os::raw::c_void {
+            unsafe fn inner(&self) -> *mut *mut std::os::raw::c_void {
                 self._inner
             }
 

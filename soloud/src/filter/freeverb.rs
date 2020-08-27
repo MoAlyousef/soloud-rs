@@ -7,6 +7,7 @@ pub struct FreeverbFilter {
 }
 
 impl FreeverbFilter {
+    /// Set filter params
     pub fn set_params(
         &mut self,
         mode: f32,

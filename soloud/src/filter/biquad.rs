@@ -24,6 +24,7 @@ pub struct BiquadResonantFilter {
 }
 
 impl BiquadResonantFilter {
+    /// Set filter params
     pub fn set_params(
         &mut self,
         filter_type: BiquadResonantFilterType,

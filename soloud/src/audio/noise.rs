@@ -16,6 +16,7 @@ pub struct Noise {
 }
 
 impl Noise {
+    /// Set noise type 
     pub fn set_type(&mut self, typ: NoiseType) {
         assert!(!self._inner.is_null());
         unsafe { ffi::Noise_setType(self._inner, typ as i32) }

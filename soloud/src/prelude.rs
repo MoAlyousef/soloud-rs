@@ -63,17 +63,16 @@ impl From<std::ffi::NulError> for SoloudError {
 
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
-pub enum SoloudFlags {
+pub enum SoloudFlag {
     ClipRoundoff = 1,
     EnableVisualization = 2,
     LeftHanded3D = 4,
     NoFpuRegisterChange = 8,
 }
 
-impl std::ops::BitOr for SoloudFlags {
+impl std::ops::BitOr for SoloudFlag {
     type Output = Self;
 
-    // rhs is the "right-hand side" of the expression `a | b`
     fn bitor(self, rhs: Self) -> Self {
         unsafe { std::mem::transmute(self as u32 | rhs as u32) }
     }
@@ -106,101 +105,110 @@ pub enum AttenuationModel {
     ExponentialDistance = 3,
 }
 
-pub struct Filter {
-    _inner: *mut soloud_sys::soloud::Filter,
-}
-
-impl Filter {
-    pub fn inner(&self) -> *mut soloud_sys::soloud::Filter {
-        self._inner
-    }
-}
-
+/// Audio Collider struct
 pub struct AudioCollider {
     _inner: *mut soloud_sys::soloud::AudioCollider,
 }
 
 impl AudioCollider {
-    pub fn inner(&self) -> *mut soloud_sys::soloud::AudioCollider {
+    /// pub unsafe fn inner(&self) -> *mut soloud_sys::soloud::AudioCollider
+    /// # Safety
+    /// The inner pointer should be modified with care!
+    pub unsafe fn inner(&self) -> *mut soloud_sys::soloud::AudioCollider {
         self._inner
     }
 }
 
+/// Audio Attenuator struct
 pub struct AudioAttenuator {
     _inner: *mut soloud_sys::soloud::AudioAttenuator,
 }
 
 impl AudioAttenuator {
-    pub fn inner(&self) -> *mut soloud_sys::soloud::AudioAttenuator {
+    /// pub unsafe fn inner(&self) -> *mut soloud_sys::soloud::AudioAttenuator
+    /// # Safety
+    /// The inner pointer should be modified with care!
+    pub unsafe fn inner(&self) -> *mut soloud_sys::soloud::AudioAttenuator {
         self._inner
     }
 }
 
 pub unsafe trait AudioExt {
+    /// Creates a default initialized object
     fn default() -> Self;
-
+    /// Sets the volume
     fn set_volume(&mut self, volume: f32);
-
+    /// Set whether the audio is looping
     fn set_looping(&mut self, flag: bool);
-
+    /// Set auto stop
     fn set_auto_stop(&mut self, flag: bool);
-
+    /// Set 3D min and max distances
     fn set_3d_min_max_distance(&mut self, min_distance: f32, max_distance: f32);
-
+    /// Set 3D attenuation
     fn set_3d_attenuation(&mut self, model: AttenuationModel, rolloff_factor: f32);
-
+    /// Set 3D doppler factor
     fn set_3d_doppler_factor(&mut self, doppler_factor: f32);
-
+    /// Set 3D listener relative
     fn set_3d_listener_relative(&mut self, flag: bool);
-
+    /// Set 3D distance delay
     fn set_3d_distance_delay(&mut self, delay: i32);
-
+    /// Set 3D collider
     fn set_3d_collider(&mut self, collider: Option<&AudioCollider>);
-
+    /// Set 3D attenuator
     fn set_3d_attenuator(&mut self, attenuator: Option<&AudioAttenuator>);
-
+    /// Set inaudible behavior
     fn set_inaudible_behavior(&mut self, must_tick: bool, kill: bool);
-
+    /// Set a loop point
     fn set_loop_point(&mut self, loop_point: f64);
-
+    /// Get the loop point
     fn loop_point(&self) -> f64;
-
+    /// Set a filter, the filter_id is assigned by the developer and becomes the id for that filter,
+    /// and to cancel pass None as a filter to the already assigned id
     fn set_filter<F: FilterExt>(&mut self, filter_id: u32, filter: Option<&F>);
-
+    /// Stop
     fn stop(&mut self);
-
-    fn inner(&self) -> *mut *mut std::os::raw::c_void;
+    /// Get the inner pointer
+    /// # Safety
+    /// The inner pointer should be modified with care!
+    unsafe fn inner(&self) -> *mut *mut std::os::raw::c_void;
 }
 
 pub unsafe trait LoadExt {
+    /// Load audio from a file
     fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError>;
-
+    /// Load audio from memory
     fn load_mem(&mut self, data: &[u8]) -> Result<(), SoloudError>;
-
-    fn load_mem_ex(
+    /// Load audio from memory with options to copy and/or take ownership
+    /// # Safety
+    /// The audio source should not be invalidated
+    unsafe fn load_mem_ex(
         &mut self,
         data: &[u8],
         copy: bool,
-        take_ownershipt: bool,
+        take_ownership: bool,
     ) -> Result<(), SoloudError>;
 }
 
 pub unsafe trait FilterExt {
-    fn inner(&self) -> *mut *mut std::os::raw::c_void;
-
+    /// Creates a default initialized object
     fn default() -> Self;
-
+    /// Get the param count
     fn param_count(&mut self) -> i32;
-
+    /// Get the param name by index
     fn param_name(&mut self, param_idx: u32) -> Option<String>;
-
+    /// Get the param type by index
     fn param_type(&mut self, param_idx: u32) -> crate::filter::ParamType;
-
+    /// Get the maximum value of a parameter
     fn param_max(&mut self, param_idx: u32) -> f32;
-
+    /// Get the minimum value of a parameter
     fn param_min(&mut self, param_idx: u32) -> f32;
+    /// Get the inner pointer
+    /// # Safety
+    /// The inner pointer should be modified with care!
+    unsafe fn inner(&self) -> *mut *mut std::os::raw::c_void;
 }
 
 pub trait FilterAttr {
+    /// Convert a filter attribute to a u32
     fn to_u32(self) -> u32;
 }

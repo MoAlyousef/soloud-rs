@@ -6,7 +6,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut wav = audio::Wav::default();
     let mut filt = filter::EchoFilter::default();
-    filt.set_params(0.2)?;
+    filt.set_params(0.2)?; // Here sets the delay by default for echo filters
 
     wav.load(&std::path::Path::new("sample.wav"))?;
     wav.set_filter(0, Some(&filt));

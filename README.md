@@ -12,7 +12,7 @@ Still pre-alpha.
 ## Usage
 ```toml
 [dependencies]
-soloud = "0.1.0"
+soloud = "0.1"
 ```
 
 Or to use the latest developments:
@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     wav.load(&std::path::Path::new("sample.wav"))?;
 
-    sl.play(&wav);
+    sl.play(&wav); // calls to play are non-blocking, so we put the thread to sleep
     while sl.get_voice_count() > 0 {
         std::thread::sleep(std::time::Duration::from_millis(100));
     }

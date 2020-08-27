@@ -32,7 +32,7 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
             fn load_mem( &mut self, data: &[u8]) -> Result<(), SoloudError> {
                 assert!(!self._inner.is_null());
                 unsafe {
-                    let ret = soloud_sys::soloud::#loadMem(self._inner, data.as_ptr(), data.len() as u32);
+                    let ret = soloud_sys::soloud::#loadMemEx(self._inner, data.as_ptr(), data.len() as u32, 0, 0);
                     if ret != 0 {
                         Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
                     } else {
@@ -41,7 +41,7 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn load_mem_ex( &mut self, data: &[u8], copy: bool, take_ownership: bool) -> Result<(), SoloudError> {
+            unsafe fn load_mem_ex( &mut self, data: &[u8], copy: bool, take_ownership: bool) -> Result<(), SoloudError> {
                 assert!(!self._inner.is_null());
                 unsafe {
                     let ret = soloud_sys::soloud::#loadMemEx(self._inner, data.as_ptr(), data.len() as u32, copy as i32, take_ownership as i32);

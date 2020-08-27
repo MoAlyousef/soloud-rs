@@ -134,7 +134,7 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_3d_collider(&mut self, collider: Option<&AudioCollider>) {
                 let collider = match collider {
-                    Some(v) => v.inner(),
+                    Some(v) => unsafe { v.inner() },
                     None => std::ptr::null_mut(),
                 };
                 assert!(!self._inner.is_null());
@@ -145,7 +145,7 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_3d_attenuator(&mut self, attenuator: Option<&AudioAttenuator>) {
                 let attenuator = match attenuator {
-                    Some(v) => v.inner(),
+                    Some(v) => unsafe { v.inner() },
                     None => std::ptr::null_mut(),
                 };
                 assert!(!self._inner.is_null());
@@ -177,7 +177,7 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_filter<F: FilterExt>(&mut self, filter_id: u32, filter: Option<&F>) {
                 let filter = match filter {
-                    Some(v) => v.inner(),
+                    Some(v) => unsafe { v.inner() },
                     None => std::ptr::null_mut(),
                 };
                 assert!(!self._inner.is_null());
@@ -193,7 +193,7 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn inner(&self) -> *mut *mut std::os::raw::c_void {
+            unsafe fn inner(&self) -> *mut *mut std::os::raw::c_void {
                 self._inner
             }
         }

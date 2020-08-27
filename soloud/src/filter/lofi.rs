@@ -15,6 +15,7 @@ pub struct LofiFilter {
 }
 
 impl LofiFilter {
+    /// Set filter params
     pub fn set_params(&mut self, samplerate: f32, bit_depth: f32) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
         unsafe {

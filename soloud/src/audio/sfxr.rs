@@ -19,6 +19,7 @@ pub struct Sfxr {
 }
 
 impl Sfxr {
+    /// Load preset
     pub fn load_preset(&mut self, preset: SfxrPreset, rand_seed: i32) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
         unsafe {

@@ -1,5 +1,6 @@
 #![recursion_limit = "256"]
 #![allow(non_snake_case)]
+#![allow(unused_variables)]
 
 extern crate proc_macro;
 extern crate syn;

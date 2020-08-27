@@ -7,6 +7,7 @@ pub struct Vizsn {
 }
 
 impl Vizsn {
+    /// set speech text
     pub fn set_text(&mut self, txt: &str) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
         unsafe {
