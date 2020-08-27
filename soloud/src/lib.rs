@@ -12,7 +12,7 @@
 //! ## Usage
 //! ```toml
 //! [dependencies]
-//! soloud = "0.1.0"
+//! soloud = "0.1"
 //! ```
 //!
 //! Or to use the latest developments:
