@@ -33,14 +33,14 @@
 //!     wav.load(&std::path::Path::new("sample.wav"))?;
 //!
 //!     sl.play(&wav);
-//!     while sl.get_voice_count() > 0 {
+//!     while sl.voice_count() > 0 {
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
 //!     wav.load(&std::path::Path::new("Recording.mp3"))?;
 //!
 //!     sl.play(&wav);
-//!     while sl.get_voice_count() > 0 {
+//!     while sl.voice_count() > 0 {
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
@@ -62,21 +62,21 @@
 //!     speech.set_text("Hello World")?;
 //!
 //!     sl.play(&speech);
-//!     while sl.get_active_voice_count() > 0 {
+//!     while sl.active_voice_count() > 0 {
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
 //!     speech.set_text("1 2 3")?;
 //!
 //!     sl.play(&speech);
-//!     while sl.get_active_voice_count() > 0 {
+//!     while sl.active_voice_count() > 0 {
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
 //!     speech.set_text("Can you hear me?")?;
 //!
 //!     sl.play(&speech);
-//!     while sl.get_active_voice_count() > 0 {
+//!     while sl.active_voice_count() > 0 {
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
@@ -890,7 +890,7 @@ impl Soloud {
     }
 
     /// Get 3d sound speed
-    pub fn get_3d_sound_speed(&self) -> f32 {
+    pub fn 3d_sound_speed(&self) -> f32 {
         assert!(!self._inner.is_null());
         unsafe { ffi::Soloud_get3dSoundSpeed(self._inner) }
     }
