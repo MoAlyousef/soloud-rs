@@ -15,9 +15,9 @@ pub struct FlangerFilter {
 }
 
 impl FlangerFilter {
-    pub fn set_params(&mut self, aDelay: f32, aFreq: f32) -> Result<(), SoloudError> {
+    pub fn set_params(&mut self, delay: f32, freq: f32) -> Result<(), SoloudError> {
         unsafe {
-            let ret = soloud_sys::soloud::FlangerFilter_setParams(self._inner, aDelay, aFreq);
+            let ret = soloud_sys::soloud::FlangerFilter_setParams(self._inner, delay, freq);
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {

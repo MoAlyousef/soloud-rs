@@ -15,9 +15,9 @@ pub struct RobotizeFilter {
 }
 
 impl RobotizeFilter {
-    pub fn set_params(&mut self, aFreq: f32, aWaveForm: WaveForm) {
+    pub fn set_params(&mut self, freq: f32, wave_form: WaveForm) {
         unsafe {
-            soloud_sys::soloud::RobotizeFilter_setParams(self._inner, aFreq, aWaveForm as i32)
+            soloud_sys::soloud::RobotizeFilter_setParams(self._inner, freq, wave_form as i32)
         }
     }
 }

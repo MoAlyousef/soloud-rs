@@ -14,9 +14,9 @@ pub struct BassboostFilter {
 }
 
 impl BassboostFilter {
-    pub fn set_params(&mut self, aDelay: f32) -> Result<(), SoloudError> {
+    pub fn set_params(&mut self, delay: f32) -> Result<(), SoloudError> {
         unsafe {
-            let ret = soloud_sys::soloud::BassboostFilter_setParams(self._inner, aDelay);
+            let ret = soloud_sys::soloud::BassboostFilter_setParams(self._inner, delay);
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {

@@ -112,4 +112,4 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 ## Dependencies
-A Rust compiler, a C++ compiler, Cargo, CMake and git (all these need to be in your PATH). This crate uses the miniaudio backend which assumes default sound drivers are functional.
+A Rust compiler, C++ compiler, Cargo, CMake and git (all these need to be in your PATH). This crate uses the miniaudio backend which assumes default sound drivers are functional.

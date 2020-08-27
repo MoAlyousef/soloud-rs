@@ -39,9 +39,9 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn load_mem_ex( &mut self, data: &[u8], aCopy: bool, aTakeOwnership: bool) -> Result<(), SoloudError> {
+            fn load_mem_ex( &mut self, data: &[u8], copy: bool, take_ownership: bool) -> Result<(), SoloudError> {
                 unsafe {
-                    let ret = soloud_sys::soloud::#loadMemEx(self._inner, data.as_ptr(), data.len() as u32, aCopy as i32, aTakeOwnership as i32);
+                    let ret = soloud_sys::soloud::#loadMemEx(self._inner, data.as_ptr(), data.len() as u32, copy as i32, take_ownership as i32);
                     if ret != 0 {
                         Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
                     } else {

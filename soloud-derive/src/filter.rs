@@ -14,8 +14,6 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
     let getParamType = Ident::new(format!("{}_{}", name_str, "getParamType").as_str(), name.span());
     let getParamMax = Ident::new(format!("{}_{}", name_str, "getParamMax").as_str(), name.span());
     let getParamMin = Ident::new(format!("{}_{}", name_str, "getParamMin").as_str(), name.span());
-    let setParams = Ident::new(format!("{}_{}", name_str, "setParams").as_str(), name.span());
-    let setParamsEx = Ident::new(format!("{}_{}", name_str, "setParamsEx").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl FilterExt for #name {
@@ -40,9 +38,9 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
             }
         
         
-            fn param_name( &mut self, aParamIndex: u32) -> Option<String> {
+            fn param_name( &mut self, param_idx: u32) -> Option<String> {
                 unsafe {
-                    let ptr = soloud_sys::soloud::#getParamName(self._inner, aParamIndex);
+                    let ptr = soloud_sys::soloud::#getParamName(self._inner, param_idx);
                     if ptr.is_null() {
                         None
                     } else {
@@ -52,23 +50,23 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
             }
         
         
-            fn param_type( &mut self, aParamIndex: u32) -> ParamType {
+            fn param_type( &mut self, param_idx: u32) -> ParamType {
                 unsafe {
-                    std::mem::transmute(soloud_sys::soloud::#getParamType(self._inner, aParamIndex))
+                    std::mem::transmute(soloud_sys::soloud::#getParamType(self._inner, param_idx))
                 }
             }
         
         
-            fn param_max(&mut self, aParamIndex: u32) -> f32 {
+            fn param_max(&mut self, param_idx: u32) -> f32 {
                 unsafe {
-                    soloud_sys::soloud::#getParamMax(self._inner, aParamIndex)
+                    soloud_sys::soloud::#getParamMax(self._inner, param_idx)
                 }
             }
         
         
-            fn param_min(&mut self, aParamIndex: u32) -> f32 {
+            fn param_min(&mut self, param_idx: u32) -> f32 {
                 unsafe {
-                    soloud_sys::soloud::#getParamMin(self._inner, aParamIndex)
+                    soloud_sys::soloud::#getParamMin(self._inner, param_idx)
                 }
             }
         }

@@ -14,9 +14,9 @@ pub struct WaveShaperFilter {
 }
 
 impl WaveShaperFilter {
-    pub fn set_params(&mut self, aAmount: f32) -> Result<(), SoloudError> {
+    pub fn set_params(&mut self, amount: f32) -> Result<(), SoloudError> {
         unsafe {
-            let ret = soloud_sys::soloud::WaveShaperFilter_setParams(self._inner, aAmount);
+            let ret = soloud_sys::soloud::WaveShaperFilter_setParams(self._inner, amount);
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {

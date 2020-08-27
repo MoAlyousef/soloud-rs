@@ -24,9 +24,9 @@ pub struct BiquadResonantFilter {
 }
 
 impl BiquadResonantFilter {
-    pub fn set_params(&mut self, aType: BiquadResonantFilterType, aFrequency: f32, aResonance: f32) -> Result<(), SoloudError> {
+    pub fn set_params(&mut self, filter_type: BiquadResonantFilterType, frequency: f32, resonance: f32) -> Result<(), SoloudError> {
         unsafe {
-            let ret = soloud_sys::soloud::BiquadResonantFilter_setParams(self._inner, aType as i32, aFrequency, aResonance);
+            let ret = soloud_sys::soloud::BiquadResonantFilter_setParams(self._inner, filter_type as i32, frequency, resonance);
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {

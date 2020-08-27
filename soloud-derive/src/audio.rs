@@ -76,83 +76,83 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
                 #name { _inner: ptr }
             }
 
-            fn set_volume(&mut self, aVolume: f32) {
+            fn set_volume(&mut self, volume: f32) {
                 unsafe {
-                    soloud_sys::soloud::#setVolume(self._inner, aVolume)
+                    soloud_sys::soloud::#setVolume(self._inner, volume)
                 }
             }
 
-            fn set_looping(&mut self, aLoop: bool) {
+            fn set_looping(&mut self, flag: bool) {
                 unsafe {
-                    soloud_sys::soloud::#setLooping(self._inner, aLoop as i32)
+                    soloud_sys::soloud::#setLooping(self._inner, flag as i32)
                 }
             }
 
-            fn set_auto_stop(&mut self, aAutoStop: bool) {
+            fn set_auto_stop(&mut self, flag: bool) {
                 unsafe {
-                    soloud_sys::soloud::#setAutoStop(self._inner, aAutoStop as i32)
+                    soloud_sys::soloud::#setAutoStop(self._inner, flag as i32)
                 }
             }
 
-            fn set_3d_min_max_distance(&mut self, aMinDistance: f32, aMaxDistance: f32) {
+            fn set_3d_min_max_distance(&mut self, min_distance: f32, max_distance: f32) {
                 unsafe {
-                    soloud_sys::soloud::#set3dMinMaxDistance(self._inner, aMinDistance, aMaxDistance)
+                    soloud_sys::soloud::#set3dMinMaxDistance(self._inner, min_distance, max_distance)
                 }
             }
 
-            fn set_3d_attenuation(&mut self,aAttenuationModel: AttenuationModels,aAttenuationRolloffFactor: f32) {
+            fn set_3d_attenuation(&mut self, model: AttenuationModel, rolloff_factor: f32) {
                 unsafe {
-                    soloud_sys::soloud::#set3dAttenuation(self._inner, aAttenuationModel as u32, aAttenuationRolloffFactor)
+                    soloud_sys::soloud::#set3dAttenuation(self._inner, model as u32, rolloff_factor)
                 }
             }
 
-            fn set_3d_doppler_factor(&mut self, aDopplerFactor: f32) {
+            fn set_3d_doppler_factor(&mut self, doppler_factor: f32) {
                 unsafe {
-                    soloud_sys::soloud::#set3dDopplerFactor(self._inner, aDopplerFactor)
+                    soloud_sys::soloud::#set3dDopplerFactor(self._inner, doppler_factor)
                 }
             }
 
-            fn set_3d_listener_relative(&mut self, aListenerRelative: bool) {
+            fn set_3d_listener_relative(&mut self, flag: bool) {
                 unsafe {
-                    soloud_sys::soloud::#set3dListenerRelative(self._inner, aListenerRelative as i32)
+                    soloud_sys::soloud::#set3dListenerRelative(self._inner, flag as i32)
                 }
             }
 
-            fn set_3d_distance_delay(&mut self, aDistanceDelay: i32) {
+            fn set_3d_distance_delay(&mut self, distance_delay: i32) {
                 unsafe {
-                    soloud_sys::soloud::#set3dDistanceDelay(self._inner, aDistanceDelay)
+                    soloud_sys::soloud::#set3dDistanceDelay(self._inner, distance_delay)
                 }
             }
 
-            fn set_3d_collider(&mut self, aCollider: Option<&AudioCollider>) {
-                let aCollider = match aCollider {
+            fn set_3d_collider(&mut self, collider: Option<&AudioCollider>) {
+                let collider = match collider {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
                 };
                 unsafe {
-                    soloud_sys::soloud::#set3dCollider(self._inner, aCollider)
+                    soloud_sys::soloud::#set3dCollider(self._inner, collider)
                 }
             }
 
-            fn set_3d_attenuator(&mut self, aAttenuator: Option<&AudioAttenuator>) {
-                let aAttenuator = match aAttenuator {
+            fn set_3d_attenuator(&mut self, attenuator: Option<&AudioAttenuator>) {
+                let attenuator = match attenuator {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
                 };
                 unsafe {
-                    soloud_sys::soloud::#set3dAttenuator(self._inner, aAttenuator)
+                    soloud_sys::soloud::#set3dAttenuator(self._inner, attenuator)
                 }
             }
 
-            fn set_inaudible_behavior(&mut self,aMustTick: bool,aKill: bool) {
+            fn set_inaudible_behavior(&mut self, must_tick: bool, kill: bool) {
                 unsafe {
-                    soloud_sys::soloud::#setInaudibleBehavior(self._inner,aMustTick as i32,aKill as i32)
+                    soloud_sys::soloud::#setInaudibleBehavior(self._inner, must_tick as i32, kill as i32)
                 }
             }
 
-            fn set_loop_point(&mut self, aLoopPoint: f64) {
+            fn set_loop_point(&mut self, loop_point: f64) {
                 unsafe {
-                    soloud_sys::soloud::#setLoopPoint(self._inner, aLoopPoint)
+                    soloud_sys::soloud::#setLoopPoint(self._inner, loop_point)
                 }
             }
 
@@ -162,13 +162,13 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_filter<F: FilterExt>(&mut self, aFilterId: u32, aFilter: Option<&F>) {
-                let aFilter = match aFilter {
+            fn set_filter<F: FilterExt>(&mut self, filter_id: u32, filter: Option<&F>) {
+                let filter = match filter {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
                 };
                 unsafe {
-                    soloud_sys::soloud::#setFilter(self._inner, aFilterId, aFilter)
+                    soloud_sys::soloud::#setFilter(self._inner, filter_id, filter)
                 }
             }
 

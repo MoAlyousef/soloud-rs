@@ -1,15 +1,9 @@
 #![recursion_limit = "256"]
-#![allow(unused_imports)]
-#![allow(unused_variables)]
-#![allow(non_camel_case_types)]
-#![allow(dead_code)]
-#![allow(non_upper_case_globals)]
 #![allow(non_snake_case)]
 
 extern crate proc_macro;
 extern crate syn;
-#[macro_use]
-extern crate quote;
+
 
 mod audio;
 mod load;
