@@ -9,11 +9,26 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
 
     let destroy = Ident::new(format!("{}_{}", name_str, "destroy").as_str(), name.span());
     let create = Ident::new(format!("{}_{}", name_str, "create").as_str(), name.span());
-    let getParamCount = Ident::new(format!("{}_{}", name_str, "getParamCount").as_str(), name.span());
-    let getParamName = Ident::new(format!("{}_{}", name_str, "getParamName").as_str(), name.span());
-    let getParamType = Ident::new(format!("{}_{}", name_str, "getParamType").as_str(), name.span());
-    let getParamMax = Ident::new(format!("{}_{}", name_str, "getParamMax").as_str(), name.span());
-    let getParamMin = Ident::new(format!("{}_{}", name_str, "getParamMin").as_str(), name.span());
+    let getParamCount = Ident::new(
+        format!("{}_{}", name_str, "getParamCount").as_str(),
+        name.span(),
+    );
+    let getParamName = Ident::new(
+        format!("{}_{}", name_str, "getParamName").as_str(),
+        name.span(),
+    );
+    let getParamType = Ident::new(
+        format!("{}_{}", name_str, "getParamType").as_str(),
+        name.span(),
+    );
+    let getParamMax = Ident::new(
+        format!("{}_{}", name_str, "getParamMax").as_str(),
+        name.span(),
+    );
+    let getParamMin = Ident::new(
+        format!("{}_{}", name_str, "getParamMin").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl FilterExt for #name {
@@ -30,15 +45,17 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
-            
+
             fn param_count(&mut self) -> i32 {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#getParamCount(self._inner)
                 }
             }
-        
-        
+
+
             fn param_name( &mut self, param_idx: u32) -> Option<String> {
+                assert!(!self._inner.is_null());
                 unsafe {
                     let ptr = soloud_sys::soloud::#getParamName(self._inner, param_idx);
                     if ptr.is_null() {
@@ -48,23 +65,26 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
-        
-        
+
+
             fn param_type( &mut self, param_idx: u32) -> ParamType {
+                assert!(!self._inner.is_null());
                 unsafe {
                     std::mem::transmute(soloud_sys::soloud::#getParamType(self._inner, param_idx))
                 }
             }
-        
-        
+
+
             fn param_max(&mut self, param_idx: u32) -> f32 {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#getParamMax(self._inner, param_idx)
                 }
             }
-        
-        
+
+
             fn param_min(&mut self, param_idx: u32) -> f32 {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#getParamMin(self._inner, param_idx)
                 }

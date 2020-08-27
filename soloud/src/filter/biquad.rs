@@ -1,5 +1,5 @@
-use crate::prelude::*;
 use super::ParamType;
+use crate::prelude::*;
 
 #[repr(u32)]
 #[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
@@ -24,9 +24,20 @@ pub struct BiquadResonantFilter {
 }
 
 impl BiquadResonantFilter {
-    pub fn set_params(&mut self, filter_type: BiquadResonantFilterType, frequency: f32, resonance: f32) -> Result<(), SoloudError> {
+    pub fn set_params(
+        &mut self,
+        filter_type: BiquadResonantFilterType,
+        frequency: f32,
+        resonance: f32,
+    ) -> Result<(), SoloudError> {
+        assert!(!self._inner.is_null());
         unsafe {
-            let ret = soloud_sys::soloud::BiquadResonantFilter_setParams(self._inner, filter_type as i32, frequency, resonance);
+            let ret = soloud_sys::soloud::BiquadResonantFilter_setParams(
+                self._inner,
+                filter_type as i32,
+                frequency,
+                resonance,
+            );
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {

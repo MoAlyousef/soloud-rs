@@ -17,6 +17,7 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl LoadExt for #name {
             fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError> {
+                assert!(!self._inner.is_null());
                 unsafe {
                     let path = std::ffi::CString::new(path.to_str().unwrap()).unwrap();
                     let ret = soloud_sys::soloud::#load(self._inner, path.as_ptr());
@@ -29,6 +30,7 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn load_mem( &mut self, data: &[u8]) -> Result<(), SoloudError> {
+                assert!(!self._inner.is_null());
                 unsafe {
                     let ret = soloud_sys::soloud::#loadMem(self._inner, data.as_ptr(), data.len() as u32);
                     if ret != 0 {
@@ -40,6 +42,7 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn load_mem_ex( &mut self, data: &[u8], copy: bool, take_ownership: bool) -> Result<(), SoloudError> {
+                assert!(!self._inner.is_null());
                 unsafe {
                     let ret = soloud_sys::soloud::#loadMemEx(self._inner, data.as_ptr(), data.len() as u32, copy as i32, take_ownership as i32);
                     if ret != 0 {

@@ -77,48 +77,56 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_volume(&mut self, volume: f32) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#setVolume(self._inner, volume)
                 }
             }
 
             fn set_looping(&mut self, flag: bool) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#setLooping(self._inner, flag as i32)
                 }
             }
 
             fn set_auto_stop(&mut self, flag: bool) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#setAutoStop(self._inner, flag as i32)
                 }
             }
 
             fn set_3d_min_max_distance(&mut self, min_distance: f32, max_distance: f32) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#set3dMinMaxDistance(self._inner, min_distance, max_distance)
                 }
             }
 
             fn set_3d_attenuation(&mut self, model: AttenuationModel, rolloff_factor: f32) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#set3dAttenuation(self._inner, model as u32, rolloff_factor)
                 }
             }
 
             fn set_3d_doppler_factor(&mut self, doppler_factor: f32) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#set3dDopplerFactor(self._inner, doppler_factor)
                 }
             }
 
             fn set_3d_listener_relative(&mut self, flag: bool) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#set3dListenerRelative(self._inner, flag as i32)
                 }
             }
 
             fn set_3d_distance_delay(&mut self, distance_delay: i32) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#set3dDistanceDelay(self._inner, distance_delay)
                 }
@@ -129,6 +137,7 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
                 };
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#set3dCollider(self._inner, collider)
                 }
@@ -139,24 +148,28 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
                 };
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#set3dAttenuator(self._inner, attenuator)
                 }
             }
 
             fn set_inaudible_behavior(&mut self, must_tick: bool, kill: bool) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#setInaudibleBehavior(self._inner, must_tick as i32, kill as i32)
                 }
             }
 
             fn set_loop_point(&mut self, loop_point: f64) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#setLoopPoint(self._inner, loop_point)
                 }
             }
 
             fn loop_point(&self) -> f64 {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#getLoopPoint(self._inner)
                 }
@@ -167,12 +180,14 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
                     Some(v) => v.inner(),
                     None => std::ptr::null_mut(),
                 };
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#setFilter(self._inner, filter_id, filter)
                 }
             }
 
             fn stop(&mut self) {
+                assert!(!self._inner.is_null());
                 unsafe {
                     soloud_sys::soloud::#stop(self._inner)
                 }

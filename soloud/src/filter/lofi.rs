@@ -1,5 +1,5 @@
-use crate::prelude::*;
 use super::ParamType;
+use crate::prelude::*;
 
 #[repr(u32)]
 #[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
@@ -16,6 +16,7 @@ pub struct LofiFilter {
 
 impl LofiFilter {
     pub fn set_params(&mut self, samplerate: f32, bit_depth: f32) -> Result<(), SoloudError> {
+        assert!(!self._inner.is_null());
         unsafe {
             let ret = soloud_sys::soloud::LofiFilter_setParams(self._inner, samplerate, bit_depth);
             if ret != 0 {

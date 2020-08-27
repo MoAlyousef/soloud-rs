@@ -1,5 +1,5 @@
-use crate::prelude::*;
 use super::ParamType;
+use crate::prelude::*;
 
 #[derive(FilterExt)]
 pub struct FFTFilter {

@@ -1,5 +1,5 @@
-use crate::prelude::*;
 use super::ParamType;
+use crate::prelude::*;
 
 #[repr(u32)]
 #[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
@@ -15,6 +15,7 @@ pub struct WaveShaperFilter {
 
 impl WaveShaperFilter {
     pub fn set_params(&mut self, amount: f32) -> Result<(), SoloudError> {
+        assert!(!self._inner.is_null());
         unsafe {
             let ret = soloud_sys::soloud::WaveShaperFilter_setParams(self._inner, amount);
             if ret != 0 {

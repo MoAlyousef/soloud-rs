@@ -14,12 +14,12 @@ pub enum SoloudError {
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum SoloudErrorKind {
     InvalidParemeter = 1, // Some parameter is invalid
-    FileNotFound = 2,    // File not found
-    FileLoadFailed = 3,  // File found, but could not be loaded
-    DllNotFound = 4,     // DLL not found, or wrong DLL
-    OutOfMemory = 5,     // Out of memory
-    NotImplemented = 6,  // Feature not implemented
-    UnknownError = 7,    // Other error
+    FileNotFound = 2,     // File not found
+    FileLoadFailed = 3,   // File found, but could not be loaded
+    DllNotFound = 4,      // DLL not found, or wrong DLL
+    OutOfMemory = 5,      // Out of memory
+    NotImplemented = 6,   // Feature not implemented
+    UnknownError = 7,     // Other error
 }
 
 impl SoloudErrorKind {
@@ -63,12 +63,11 @@ impl From<std::ffi::NulError> for SoloudError {
 
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
-pub enum SoloudFlags
-{
+pub enum SoloudFlags {
     ClipRoundoff = 1,
     EnableVisualization = 2,
     LeftHanded3D = 4,
-    NoFpuRegisterChange = 8
+    NoFpuRegisterChange = 8,
 }
 
 impl std::ops::BitOr for SoloudFlags {
@@ -148,11 +147,7 @@ pub unsafe trait AudioExt {
 
     fn set_3d_min_max_distance(&mut self, min_distance: f32, max_distance: f32);
 
-    fn set_3d_attenuation(
-        &mut self,
-        model: AttenuationModel,
-        rolloff_factor: f32,
-    );
+    fn set_3d_attenuation(&mut self, model: AttenuationModel, rolloff_factor: f32);
 
     fn set_3d_doppler_factor(&mut self, doppler_factor: f32);
 
@@ -180,26 +175,30 @@ pub unsafe trait AudioExt {
 pub unsafe trait LoadExt {
     fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError>;
 
-    fn load_mem( &mut self, data: &[u8]) -> Result<(), SoloudError>;
+    fn load_mem(&mut self, data: &[u8]) -> Result<(), SoloudError>;
 
-    fn load_mem_ex( &mut self, data: &[u8], copy: bool, take_ownershipt: bool) -> Result<(), SoloudError>;
+    fn load_mem_ex(
+        &mut self,
+        data: &[u8],
+        copy: bool,
+        take_ownershipt: bool,
+    ) -> Result<(), SoloudError>;
 }
 
 pub unsafe trait FilterExt {
     fn inner(&self) -> *mut *mut std::os::raw::c_void;
-    
+
     fn default() -> Self;
-    
+
     fn param_count(&mut self) -> i32;
 
-    fn param_name( &mut self, param_idx: u32) -> Option<String>;
+    fn param_name(&mut self, param_idx: u32) -> Option<String>;
 
-    fn param_type( &mut self, param_idx: u32) -> crate::filter::ParamType;
+    fn param_type(&mut self, param_idx: u32) -> crate::filter::ParamType;
 
     fn param_max(&mut self, param_idx: u32) -> f32;
 
     fn param_min(&mut self, param_idx: u32) -> f32;
-
 }
 
 pub trait FilterAttr {

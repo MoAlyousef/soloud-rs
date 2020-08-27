@@ -4,15 +4,14 @@
 extern crate proc_macro;
 extern crate syn;
 
-
 mod audio;
-mod load;
 mod filter;
+mod load;
 
 use crate::audio::impl_audio_trait;
-use crate::load::impl_load_trait;
 use crate::filter::impl_filter_trait;
 use crate::filter::impl_filter_type_trait;
+use crate::load::impl_load_trait;
 
 use proc_macro::TokenStream;
 

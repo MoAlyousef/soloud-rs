@@ -20,6 +20,7 @@ pub struct Sfxr {
 
 impl Sfxr {
     pub fn load_preset(&mut self, preset: SfxrPreset, rand_seed: i32) -> Result<(), SoloudError> {
+        assert!(!self._inner.is_null());
         unsafe {
             let ret = ffi::Sfxr_loadPreset(self._inner, preset as i32, rand_seed);
             if ret != 0 {

@@ -1,5 +1,5 @@
-use crate::prelude::*;
 use super::ParamType;
+use crate::prelude::*;
 
 #[repr(u32)]
 #[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
@@ -7,7 +7,7 @@ pub enum EchoFilterAttr {
     Wet = 0,
     Delay,
     Decay,
-    Filter
+    Filter,
 }
 
 #[derive(FilterExt)]
@@ -17,6 +17,7 @@ pub struct EchoFilter {
 
 impl EchoFilter {
     pub fn set_params(&mut self, delay: f32) -> Result<(), SoloudError> {
+        assert!(!self._inner.is_null());
         unsafe {
             let ret = soloud_sys::soloud::EchoFilter_setParams(self._inner, delay);
             if ret != 0 {
@@ -27,8 +28,13 @@ impl EchoFilter {
         }
     }
 
-
-    pub fn set_params_ex(&mut self, delay: f32, decay: f32, filter: f32) -> Result<(), SoloudError> {
+    pub fn set_params_ex(
+        &mut self,
+        delay: f32,
+        decay: f32,
+        filter: f32,
+    ) -> Result<(), SoloudError> {
+        assert!(!self._inner.is_null());
         unsafe {
             let ret = soloud_sys::soloud::EchoFilter_setParamsEx(self._inner, delay, decay, filter);
             if ret != 0 {

@@ -8,6 +8,7 @@ pub struct Speech {
 
 impl Speech {
     pub fn set_text(&mut self, txt: &str) -> Result<(), SoloudError> {
+        assert!(!self._inner.is_null());
         unsafe {
             let txt = std::ffi::CString::new(txt).unwrap();
             let ret = ffi::Speech_setText(self._inner, txt.as_ptr());
