@@ -890,7 +890,7 @@ impl Soloud {
     }
 
     /// Get 3d sound speed
-    pub fn 3d_sound_speed(&self) -> f32 {
+    pub fn get_3d_sound_speed(&self) -> f32 {
         assert!(!self._inner.is_null());
         unsafe { ffi::Soloud_get3dSoundSpeed(self._inner) }
     }
