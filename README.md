@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/crates/l/soloud.svg)](https://github.com/MoAlyousef/soloud-rs/blob/master/LICENSE)
 [![Build](https://github.com/MoAlyousef/soloud-rs/workflows/Build/badge.svg)](https://github.com/MoAlyousef/soloud-rs/actions)
 
-Rust bindings for the soloud audio engine library.
+A crossplatform Rust bindings for the soloud audio engine library.
 
 Supported formats: wav, mp3, ogg. The library also comes with a speech synthesizer.
 
@@ -21,7 +21,7 @@ Still pre-alpha.
 soloud = "0.1"
 ```
 
-Or to use the latest developments:
+Or to use the git repo:
 ```toml
 [dependencies]
 soloud = { git = "https://github.com/moalyousef/soloud-rs" }
@@ -120,5 +120,3 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ## Dependencies
 A Rust compiler, C++ compiler, Cargo, CMake and git (all these need to be in your PATH). This crate uses the miniaudio backend which assumes default sound drivers are functional.
 
-## Contributions
-Contributions are welcome. Bug fixes, typo fixes, code improvements and examples.
