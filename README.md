@@ -1,5 +1,11 @@
 # soloud-rs
 
+
+[![Documentation](https://docs.rs/soloud/badge.svg)](https://docs.rs/soloud)
+[![Crates.io](https://img.shields.io/crates/v/soloud.svg)](https://crates.io/crates/soloud)
+[![License](https://img.shields.io/crates/l/soloud.svg)](https://github.com/MoAlyousef/soloud-rs/blob/master/LICENSE)
+[![Build](https://github.com/MoAlyousef/soloud-rs/workflows/Build/badge.svg)](https://github.com/MoAlyousef/soloud-rs/actions)
+
 Rust bindings for the soloud audio engine library.
 
 Supported formats: wav, mp3, ogg. The library also comes with a speech synthesizer.
