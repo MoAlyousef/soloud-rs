@@ -54,7 +54,7 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
             }
 
 
-            fn param_name( &mut self, param_idx: u32) -> Option<String> {
+            fn param_name(&mut self, param_idx: u32) -> Option<String> {
                 assert!(!self._inner.is_null());
                 unsafe {
                     let ptr = soloud_sys::soloud::#getParamName(self._inner, param_idx);
@@ -67,7 +67,7 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
             }
 
 
-            fn param_type( &mut self, param_idx: u32) -> ParamType {
+            fn param_type(&mut self, param_idx: u32) -> ParamType {
                 assert!(!self._inner.is_null());
                 unsafe {
                     std::mem::transmute(soloud_sys::soloud::#getParamType(self._inner, param_idx))
