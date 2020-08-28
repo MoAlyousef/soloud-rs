@@ -44,7 +44,7 @@
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
-//!     sl.deinit();
+//!     sl
 //!
 //!     Ok(())
 //! }
@@ -80,7 +80,7 @@
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
-//!     sl.deinit();
+//!     sl
 //!    
 //!     Ok(())
 //! }
@@ -105,7 +105,7 @@
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
-//!     sl.deinit();
+//!     sl
 //!
 //!     Ok(())
 //! }
@@ -128,7 +128,6 @@ use soloud_sys::soloud as ffi;
 
 pub type Handle = u32;
 
-#[derive(Clone)]
 pub struct Soloud {
     _inner: *mut ffi::Soloud,
 }
@@ -439,7 +438,7 @@ impl Soloud {
     }
 
     /// Deinitialize the soloud engine
-    pub fn deinit(&mut self) {
+    pub(crate) fn deinit(&mut self) {
         assert!(!self._inner.is_null());
         unsafe {
             ffi::Soloud_deinit(self._inner);
@@ -1188,5 +1187,14 @@ impl Soloud {
     pub fn set_global_filter(&mut self, filter_id: u32, filter: impl FilterExt) {
         assert!(!self._inner.is_null());
         unsafe { ffi::Soloud_setGlobalFilter(self._inner, filter_id, filter.inner()) }
+    }
+}
+
+
+impl Drop for Soloud {
+    fn drop(&mut self) {
+        if !self._inner.is_null() {
+            self.deinit()
+        }
     }
 }

@@ -8,9 +8,7 @@
 
 A crossplatform Rust bindings for the soloud audio engine library.
 
-Supported formats: wav, mp3, ogg. The library also comes with a speech synthesizer.
-
-Still pre-alpha.
+Supported formats: wav, mp3, ogg, flac. The library also comes with a speech synthesizer.
 
 - The official soloud [website](https://sol.gfxile.net/soloud/index.html)
 - The official soloud [repo](https://github.com/jarikomppa/soloud)
@@ -50,8 +48,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         std::thread::sleep(std::time::Duration::from_millis(100));
     }
 
-    sl.deinit();
-
     Ok(())
 }
 ```
@@ -85,8 +81,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     while sl.active_voice_count() > 0 {
         std::thread::sleep(std::time::Duration::from_millis(100));
     }
-
-    sl.deinit();
     
     Ok(())
 }
@@ -111,11 +105,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         std::thread::sleep(std::time::Duration::from_millis(100));
     }
 
-    sl.deinit();
-
     Ok(())
 }
 ```
+
+The examples can be found in the soloud/examples directory. They can be run using:
+```
+$ cargo run --example simple
+$ cargo run --example speech
+$ cargo run --example filter
+$ cargo run --example load_mem
+```
+You will need to have valid "sample.wav" and "Recording.mp3" audio files in the project root. Or you can change the paths to point to any supported audio file.
+
+There is also a demo file in the demos directory showing the use of this crate with a gui library like fltk.
 
 ## Dependencies
 A Rust compiler, C++ compiler, Cargo, CMake and git (all these need to be in your PATH). This crate uses the miniaudio backend which assumes default sound drivers are functional.
