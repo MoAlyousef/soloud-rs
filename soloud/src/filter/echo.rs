@@ -18,7 +18,6 @@ pub struct EchoFilter {
 impl EchoFilter {
     /// Set filter params
     pub fn set_params(&mut self, delay: f32) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
             let ret = soloud_sys::soloud::EchoFilter_setParams(self._inner, delay);
             if ret != 0 {
@@ -36,7 +35,6 @@ impl EchoFilter {
         decay: f32,
         filter: f32,
     ) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
             let ret = soloud_sys::soloud::EchoFilter_setParamsEx(self._inner, delay, decay, filter);
             if ret != 0 {

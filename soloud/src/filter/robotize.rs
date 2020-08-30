@@ -17,7 +17,6 @@ pub struct RobotizeFilter {
 impl RobotizeFilter {
     /// Set filter params
     pub fn set_params(&mut self, freq: f32, wave_form: WaveForm) {
-        assert!(!self._inner.is_null());
         unsafe { soloud_sys::soloud::RobotizeFilter_setParams(self._inner, freq, wave_form as i32) }
     }
 }

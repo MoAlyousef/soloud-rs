@@ -1,4 +1,5 @@
 mod ay;
+mod bus;
 mod monotone;
 mod noise;
 mod openmpt;
@@ -12,6 +13,7 @@ mod wav;
 mod wavstream;
 
 pub use ay::*;
+pub use bus::*;
 pub use monotone::*;
 pub use noise::*;
 pub use openmpt::*;

@@ -549,9 +549,9 @@ impl Soloud {
     }
 
     /// Get main resampler
-    pub fn main_resampler(&self) -> u32 {
+    pub fn main_resampler(&self) -> Resampler {
         assert!(!self._inner.is_null());
-        unsafe { ffi::Soloud_getMainResampler(self._inner) }
+        unsafe { std::mem::transmute(ffi::Soloud_getMainResampler(self._inner)) }
     }
 
     /// Get global volume
@@ -635,9 +635,9 @@ impl Soloud {
     }
 
     /// Set main resampler
-    pub fn set_main_resampler(&mut self, resampler: u32) {
+    pub fn set_main_resampler(&mut self, resampler: Resampler) {
         assert!(!self._inner.is_null());
-        unsafe { ffi::Soloud_setMainResampler(self._inner, resampler) }
+        unsafe { ffi::Soloud_setMainResampler(self._inner, resampler as u32) }
     }
 
     /// Set whether a handle pauses
@@ -1189,7 +1189,6 @@ impl Soloud {
         unsafe { ffi::Soloud_setGlobalFilter(self._inner, filter_id, filter.inner()) }
     }
 }
-
 
 impl Drop for Soloud {
     fn drop(&mut self) {

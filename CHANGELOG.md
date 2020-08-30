@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## [0.1.5] - 2020-08-30
 ### Changes
-- (None)
+- Add Bus sound source.
+- Complete implementation of audio sources.
 
 ## [0.1.4] - 2020-08-28
 ### Changes

@@ -92,6 +92,14 @@ pub enum WaveForm {
     FSaw,
 }
 
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
+pub enum Resampler {
+    Point,
+    Linear,
+    Catmullrom,
+}
+
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
 pub enum AttenuationModel {

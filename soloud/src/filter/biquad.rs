@@ -31,7 +31,6 @@ impl BiquadResonantFilter {
         frequency: f32,
         resonance: f32,
     ) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
             let ret = soloud_sys::soloud::BiquadResonantFilter_setParams(
                 self._inner,

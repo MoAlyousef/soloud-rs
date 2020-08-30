@@ -47,7 +47,7 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn param_count(&mut self) -> i32 {
-                assert!(!self._inner.is_null());
+                
                 unsafe {
                     soloud_sys::soloud::#getParamCount(self._inner)
                 }
@@ -55,7 +55,7 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
 
 
             fn param_name(&mut self, param_idx: u32) -> Option<String> {
-                assert!(!self._inner.is_null());
+                
                 unsafe {
                     let ptr = soloud_sys::soloud::#getParamName(self._inner, param_idx);
                     if ptr.is_null() {
@@ -68,7 +68,7 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
 
 
             fn param_type(&mut self, param_idx: u32) -> ParamType {
-                assert!(!self._inner.is_null());
+                
                 unsafe {
                     std::mem::transmute(soloud_sys::soloud::#getParamType(self._inner, param_idx))
                 }
@@ -76,7 +76,7 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
 
 
             fn param_max(&mut self, param_idx: u32) -> f32 {
-                assert!(!self._inner.is_null());
+                
                 unsafe {
                     soloud_sys::soloud::#getParamMax(self._inner, param_idx)
                 }
@@ -84,7 +84,7 @@ pub fn impl_filter_trait(ast: &DeriveInput) -> TokenStream {
 
 
             fn param_min(&mut self, param_idx: u32) -> f32 {
-                assert!(!self._inner.is_null());
+                
                 unsafe {
                     soloud_sys::soloud::#getParamMin(self._inner, param_idx)
                 }

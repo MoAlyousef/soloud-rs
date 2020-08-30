@@ -11,9 +11,9 @@ impl Wav {
     /// # Safety
     /// The data must be valid
     pub unsafe fn load_raw_wav_8(&mut self, data: &[u8]) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
-            let ret = ffi::Wav_loadRawWave8(self._inner, data.as_ptr() as *mut _, data.len() as u32);
+            let ret =
+                ffi::Wav_loadRawWave8(self._inner, data.as_ptr() as *mut _, data.len() as u32);
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {
@@ -31,7 +31,6 @@ impl Wav {
         samplerate: f32,
         channels: u32,
     ) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
             let ret = ffi::Wav_loadRawWave8Ex(
                 self._inner,
@@ -52,9 +51,9 @@ impl Wav {
     /// # Safety
     /// The data must be valid
     pub unsafe fn load_raw_wav_16(&mut self, data: &[i16]) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
-            let ret = ffi::Wav_loadRawWave16(self._inner, data.as_ptr() as *mut _, data.len() as u32);
+            let ret =
+                ffi::Wav_loadRawWave16(self._inner, data.as_ptr() as *mut _, data.len() as u32);
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {
@@ -72,7 +71,6 @@ impl Wav {
         samplerate: f32,
         channels: u32,
     ) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
             let ret = ffi::Wav_loadRawWave16Ex(
                 self._inner,
@@ -93,7 +91,6 @@ impl Wav {
     /// # Safety
     /// The data must be valid
     pub unsafe fn load_raw_wav(&mut self, data: &[f32]) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
             let ret = ffi::Wav_loadRawWave(self._inner, data.as_ptr() as *mut _, data.len() as u32);
             if ret != 0 {
@@ -115,7 +112,6 @@ impl Wav {
         copy: bool,
         take_ownership: bool,
     ) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
             let ret = ffi::Wav_loadRawWaveEx(
                 self._inner,
@@ -135,8 +131,7 @@ impl Wav {
     }
 
     /// Get the length of the Wav object
-    pub fn length(&mut self) -> f64 {
-        assert!(!self._inner.is_null());
+    pub fn length(&self) -> f64 {
         unsafe { ffi::Wav_getLength(self._inner) }
     }
 }

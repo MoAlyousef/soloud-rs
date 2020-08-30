@@ -15,7 +15,6 @@ impl FreeverbFilter {
         damp: f32,
         width: f32,
     ) -> Result<(), SoloudError> {
-        assert!(!self._inner.is_null());
         unsafe {
             let ret = soloud_sys::soloud::FreeverbFilter_setParams(
                 self._inner,
