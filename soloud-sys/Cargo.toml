@@ -19,7 +19,7 @@ readme = "../README.md"
 libc = "0.2.74"
 
 [build-dependencies]
-cmake = "^0.1.54"
+cmake = "^0.1.44"
 
 [features]
 use-ninja = []
