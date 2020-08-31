@@ -24,6 +24,7 @@ set(BACKEND_SRCS ${CMAKE_CURRENT_LIST_DIR}/soloud/src/backend/miniaudio/soloud_m
 
 set(SOLOUD_SRCS 
     ${CMAKE_CURRENT_LIST_DIR}/soloud_new.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/soloud_derives.cpp
     ${BACKEND_SRCS}
     ${CMAKE_CURRENT_LIST_DIR}/soloud/src/c_api/soloud_c.cpp
     ${AUDIOSOURCE}
@@ -38,3 +39,4 @@ target_compile_definitions(soloud PUBLIC "WITH_MINIAUDIO")
 install(TARGETS soloud
     DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
     )
+

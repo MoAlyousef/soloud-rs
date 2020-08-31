@@ -16,6 +16,8 @@ fn main() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=sys/CMakeLists.txt");
     println!("cargo:rerun-if-changed=sys/soloud_new.cpp");
+    println!("cargo:rerun-if-changed=sys/soloud_derives.h");
+    println!("cargo:rerun-if-changed=sys/soloud_derives.cpp");
 
     Command::new("git")
         .args(&["submodule", "update", "--init"])

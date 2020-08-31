@@ -9,7 +9,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     wav.load(&std::path::Path::new("sample.wav"))?;
 
     sl.play(&wav);
-    while sl.voice_count() > 0 {
+    while sl.voice_count() > 0 { // calls to play are non-blocking, so we put the thread to sleep
         std::thread::sleep(std::time::Duration::from_millis(100));
     }
 

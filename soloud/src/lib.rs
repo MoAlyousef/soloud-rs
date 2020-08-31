@@ -1188,6 +1188,20 @@ impl Soloud {
         assert!(!self._inner.is_null());
         unsafe { ffi::Soloud_setGlobalFilter(self._inner, filter_id, filter.inner()) }
     }
+
+    /// Get the inner pointer
+    /// # Safety
+    /// The pointer must remain valid
+    pub unsafe fn inner(&self) -> *mut ffi::Soloud {
+        self._inner
+    }
+
+    unsafe fn from_ptr(ptr: *mut std::os::raw::c_void) -> Soloud {
+        assert!(!ptr.is_null());
+        Soloud {
+            _inner: ptr as *mut ffi::Soloud,
+        }
+    }
 }
 
 impl Drop for Soloud {
