@@ -116,6 +116,7 @@
 pub mod audio;
 pub mod filter;
 pub mod prelude;
+pub mod effects;
 
 #[macro_use]
 extern crate soloud_derive;
@@ -1189,7 +1190,7 @@ impl Soloud {
         unsafe { ffi::Soloud_setGlobalFilter(self._inner, filter_id, filter.inner()) }
     }
 
-    /// Get the inner pointer
+    /// Get the inner pointer of the Soloud engine
     /// # Safety
     /// The pointer must remain valid
     pub unsafe fn inner(&self) -> *mut ffi::Soloud {

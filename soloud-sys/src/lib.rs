@@ -4,7 +4,6 @@
 #![allow(non_upper_case_globals)]
 
 pub mod soloud;
-pub mod soloud_derives;
 
 #[cfg(test)]
 mod tests {

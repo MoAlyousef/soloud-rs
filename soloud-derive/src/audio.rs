@@ -133,7 +133,7 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_3d_collider(&mut self, collider: Option<&AudioCollider>) {
-                let collider = match collider {
+                let mut collider = match collider {
                     Some(v) => unsafe { v.inner() },
                     None => std::ptr::null_mut(),
                 };
@@ -144,7 +144,7 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_3d_attenuator(&mut self, attenuator: Option<&AudioAttenuator>) {
-                let attenuator = match attenuator {
+                let mut attenuator = match attenuator {
                     Some(v) => unsafe { v.inner() },
                     None => std::ptr::null_mut(),
                 };

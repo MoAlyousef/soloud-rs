@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.6] - 2020-08-31
+### Changes
+- Add AudioAttenuator and AudioCollider overridable methods.
+
+
 ## [0.1.5] - 2020-08-30
 ### Changes
 - Add Bus sound source.

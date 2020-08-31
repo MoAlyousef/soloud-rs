@@ -1,2 +1,1 @@
-bindgen --use-core --ctypes-prefix libc soloud-sys/sys/soloud/include/soloud_c.h -o soloud-sys/src/soloud.rs
-bindgen --use-core --ctypes-prefix libc soloud-sys/sys/soloud_derives.h -o soloud-sys/src/soloud_derives.rs
+bindgen --use-core --ctypes-prefix libc soloud-sys/sys/soloud_derives.h -o soloud-sys/src/soloud.rs

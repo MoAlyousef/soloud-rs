@@ -1,24 +1,31 @@
 #pragma once
 
+#include "soloud/include/soloud_c.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void *AudioSourceInstance3dData_new(void *as);
+typedef void *AudioSourceInstance3dData;
 
-void AudioSourceInstance3dData_delete(void *inst);
+AudioSourceInstance3dData *AudioSourceInstance3dData_new(AudioSource *as);
 
-void *AudioCollider_new();
+void AudioSourceInstance3dData_delete(AudioSourceInstance3dData *inst);
 
-void AudioCollider_set_handler(void *self, float (*handler)(void *, void *, int, void *), void *data);
+AudioCollider *AudioCollider_new();
 
-void AudioCollider_delete(void *);
+void AudioCollider_set_handler(AudioCollider *self,
+                               float (*handler)(Soloud *, AudioSourceInstance3dData *, int, void *),
+                               void *data);
 
-void *AudioAttenuator_new();
+void AudioCollider_delete(AudioCollider *);
 
-void AudioAttenuator_set_handler(void *self, float (*handler)(float, float, float, float, void *), void *data);
+AudioAttenuator *AudioAttenuator_new();
 
-void AudioAttenuator_delete(void *);
+void AudioAttenuator_set_handler(AudioAttenuator *self,
+                                 float (*handler)(float, float, float, float, void *), void *data);
+
+void AudioAttenuator_delete(AudioAttenuator *);
 
 #ifdef __cplusplus
 }
