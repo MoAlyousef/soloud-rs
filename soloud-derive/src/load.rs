@@ -19,7 +19,7 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
             fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError> {
                 
                 unsafe {
-                    let path = std::ffi::CString::new(path.to_str().unwrap()).unwrap();
+                    let path = std::ffi::CString::new(path.to_str().ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?)?;
                     let ret = soloud_sys::soloud::#load(self._inner, path.as_ptr());
                     if ret != 0 {
                         Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))

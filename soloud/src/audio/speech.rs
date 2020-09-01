@@ -22,7 +22,7 @@ impl Speech {
     /// set speech text
     pub fn set_text(&mut self, txt: &str) -> Result<(), SoloudError> {
         unsafe {
-            let txt = std::ffi::CString::new(txt).unwrap();
+            let txt = std::ffi::CString::new(txt)?;
             let ret = ffi::Speech_setText(self._inner, txt.as_ptr());
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))

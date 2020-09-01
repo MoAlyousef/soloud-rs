@@ -15,7 +15,7 @@ pub enum SoloudError {
 #[repr(i32)]
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum SoloudErrorKind {
-    InvalidParemeter = 1, // Some parameter is invalid
+    InvalidParameter = 1, // Some parameter is invalid
     FileNotFound = 2,     // File not found
     FileLoadFailed = 3,   // File found, but could not be loaded
     DllNotFound = 4,      // DLL not found, or wrong DLL

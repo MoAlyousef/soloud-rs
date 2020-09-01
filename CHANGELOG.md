@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.8] - 2020-09-01
+### Changes
+- Fix typo in SoloudErrorKind.
+- Remove unwraps in internal code.
+
 ## [0.1.7] - 2020-09-01
 ### Changes
 - Remove effects module for now.

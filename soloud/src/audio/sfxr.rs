@@ -39,7 +39,7 @@ impl Sfxr {
     /// Load parameters from a file
     pub fn load_params(&mut self, path: &std::path::Path) -> Result<(), SoloudError> {
         unsafe {
-            let path = path.to_str().unwrap();
+            let path = path.to_str().ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?;
             let path = std::ffi::CString::new(path)?;
             let ret = ffi::Sfxr_loadParams(self._inner, path.as_ptr());
             if ret != 0 {
