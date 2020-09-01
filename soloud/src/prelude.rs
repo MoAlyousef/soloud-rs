@@ -1,4 +1,4 @@
-pub use crate::effects::*;
+// pub use crate::effects::*;
 use std::convert::From;
 use std::{fmt, io};
 use std::os::raw::*;
@@ -134,10 +134,10 @@ pub unsafe trait AudioExt {
     fn set_3d_listener_relative(&mut self, flag: bool);
     /// Set 3D distance delay
     fn set_3d_distance_delay(&mut self, delay: i32);
-    /// Set 3D collider
-    fn set_3d_collider(&mut self, collider: Option<&AudioCollider>);
-    /// Set 3D attenuator
-    fn set_3d_attenuator(&mut self, attenuator: Option<&AudioAttenuator>);
+    // /// Set 3D collider
+    // fn set_3d_collider(&mut self, collider: Option<&AudioCollider>);
+    // /// Set 3D attenuator
+    // fn set_3d_attenuator(&mut self, attenuator: Option<&AudioAttenuator>);
     /// Set inaudible behavior
     fn set_inaudible_behavior(&mut self, must_tick: bool, kill: bool);
     /// Set a loop point

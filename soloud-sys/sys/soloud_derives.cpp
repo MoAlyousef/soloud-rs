@@ -51,11 +51,11 @@ void AudioSourceInstance3dData_delete(AudioSourceInstance3dData *inst) {
     delete (SoLoud::AudioSourceInstance3dData *)inst;
 }
 
-AudioCollider *AudioCollider_new() {
-    return (AudioCollider *)new AudioCollider_Derived;
+AudioCollider AudioCollider_new() {
+    return (AudioCollider)new AudioCollider_Derived;
 }
 
-void AudioCollider_set_handler(AudioCollider *self,
+void AudioCollider_set_handler(AudioCollider self,
                                float (*handler)(Soloud *, AudioSourceInstance3dData *, int,
                                                 void *data),
                                void *data) {
@@ -63,21 +63,21 @@ void AudioCollider_set_handler(AudioCollider *self,
     ((AudioCollider_Derived *)self)->set_handler_data(data);
 }
 
-void AudioCollider_delete(AudioCollider *inst) {
+void AudioCollider_delete(AudioCollider inst) {
     delete (AudioCollider_Derived *)inst;
 }
 
-AudioAttenuator *AudioAttenuator_new() {
-    return (AudioAttenuator *)new AudioAttenuator_Derived;
+AudioAttenuator AudioAttenuator_new() {
+    return (AudioAttenuator)new AudioAttenuator_Derived;
 }
 
-void AudioAttenuator_set_handler(AudioAttenuator *self,
+void AudioAttenuator_set_handler(AudioAttenuator self,
                                  float (*handler)(float, float, float, float, void *data),
                                  void *data) {
-    ((AudioAttenuator_Derived *)self)->set_handler(handler);
+    ((AudioAttenuator_Derived *)self)->set_handler((AudioAttenuator_Derived::handler)handler);
     ((AudioAttenuator_Derived *)self)->set_handler_data(data);
 }
 
-void AudioAttenuator_delete(AudioAttenuator *inst) {
+void AudioAttenuator_delete(AudioAttenuator inst) {
     delete (AudioAttenuator_Derived *)inst;
 }

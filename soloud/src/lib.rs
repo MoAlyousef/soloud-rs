@@ -116,7 +116,7 @@
 pub mod audio;
 pub mod filter;
 pub mod prelude;
-pub mod effects;
+// pub mod effects;
 
 #[macro_use]
 extern crate soloud_derive;
@@ -1197,12 +1197,12 @@ impl Soloud {
         self._inner
     }
 
-    unsafe fn from_ptr(ptr: *mut std::os::raw::c_void) -> Soloud {
-        assert!(!ptr.is_null());
-        Soloud {
-            _inner: ptr as *mut ffi::Soloud,
-        }
-    }
+    // unsafe fn from_ptr(ptr: *mut std::os::raw::c_void) -> Soloud {
+    //     assert!(!ptr.is_null());
+    //     Soloud {
+    //         _inner: ptr as *mut ffi::Soloud,
+    //     }
+    // }
 }
 
 impl Drop for Soloud {

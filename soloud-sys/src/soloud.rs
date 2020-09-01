@@ -2364,19 +2364,19 @@ extern "C" {
 extern "C" {
     pub fn WavStream_stop(aWavStream: *mut WavStream);
 }
-pub type AudioSourceInstance3dData = *mut libc::c_void;
+pub type AudioSourceInstance3dData = libc::c_void;
 extern "C" {
-    pub fn AudioSourceInstance3dData_new(as_: *mut libc::c_void) -> *mut AudioSourceInstance3dData;
+    pub fn AudioSourceInstance3dData_new(as_: *mut AudioSource) -> *mut AudioSourceInstance3dData;
 }
 extern "C" {
     pub fn AudioSourceInstance3dData_delete(inst: *mut AudioSourceInstance3dData);
 }
 extern "C" {
-    pub fn AudioCollider_new() -> *mut AudioCollider;
+    pub fn AudioCollider_new() -> AudioCollider;
 }
 extern "C" {
     pub fn AudioCollider_set_handler(
-        self_: *mut libc::c_void,
+        self_: AudioCollider,
         handler: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut Soloud,
@@ -2389,14 +2389,14 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn AudioCollider_delete(arg1: *mut AudioCollider);
+    pub fn AudioCollider_delete(arg1: AudioCollider);
 }
 extern "C" {
-    pub fn AudioAttenuator_new() -> *mut AudioAttenuator;
+    pub fn AudioAttenuator_new() -> AudioAttenuator;
 }
 extern "C" {
     pub fn AudioAttenuator_set_handler(
-        self_: *mut libc::c_void,
+        self_: AudioAttenuator,
         handler: ::core::option::Option<
             unsafe extern "C" fn(
                 arg1: f32,
@@ -2410,5 +2410,5 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn AudioAttenuator_delete(arg1: *mut AudioAttenuator);
+    pub fn AudioAttenuator_delete(arg1: AudioAttenuator);
 }

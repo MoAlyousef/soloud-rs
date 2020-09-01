@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.1.7] - 2020-09-01
+### Changes
+- Remove effects module for now.
+
 ## [0.1.6] - 2020-08-31
 ### Changes
 - Add AudioAttenuator and AudioCollider overridable methods.

@@ -39,14 +39,14 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set3dDistanceDelay").as_str(),
         name.span(),
     );
-    let set3dCollider = Ident::new(
-        format!("{}_{}", name_str, "set3dCollider").as_str(),
-        name.span(),
-    );
-    let set3dAttenuator = Ident::new(
-        format!("{}_{}", name_str, "set3dAttenuator").as_str(),
-        name.span(),
-    );
+    // let set3dCollider = Ident::new(
+    //     format!("{}_{}", name_str, "set3dCollider").as_str(),
+    //     name.span(),
+    // );
+    // let set3dAttenuator = Ident::new(
+    //     format!("{}_{}", name_str, "set3dAttenuator").as_str(),
+    //     name.span(),
+    // );
     let setInaudibleBehavior = Ident::new(
         format!("{}_{}", name_str, "setInaudibleBehavior").as_str(),
         name.span(),
@@ -132,27 +132,27 @@ pub fn impl_audio_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_3d_collider(&mut self, collider: Option<&AudioCollider>) {
-                let mut collider = match collider {
-                    Some(v) => unsafe { v.inner() },
-                    None => std::ptr::null_mut(),
-                };
+            // fn set_3d_collider(&mut self, collider: Option<&AudioCollider>) {
+            //     let mut collider = match collider {
+            //         Some(v) => unsafe { v.inner() },
+            //         None => std::ptr::null_mut(),
+            //     };
                 
-                unsafe {
-                    soloud_sys::soloud::#set3dCollider(self._inner, collider)
-                }
-            }
+            //     unsafe {
+            //         soloud_sys::soloud::#set3dCollider(self._inner, &mut collider as *mut *mut _)
+            //     }
+            // }
 
-            fn set_3d_attenuator(&mut self, attenuator: Option<&AudioAttenuator>) {
-                let mut attenuator = match attenuator {
-                    Some(v) => unsafe { v.inner() },
-                    None => std::ptr::null_mut(),
-                };
+            // fn set_3d_attenuator(&mut self, attenuator: Option<&AudioAttenuator>) {
+            //     let mut attenuator = match attenuator {
+            //         Some(v) => unsafe { v.inner() },
+            //         None => std::ptr::null_mut(),
+            //     };
                 
-                unsafe {
-                    soloud_sys::soloud::#set3dAttenuator(self._inner, attenuator)
-                }
-            }
+            //     unsafe {
+            //         soloud_sys::soloud::#set3dAttenuator(self._inner, &mut attenuator as *mut *mut _)
+            //     }
+            // }
 
             fn set_inaudible_behavior(&mut self, must_tick: bool, kill: bool) {
                 

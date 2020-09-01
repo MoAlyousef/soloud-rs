@@ -10,14 +10,14 @@ impl AudioSourceInstance3dData {
     pub fn new(engine: &crate::Soloud) -> Self {
         unsafe {
             let ptr = ffi::AudioSourceInstance3dData_new(
-                engine.inner() as *mut c_void
+                engine.inner()
             );
             assert!(!ptr.is_null());
             AudioSourceInstance3dData { _inner: ptr }
         }
     }
 
-    unsafe fn from_ptr(ptr: *mut *mut c_void) -> Self {
+    unsafe fn from_ptr(ptr: *mut c_void) -> Self {
         assert!(!ptr.is_null());
         AudioSourceInstance3dData { _inner: ptr }
     }
@@ -31,7 +31,7 @@ impl Drop for AudioSourceInstance3dData {
 
 /// Audio Collider struct
 pub struct AudioCollider {
-    _inner: *mut ffi::AudioCollider,
+    _inner: ffi::AudioCollider,
 }
 
 impl AudioCollider {
@@ -53,7 +53,7 @@ impl AudioCollider {
         unsafe {
             unsafe extern "C" fn shim(
                 arg1: *mut *mut c_void,
-                arg2: *mut *mut c_void,
+                arg2: *mut c_void,
                 arg3: c_int,
                 data: *mut c_void,
             ) -> f32 {
@@ -82,13 +82,13 @@ impl AudioCollider {
             let callback: Option<
                 unsafe extern "C" fn(
                     arg1: *mut *mut c_void,
-                    arg2: *mut *mut c_void,
+                    arg2: *mut c_void,
                     arg3: c_int,
                     arg4: *mut c_void,
                 ) -> f32,
             > = Some(shim);
             ffi::AudioCollider_set_handler(
-                self._inner as *mut c_void,
+                self._inner,
                 callback,
                 data,
             );
@@ -98,7 +98,7 @@ impl AudioCollider {
     /// Gets the inner ptr of the audio collider
     /// # Safety
     /// The inner pointer should be modified with care!
-    pub unsafe fn inner(&self) -> *mut ffi::AudioCollider {
+    pub unsafe fn inner(&self) -> ffi::AudioCollider {
         self._inner
     }
 }
@@ -111,7 +111,7 @@ impl Drop for AudioCollider {
 
 /// Audio Attenuator struct
 pub struct AudioAttenuator {
-    _inner: *mut ffi::AudioAttenuator,
+    _inner: ffi::AudioAttenuator,
 }
 
 impl AudioAttenuator {
@@ -160,7 +160,7 @@ impl AudioAttenuator {
                 ) -> f32,
             > = Some(shim);
             ffi::AudioAttenuator_set_handler(
-                self._inner as *mut c_void,
+                self._inner,
                 callback,
                 data,
             );
@@ -170,7 +170,7 @@ impl AudioAttenuator {
     /// Gets the inner ptr of the audio attenuator
     /// # Safety
     /// The inner pointer should be modified with care!
-    pub unsafe fn inner(&self) -> *mut ffi::AudioAttenuator {
+    pub unsafe fn inner(&self) -> ffi::AudioAttenuator {
         self._inner
     }
 }
