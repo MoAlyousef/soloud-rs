@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.9] - 2020-09-01
+### Changes
+- Accept CMake toolchain files for cross-compilation via SOLOUD_TOOLCHAIN env var.
+- Update deps.
+
 ## [0.1.8] - 2020-09-01
 ### Changes
 - Fix typo in SoloudErrorKind.

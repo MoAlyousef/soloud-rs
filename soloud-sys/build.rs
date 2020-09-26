@@ -35,6 +35,10 @@ fn main() {
         dst.generator("Ninja");
     }
 
+    if let Ok(toolchain) = env::var("SOLOUD_TOOLCHAIN") {
+        dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
+    }
+
     let _dst = dst
         .profile("Release")
         .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
