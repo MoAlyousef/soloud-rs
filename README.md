@@ -16,7 +16,7 @@ Supported formats: wav, mp3, ogg, flac. The library also comes with a speech syn
 ## Usage
 ```toml
 [dependencies]
-soloud = "0.1"
+soloud = "0.2"
 ```
 
 Or to use the git repo:

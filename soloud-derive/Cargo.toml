@@ -1,6 +1,6 @@
 [package]
 name = "soloud-derive"
-version = "0.1.9"
+version = "0.2.0"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the soloud audio engine"
@@ -20,5 +20,5 @@ path = "src/lib.rs"
 proc-macro = true
 
 [dependencies]
-syn = "^1.0.41"
+syn = "^1.0.42"
 quote = "^1.0.7"

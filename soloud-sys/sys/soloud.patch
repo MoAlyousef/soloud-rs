@@ -1,0 +1,26 @@
+diff --git a/src/audiosource/ay/chipplayer.cpp b/src/audiosource/ay/chipplayer.cpp
+index f671a0f..4bd5b7b 100644
+--- a/src/audiosource/ay/chipplayer.cpp
++++ b/src/audiosource/ay/chipplayer.cpp
+@@ -1,7 +1,7 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <memory.h>
+-#include <malloc.h>
++#include <stdlib.h>
+ #include "chipplayer.h"
+ #include "soloud_file.h"
+ #include "soloud_ay.h"
+diff --git a/src/audiosource/ay/sndbuffer.cpp b/src/audiosource/ay/sndbuffer.cpp
+index 4a7342c..aaf3f32 100644
+--- a/src/audiosource/ay/sndbuffer.cpp
++++ b/src/audiosource/ay/sndbuffer.cpp
+@@ -1,7 +1,7 @@
+ #include "sndbuffer.h"
+ #include "sndrender.h"
+ 
+-#include "malloc.h"
++#include <stdlib.h>
+ #include "memory.h"
+ 
+ SNDBUFFER::SNDBUFFER(unsigned aSize) {

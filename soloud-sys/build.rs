@@ -31,6 +31,12 @@ fn main() {
         .status()
         .expect("Git is needed to retrieve the soloud source files!");
 
+    Command::new("git")
+        .args(&["apply", "../soloud.patch"])
+        .current_dir(manifest_dir.join("sys").join("soloud"))
+        .status()
+        .expect("Git is needed to retrieve the soloud source files!");
+
     if cfg!(feature = "use-ninja") {
         dst.generator("Ninja");
     }
@@ -43,6 +49,12 @@ fn main() {
         .profile("Release")
         .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
         .build();
+
+    Command::new("git")
+        .args(&["reset", "--hard", "origin/master"])
+        .current_dir(manifest_dir.join("sys").join("soloud"))
+        .status()
+        .expect("Git is needed to retrieve the fltk source files!");
 
     println!(
         "cargo:rustc-link-search=native={}",

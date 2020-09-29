@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0] - 2020-09-29
+### Changes
+- Pull changes from origin.
+- Redirect submodule to point to origin.
+- Patch origin.
+
 ## [0.1.9] - 2020-09-01
 ### Changes
 - Accept CMake toolchain files for cross-compilation via SOLOUD_TOOLCHAIN env var.
