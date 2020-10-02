@@ -1,7 +1,7 @@
 // pub use crate::effects::*;
 use std::convert::From;
-use std::{fmt, io};
 use std::os::raw::*;
+use std::{fmt, io};
 
 #[derive(Debug)]
 pub enum SoloudError {
@@ -193,4 +193,25 @@ pub unsafe trait FilterExt {
 pub trait FilterAttr {
     /// Convert a filter attribute to a u32
     fn to_u32(self) -> u32;
+}
+
+use std::path::Path;
+
+pub unsafe trait FromExt: Sized {
+    fn from_path(p: &Path) -> Result<Self, SoloudError>;
+    fn from_mem(data: &[u8]) -> Result<Self, SoloudError>;
+}
+
+unsafe impl<T: AudioExt + LoadExt> FromExt for T {
+    fn from_path(path: &Path) -> Result<Self, SoloudError> {
+        let mut x = Self::default();
+        x.load(path)?;
+        Ok(x)
+    }
+
+    fn from_mem(data: &[u8]) -> Result<Self, SoloudError> {
+        let mut x = Self::default();
+        x.load_mem(data)?;
+        Ok(x)
+    }
 }
