@@ -6,14 +6,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut wav = audio::Wav::default();
 
-    wav.load(&std::path::Path::new("sample.wav"))?;
+    wav.load("sample.wav")?;
 
     sl.play(&wav);
     while sl.voice_count() > 0 { // calls to play are non-blocking, so we put the thread to sleep
         std::thread::sleep(std::time::Duration::from_millis(100));
     }
 
-    wav.load(&std::path::Path::new("Recording.mp3"))?;
+    wav.load("Recording.mp3")?;
     
     sl.play(&wav);
     while sl.voice_count() > 0 {

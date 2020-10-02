@@ -2,6 +2,7 @@
 use std::convert::From;
 use std::os::raw::*;
 use std::{fmt, io};
+use std::path::Path;
 
 #[derive(Debug)]
 pub enum SoloudError {
@@ -157,7 +158,7 @@ pub unsafe trait AudioExt {
 
 pub unsafe trait LoadExt {
     /// Load audio from a file
-    fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError>;
+    fn load<P: AsRef<Path>>(&mut self, path: P) -> Result<(), SoloudError>;
     /// Load audio from memory
     fn load_mem(&mut self, data: &[u8]) -> Result<(), SoloudError>;
     /// Load audio from memory with options to copy and/or take ownership
@@ -195,17 +196,17 @@ pub trait FilterAttr {
     fn to_u32(self) -> u32;
 }
 
-use std::path::Path;
-
 pub unsafe trait FromExt: Sized {
-    fn from_path(p: &Path) -> Result<Self, SoloudError>;
+    /// Helper methods for loading an audio source from a path
+    fn from_path<P: AsRef<Path>>(p: P) -> Result<Self, SoloudError>;
+    /// Helper methods for loading an audio source from memory
     fn from_mem(data: &[u8]) -> Result<Self, SoloudError>;
 }
 
 unsafe impl<T: AudioExt + LoadExt> FromExt for T {
-    fn from_path(path: &Path) -> Result<Self, SoloudError> {
+    fn from_path<P: AsRef<Path>>(path: P) -> Result<Self, SoloudError> {
         let mut x = Self::default();
-        x.load(path)?;
+        x.load(path.as_ref())?;
         Ok(x)
     }
 

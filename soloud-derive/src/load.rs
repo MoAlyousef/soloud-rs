@@ -16,11 +16,11 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         unsafe impl LoadExt for #name {
-            fn load(&mut self, path: &std::path::Path) -> Result<(), SoloudError> {
+            fn load<P: AsRef<Path>>(&mut self, path: P) -> Result<(), SoloudError> {
                 
                 unsafe {
-                    let path = std::ffi::CString::new(path.to_str().ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?)?;
-                    let ret = soloud_sys::soloud::#load(self._inner, path.as_ptr());
+                    let path = std::ffi::CString::new(path.as_ref().to_str().ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?)?;
+                    let ret = soloud_sys::soloud::#load(self._inner, path.as_ref().as_ptr());
                     if ret != 0 {
                         Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
                     } else {
