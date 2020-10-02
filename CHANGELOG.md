@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.1] - 2020-10-02
+### Changes
+- Add a helper trait FromExt, thanks @toyboot4e
+- Add AsRef<Path> impl fro LoadExt::load() and FromExt::from_path trait methods.
+
 ## [0.2.0] - 2020-09-29
 ### Changes
 - Pull changes from origin.
