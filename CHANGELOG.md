@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.2] - 2020-11-22
+### Changes
+- Update dependencies.
+- Add example using include_bytes.
+
 ## [0.2.1] - 2020-10-02
 ### Changes
 - Add a helper trait FromExt, thanks @toyboot4e
