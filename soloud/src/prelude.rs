@@ -64,20 +64,12 @@ impl From<std::ffi::NulError> for SoloudError {
     }
 }
 
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
-pub enum SoloudFlag {
-    ClipRoundoff = 1,
-    EnableVisualization = 2,
-    LeftHanded3D = 4,
-    NoFpuRegisterChange = 8,
-}
-
-impl std::ops::BitOr for SoloudFlag {
-    type Output = Self;
-
-    fn bitor(self, rhs: Self) -> Self {
-        unsafe { std::mem::transmute(self as u32 | rhs as u32) }
+bitflags! {
+    pub struct SoloudFlag: i32 {
+        const ClipRoundoff = 1;
+        const EnableVisualization = 2;
+        const LeftHanded3D = 4;
+        const NoFpuRegisterChange = 8;
     }
 }
 

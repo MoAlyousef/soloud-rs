@@ -112,6 +112,7 @@
 //! ```
 
 #![allow(unused_unsafe)]
+#![allow(non_upper_case_globals)]
 
 pub mod audio;
 pub mod filter;
@@ -120,6 +121,9 @@ pub mod prelude;
 
 #[macro_use]
 extern crate soloud_derive;
+
+#[macro_use]
+extern crate bitflags;
 
 pub use audio::*;
 pub use filter::*;
@@ -181,7 +185,7 @@ impl Soloud {
         assert!(!self._inner.is_null());
         unsafe {
             let ret =
-                ffi::Soloud_initEx(self._inner, flags as u32, 0, samplerate, buf_size, channels);
+                ffi::Soloud_initEx(self._inner, flags.bits() as u32, 0, samplerate, buf_size, channels);
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {

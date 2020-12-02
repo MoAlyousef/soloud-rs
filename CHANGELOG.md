@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.3] - 2020-12-02
+### Changes
+- Use bitflags for SoloudFlag;
+
 ## [0.2.2] - 2020-11-22
 ### Changes
 - Update dependencies.
