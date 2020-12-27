@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.4] - 2020-12-27
+### Changes
+- Add derive Debug for Soloud types. Thanks @toyboot4e.
+- Update dependencies.
+
 ## [0.2.3] - 2020-12-02
 ### Changes
 - Use bitflags for SoloudFlag;
