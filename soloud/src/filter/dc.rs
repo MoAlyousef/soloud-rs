@@ -1,7 +1,7 @@
 use super::ParamType;
 use crate::prelude::*;
 
-#[derive(FilterExt)]
+#[derive(Debug, FilterExt)]
 pub struct DCRemovalFilter {
     _inner: *mut soloud_sys::soloud::DCRemovalFilter,
 }

@@ -8,7 +8,7 @@ pub enum BassBoostFilterAttr {
     Boost = 1,
 }
 
-#[derive(FilterExt)]
+#[derive(Debug, FilterExt)]
 pub struct BassboostFilter {
     _inner: *mut soloud_sys::soloud::BassboostFilter,
 }

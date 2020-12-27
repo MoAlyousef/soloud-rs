@@ -2,7 +2,7 @@ use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 use std::path::Path;
 
-#[derive(AudioExt, LoadExt)]
+#[derive(Debug, AudioExt, LoadExt)]
 pub struct Wav {
     _inner: *mut ffi::Wav,
 }

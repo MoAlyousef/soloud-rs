@@ -10,7 +10,7 @@ pub enum EchoFilterAttr {
     Filter,
 }
 
-#[derive(FilterExt)]
+#[derive(Debug, FilterExt)]
 pub struct EchoFilter {
     _inner: *mut soloud_sys::soloud::EchoFilter,
 }

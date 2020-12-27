@@ -133,6 +133,7 @@ use soloud_sys::soloud as ffi;
 
 pub type Handle = u32;
 
+#[derive(Debug)]
 pub struct Soloud {
     _inner: *mut ffi::Soloud,
 }
@@ -184,8 +185,14 @@ impl Soloud {
     ) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
         unsafe {
-            let ret =
-                ffi::Soloud_initEx(self._inner, flags.bits() as u32, 0, samplerate, buf_size, channels);
+            let ret = ffi::Soloud_initEx(
+                self._inner,
+                flags.bits() as u32,
+                0,
+                samplerate,
+                buf_size,
+                channels,
+            );
             if ret != 0 {
                 Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
             } else {

@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 
-#[derive(AudioExt)]
+#[derive(Debug, AudioExt)]
 pub struct Vizsn {
     _inner: *mut ffi::Vizsn,
 }

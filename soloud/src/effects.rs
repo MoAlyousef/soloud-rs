@@ -1,6 +1,7 @@
 use soloud_sys::soloud as ffi;
 use std::os::raw::*;
 
+#[derive(Debug)]
 pub struct AudioSourceInstance3dData {
     _inner: *mut ffi::AudioSourceInstance3dData,
 }
@@ -9,9 +10,7 @@ impl AudioSourceInstance3dData {
     /// Instantiante a new AudioSourceInstance3dData
     pub fn new(engine: &crate::Soloud) -> Self {
         unsafe {
-            let ptr = ffi::AudioSourceInstance3dData_new(
-                engine.inner()
-            );
+            let ptr = ffi::AudioSourceInstance3dData_new(engine.inner());
             assert!(!ptr.is_null());
             AudioSourceInstance3dData { _inner: ptr }
         }
@@ -29,6 +28,7 @@ impl Drop for AudioSourceInstance3dData {
     }
 }
 
+#[derive(Debug)]
 /// Audio Collider struct
 pub struct AudioCollider {
     _inner: ffi::AudioCollider,
@@ -87,11 +87,7 @@ impl AudioCollider {
                     arg4: *mut c_void,
                 ) -> f32,
             > = Some(shim);
-            ffi::AudioCollider_set_handler(
-                self._inner,
-                callback,
-                data,
-            );
+            ffi::AudioCollider_set_handler(self._inner, callback, data);
         }
     }
 
@@ -110,6 +106,7 @@ impl Drop for AudioCollider {
 }
 
 /// Audio Attenuator struct
+#[derive(Debug)]
 pub struct AudioAttenuator {
     _inner: ffi::AudioAttenuator,
 }
@@ -159,11 +156,7 @@ impl AudioAttenuator {
                     data: *mut c_void,
                 ) -> f32,
             > = Some(shim);
-            ffi::AudioAttenuator_set_handler(
-                self._inner,
-                callback,
-                data,
-            );
+            ffi::AudioAttenuator_set_handler(self._inner, callback, data);
         }
     }
 

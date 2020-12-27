@@ -9,7 +9,7 @@ pub enum RobotizeFilterAttr {
     Wave = 2,
 }
 
-#[derive(FilterExt)]
+#[derive(Debug, FilterExt)]
 pub struct RobotizeFilter {
     _inner: *mut soloud_sys::soloud::RobotizeFilter,
 }

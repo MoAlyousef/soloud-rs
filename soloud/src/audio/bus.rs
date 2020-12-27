@@ -3,7 +3,7 @@ use soloud_sys::soloud as ffi;
 
 pub type Handle = u32;
 
-#[derive(AudioExt)]
+#[derive(Debug, AudioExt)]
 pub struct Bus {
     _inner: *mut ffi::Bus,
 }

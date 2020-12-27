@@ -9,7 +9,7 @@ pub enum LofiFilterAttr {
     BitDepth = 2,
 }
 
-#[derive(FilterExt)]
+#[derive(Debug, FilterExt)]
 pub struct LofiFilter {
     _inner: *mut soloud_sys::soloud::LofiFilter,
 }

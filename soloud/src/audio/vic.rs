@@ -18,7 +18,7 @@ pub enum VicRegister {
     MaxRegs,
 }
 
-#[derive(AudioExt)]
+#[derive(Debug, AudioExt)]
 pub struct Vic {
     _inner: *mut ffi::Vic,
 }

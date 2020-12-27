@@ -13,7 +13,7 @@ pub enum KlattWaveForm {
     Warble,
 }
 
-#[derive(AudioExt)]
+#[derive(Debug, AudioExt)]
 pub struct Speech {
     _inner: *mut ffi::Speech,
 }

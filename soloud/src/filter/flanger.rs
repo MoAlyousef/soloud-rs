@@ -9,7 +9,7 @@ pub enum FlangerFilterAttr {
     Freq = 2,
 }
 
-#[derive(FilterExt)]
+#[derive(Debug, FilterExt)]
 pub struct FlangerFilter {
     _inner: *mut soloud_sys::soloud::FlangerFilter,
 }
