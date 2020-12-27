@@ -18,7 +18,7 @@ pub enum BiquadResonantFilterType {
     BandPass,
 }
 
-#[derive(FilterExt)]
+#[derive(Debug, FilterExt)]
 pub struct BiquadResonantFilter {
     _inner: *mut soloud_sys::soloud::BiquadResonantFilter,
 }

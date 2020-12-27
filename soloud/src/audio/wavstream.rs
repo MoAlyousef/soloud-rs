@@ -2,7 +2,7 @@ use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 use std::path::Path;
 
-#[derive(AudioExt, LoadExt)]
+#[derive(Debug, AudioExt, LoadExt)]
 pub struct WavStream {
     _inner: *mut ffi::WavStream,
 }
@@ -16,7 +16,9 @@ impl WavStream {
     /// Load a file to memory
     pub fn load_to_mem(&mut self, path: &std::path::Path) -> Result<(), SoloudError> {
         unsafe {
-            let path = path.to_str().ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?;
+            let path = path
+                .to_str()
+                .ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?;
             let path = std::ffi::CString::new(path)?;
             let ret = ffi::WavStream_loadToMem(self._inner, path.as_ptr());
             if ret != 0 {

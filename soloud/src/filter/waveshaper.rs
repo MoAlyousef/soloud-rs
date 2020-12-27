@@ -8,7 +8,7 @@ pub enum WaveShaperFilterAttr {
     Amount = 1,
 }
 
-#[derive(FilterExt)]
+#[derive(Debug, FilterExt)]
 pub struct WaveShaperFilter {
     _inner: *mut soloud_sys::soloud::WaveShaperFilter,
 }
