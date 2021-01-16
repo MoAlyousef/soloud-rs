@@ -1,7 +1,5 @@
-use crate::prelude::*;
+use crate::{prelude::*, Handle};
 use soloud_sys::soloud as ffi;
-
-pub type Handle = u32;
 
 #[derive(Debug, AudioExt)]
 pub struct Bus {
@@ -16,17 +14,17 @@ impl Bus {
 
     /// Play audio
     pub fn play<T: AudioExt>(&self, sound: &T) -> Handle {
-        unsafe { ffi::Bus_play(self._inner, sound.inner()) }
+        Handle(unsafe { ffi::Bus_play(self._inner, sound.inner()) })
     }
 
     /// Play audio with extra args
-    pub fn play_ex<AS: AudioExt>(&self, sound: &AS, volume: f32, pan: f32, paused: bool) -> u32 {
-        unsafe { ffi::Bus_playEx(self._inner, sound.inner(), volume, pan, paused as i32) }
+    pub fn play_ex<AS: AudioExt>(&self, sound: &AS, volume: f32, pan: f32, paused: bool) -> Handle {
+        Handle(unsafe { ffi::Bus_playEx(self._inner, sound.inner(), volume, pan, paused as i32) })
     }
 
     /// Play clocked
-    pub fn play_clocked<AS: AudioExt>(&self, sound_time: f64, sound: &AS) -> u32 {
-        unsafe { ffi::Bus_playClocked(self._inner, sound_time, sound.inner()) }
+    pub fn play_clocked<AS: AudioExt>(&self, sound_time: f64, sound: &AS) -> Handle {
+        Handle(unsafe { ffi::Bus_playClocked(self._inner, sound_time, sound.inner()) })
     }
 
     /// Play clocked with extra args
@@ -36,13 +34,15 @@ impl Bus {
         sound: &AS,
         volume: f32,
         pan: f32,
-    ) -> u32 {
-        unsafe { ffi::Bus_playClockedEx(self._inner, sound_time, sound.inner(), volume, pan) }
+    ) -> Handle {
+        Handle(unsafe {
+            ffi::Bus_playClockedEx(self._inner, sound_time, sound.inner(), volume, pan)
+        })
     }
 
     /// Play 3D
-    pub fn play_3d<AS: AudioExt>(&self, sound: &AS, pos_x: f32, pos_y: f32, pos_z: f32) -> u32 {
-        unsafe { ffi::Bus_play3d(self._inner, sound.inner(), pos_x, pos_y, pos_z) }
+    pub fn play_3d<AS: AudioExt>(&self, sound: &AS, pos_x: f32, pos_y: f32, pos_z: f32) -> Handle {
+        Handle(unsafe { ffi::Bus_play3d(self._inner, sound.inner(), pos_x, pos_y, pos_z) })
     }
 
     /// Play 3D with extra args
@@ -57,8 +57,8 @@ impl Bus {
         vel_z: f32,
         volume: f32,
         paused: bool,
-    ) -> u32 {
-        unsafe {
+    ) -> Handle {
+        Handle(unsafe {
             ffi::Bus_play3dEx(
                 self._inner,
                 sound.inner(),
@@ -71,7 +71,7 @@ impl Bus {
                 volume,
                 paused as i32,
             )
-        }
+        })
     }
 
     /// Play 3D clocked
@@ -82,10 +82,10 @@ impl Bus {
         pos_x: f32,
         pos_y: f32,
         pos_z: f32,
-    ) -> u32 {
-        unsafe {
+    ) -> Handle {
+        Handle(unsafe {
             ffi::Bus_play3dClocked(self._inner, sound_time, sound.inner(), pos_x, pos_y, pos_z)
-        }
+        })
     }
 
     /// Play 3D clocked with extra args
@@ -100,8 +100,8 @@ impl Bus {
         vel_y: f32,
         vel_z: f32,
         volume: f32,
-    ) -> u32 {
-        unsafe {
+    ) -> Handle {
+        Handle(unsafe {
             ffi::Bus_play3dClockedEx(
                 self._inner,
                 sound_time,
@@ -114,7 +114,7 @@ impl Bus {
                 vel_z,
                 volume,
             )
-        }
+        })
     }
 
     /// Enable visualizations
