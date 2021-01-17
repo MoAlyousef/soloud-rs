@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0] - 2020-01-17
+- [BREAKING] Wrap Handle type in a struct to avoid misuse. Thanks @toyboot4e.
+- [BREAKING] backend_string now returns a String instead of a &str.
+- Refactor boilerplate ffi handling by using a macro. Thanks @toyboot4e.
+- Support more backends in soloud-rs via feature flags.
+- Update deps.
+
 ## [0.2.4] - 2020-12-27
 ### Changes
 - Add derive Debug for Soloud types. Thanks @toyboot4e.

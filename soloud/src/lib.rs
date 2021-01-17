@@ -12,7 +12,7 @@
 //! ## Usage
 //! ```toml
 //! [dependencies]
-//! soloud = "0.2"
+//! soloud = "0.3"
 //! ```
 //!
 //! Or to use the latest developments:
@@ -49,7 +49,7 @@
 //! ```
 //!
 //! To play speech:
-//! ```rust
+//! ```no_run
 //! use soloud::*;
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -104,6 +104,35 @@
 //!     Ok(())
 //! }
 //! ```
+//! ## Backends
+//! The default backend is miniaudio, however Soloud supports several backends to varying degrees. To enable support of a certain backend, alsa for example:
+//! ```toml
+//! [dependencies]
+//! soloud = { version = "0.3", default-features = false, features = ["alsa"] }
+//! ```
+//! This also assumes that those libraries headers are in your include path where CMake can find them, otherwise you can set it via the command line (posix):
+//! ```ignore
+//! $ export CXXFLAGS=-I /path/to/include
+//! ```
+//! or for Windows:
+//! ```ignore
+//! $ set CXXFLAGS=-I C:\\path\\to\\include
+//! ```
+//! ### Supported backends:
+//! - miniaudio
+//! - oss
+//! - alsa
+//! - sdl2
+//! - sdl2-static
+//! - portaudio
+//! - openal
+//! - xaudio2
+//! - winmm
+//! - wasapi
+//! - opensles
+//! - coreaudio
+//! - jack
+
 
 #![allow(unused_unsafe)]
 #![allow(non_upper_case_globals)]
@@ -221,12 +250,17 @@ impl Soloud {
 
     /// Gets the backend id
     pub fn backend_id(&self) -> u32 {
-        14
+        unsafe { ffi::Soloud_getBackendId(self._inner) }
     }
 
     /// Gets the backend name, it's MINIAUDIO for now!
-    pub fn backend_string(&self) -> &'static str {
-        "MINIAUDIO"
+    pub fn backend_string(&self) -> String {
+        assert!(!self._inner.is_null());
+        unsafe { 
+            let ptr = ffi::Soloud_getBackendString(self._inner);
+            assert!(!ptr.is_null());
+            std::ffi::CStr::from_ptr(ptr).to_string_lossy().to_string()
+        }
     }
 
     /// Get the backend channels

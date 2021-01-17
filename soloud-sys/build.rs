@@ -41,6 +41,66 @@ fn main() {
         dst.generator("Ninja");
     }
 
+    if cfg!(feature = "miniaudio") {
+        dst.define("WITH_MINIAUDIO", "ON");
+    }
+
+    if cfg!(feature = "alsa") {
+        dst.define("WITH_ALSA", "ON");
+    }
+
+    if cfg!(feature = "sdl2-static") {
+        dst.define("WITH_SDL2_STATIC", "ON");
+    }
+
+    if cfg!(feature = "sdl2") {
+        dst.define("WITH_SDL2", "ON");
+    }
+
+    if cfg!(feature = "openal") {
+        dst.define("WITH_OPENAL", "ON");
+    }
+
+    if cfg!(feature = "portaudio") {
+        dst.define("WITH_PORTAUDIO", "ON");
+    }
+
+    if cfg!(feature = "xaudio2") {
+        dst.define("WITH_XAUDIO2", "ON");
+    }
+
+    if cfg!(feature = "winmm") {
+        dst.define("WITH_WINMM", "ON");
+    }
+
+    if cfg!(feature = "wasapi") {
+        dst.define("WITH_WASAPI", "ON");
+    }
+
+    if cfg!(feature = "oss") {
+        dst.define("WITH_OSS", "ON");
+    }
+
+    if cfg!(feature = "opensles") {
+        dst.define("WITH_OPENSLES", "ON");
+    }
+
+    if cfg!(feature = "coreaudio") {
+        dst.define("WITH_COREAUDIO", "ON");
+    }
+
+    if cfg!(feature = "jack") {
+        dst.define("WITH_JACK", "ON");
+    }
+
+    if cfg!(feature = "nosound") {
+        dst.define("WITH_NOSOUND", "ON");
+    }
+
+    if cfg!(feature = "null") {
+        dst.define("WITH_NULL", "ON");
+    }
+
     if let Ok(toolchain) = env::var("SOLOUD_TOOLCHAIN") {
         dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
     }
@@ -72,4 +132,52 @@ fn main() {
     );
 
     println!("cargo:rustc-link-lib=static=soloud");
+    
+    if cfg!(feature = "alsa") {
+        println!("cargo:rustc-link-lib=dylib=asound");
+    }
+
+    if cfg!(feature = "sdl2-static") {
+        println!("cargo:rustc-link-lib=static=SDL2");
+    }
+
+    if cfg!(feature = "sdl2") {
+        println!("cargo:rustc-link-lib=dylib=SDL2");
+    }
+
+    if cfg!(feature = "openal") {
+        println!("cargo:rustc-link-lib=openal");
+    }
+
+    if cfg!(feature = "portaudio") {
+        println!("cargo:rustc-link-lib=portaudio");
+    }
+
+    if cfg!(feature = "xaudio2") {
+        println!("cargo:rustc-link-lib=xaudio2");
+    }
+
+    if cfg!(feature = "winmm") {
+        println!("cargo:rustc-link-lib=winmm");
+    }
+
+    if cfg!(feature = "wasapi") {
+        println!("cargo:rustc-link-lib=win-wasapi");
+    }
+
+    if cfg!(feature = "oss") {
+        println!("cargo:rustc-link-lib=oss");
+    }
+
+    if cfg!(feature = "opensles") {
+        println!("cargo:rustc-link-lib=OpenSLES");
+    }
+
+    if cfg!(feature = "coreaudio") {
+        println!("cargo:rustc-link-lib=coreaudio");
+    }
+
+    if cfg!(feature = "jack") {
+        println!("cargo:rustc-link-lib=jack");
+    }
 }

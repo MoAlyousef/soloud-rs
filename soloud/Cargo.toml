@@ -1,6 +1,6 @@
 [package]
 name = "soloud"
-version = "0.2.4"
+version = "0.3.0"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the soloud audio engine"
@@ -15,9 +15,25 @@ readme = "../README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-soloud-sys = { path = "../soloud-sys", version = "=0.2.4" }
-soloud-derive = { path = "../soloud-derive", version = "=0.2.4" }
+soloud-sys = { path = "../soloud-sys", version = "=0.3.0" }
+soloud-derive = { path = "../soloud-derive", version = "=0.3.0" }
 bitflags = "^1.2.1"
 
 [features]
+default = ["miniaudio"]
 use-ninja = ["soloud-sys/use-ninja"]
+miniaudio = ["soloud-sys/miniaudio"]
+sdl2 = ["soloud-sys/sdl2"]
+sdl2-static = ["soloud-sys/sdl2-static"]
+portaudio = ["soloud-sys/portaudio"]
+openal = ["soloud-sys/openal"]
+xaudio2 = ["soloud-sys/xaudio2"]
+winmm = ["soloud-sys/winmm"]
+wasapi = ["soloud-sys/wasapi"]
+oss = ["soloud-sys/oss"]
+alsa = ["soloud-sys/alsa"]
+opensles = ["soloud-sys/opensles"]
+coreaudio = ["soloud-sys/coreaudio"]
+jack = ["soloud-sys/jack"]
+nosound = ["soloud-sys/nosound"]
+null = ["soloud-sys/null"]
