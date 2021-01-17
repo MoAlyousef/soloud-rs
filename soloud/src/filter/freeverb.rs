@@ -15,19 +15,12 @@ impl FreeverbFilter {
         damp: f32,
         width: f32,
     ) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = soloud_sys::soloud::FreeverbFilter_setParams(
-                self._inner,
-                mode,
-                room_size,
-                damp,
-                width,
-            );
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(soloud_sys::soloud::FreeverbFilter_setParams(
+            self._inner,
+            mode,
+            room_size,
+            damp,
+            width,
+        ))
     }
 }

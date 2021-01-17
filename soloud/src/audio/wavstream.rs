@@ -15,17 +15,10 @@ impl WavStream {
 
     /// Load a file to memory
     pub fn load_to_mem(&mut self, path: &std::path::Path) -> Result<(), SoloudError> {
-        unsafe {
-            let path = path
-                .to_str()
-                .ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?;
-            let path = std::ffi::CString::new(path)?;
-            let ret = ffi::WavStream_loadToMem(self._inner, path.as_ptr());
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        let path = path
+            .to_str()
+            .ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?;
+        let path = std::ffi::CString::new(path)?;
+        ffi_call!(ffi::WavStream_loadToMem(self._inner, path.as_ptr()))
     }
 }

@@ -21,27 +21,13 @@ pub struct Speech {
 impl Speech {
     /// set speech text
     pub fn set_text(&mut self, txt: &str) -> Result<(), SoloudError> {
-        unsafe {
-            let txt = std::ffi::CString::new(txt)?;
-            let ret = ffi::Speech_setText(self._inner, txt.as_ptr());
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        let txt = std::ffi::CString::new(txt)?;
+        ffi_call!(ffi::Speech_setText(self._inner, txt.as_ptr()))
     }
 
     /// Set speech params
     pub fn set_params(&mut self) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = ffi::Speech_setParams(self._inner);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Speech_setParams(self._inner))
     }
 
     /// Set speech params
@@ -52,19 +38,12 @@ impl Speech {
         base_declination: f32,
         base_waveform: KlattWaveForm,
     ) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = ffi::Speech_setParamsEx(
-                self._inner,
-                base_freq,
-                base_speed,
-                base_declination,
-                base_waveform as i32,
-            );
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Speech_setParamsEx(
+            self._inner,
+            base_freq,
+            base_speed,
+            base_declination,
+            base_waveform as i32,
+        ))
     }
 }
