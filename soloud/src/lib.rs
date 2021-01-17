@@ -22,7 +22,7 @@
 //! ```
 //!
 //! To play audio:
-//! ```rust
+//! ```no_run
 //! use soloud::*;
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -43,8 +43,6 @@
 //!     while sl.voice_count() > 0 {
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
-//!
-//!     sl
 //!
 //!     Ok(())
 //! }
@@ -80,14 +78,12 @@
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
 //!
-//!     sl
-//!    
 //!     Ok(())
 //! }
 //! ```
 //!
 //! To add a filter:
-//! ```rust
+//! ```no_run
 //! use soloud::*;
 //!
 //! fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -104,8 +100,6 @@
 //!     while sl.voice_count() > 0 {
 //!         std::thread::sleep(std::time::Duration::from_millis(100));
 //!     }
-//!
-//!     sl
 //!
 //!     Ok(())
 //! }
