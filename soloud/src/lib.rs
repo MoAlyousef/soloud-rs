@@ -108,6 +108,18 @@
 #![allow(unused_unsafe)]
 #![allow(non_upper_case_globals)]
 
+/// FFI function call with error handling
+///
+/// NOTE: It has to be defined _before_ declaring sub modules.
+macro_rules! ffi_call {
+    ($s:expr) => {
+        match unsafe { $s } {
+            0 => Ok(()),
+            code => Err(SoloudError::Internal(SoloudErrorKind::from_i32(code))),
+        }
+    };
+}
+
 pub mod audio;
 pub mod filter;
 pub mod prelude;
@@ -160,14 +172,7 @@ impl Soloud {
     /// initialize an uninitialized instance of Soloud
     pub fn init(&mut self) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret = ffi::Soloud_init(self._inner);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_init(self._inner))
     }
 
     /// Creates a default initialized instance of soloud
@@ -186,21 +191,14 @@ impl Soloud {
         channels: u32,
     ) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret = ffi::Soloud_initEx(
-                self._inner,
-                flags.bits() as u32,
-                0,
-                samplerate,
-                buf_size,
-                channels,
-            );
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_initEx(
+            self._inner,
+            flags.bits() as u32,
+            0,
+            samplerate,
+            buf_size,
+            channels,
+        ))
     }
 
     /// Creates a default initialized instance of soloud
@@ -211,11 +209,8 @@ impl Soloud {
         channels: u32,
     ) -> Result<Self, SoloudError> {
         let mut temp = unsafe { Soloud::default_uninit().assume_init() };
-        if let Err(val) = temp.init_ex(flags, samplerate, buf_size, channels) {
-            Err(val)
-        } else {
-            Ok(temp)
-        }
+        temp.init_ex(flags, samplerate, buf_size, channels)?;
+        Ok(temp)
     }
 
     /// Gets the current version of the Soloud library
@@ -261,30 +256,29 @@ impl Soloud {
         z: f32,
     ) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret = ffi::Soloud_setSpeakerPosition(self._inner, channel, x, y, z);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_setSpeakerPosition(
+            self._inner,
+            channel,
+            x,
+            y,
+            z
+        ))
     }
 
     /// Get the speaker position
     pub fn speaker_position(&self, channel: u32) -> Result<(f32, f32, f32), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let mut x = 0.0;
-            let mut y = 0.0;
-            let mut z = 0.0;
-            let ret = ffi::Soloud_getSpeakerPosition(self._inner, channel, &mut x, &mut y, &mut z);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok((x, y, z))
-            }
-        }
+        let mut x = 0.0;
+        let mut y = 0.0;
+        let mut z = 0.0;
+        ffi_call!(ffi::Soloud_getSpeakerPosition(
+            self._inner,
+            channel,
+            &mut x,
+            &mut y,
+            &mut z
+        ))?;
+        Ok((x, y, z))
     }
 
     /// Play audio with extra args
@@ -438,14 +432,7 @@ impl Soloud {
     /// Seek in seconds
     pub fn seek(&self, voice_handle: Handle, seconds: f64) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret = ffi::Soloud_seek(self._inner, voice_handle.0, seconds);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_seek(self._inner, voice_handle.0, seconds))
     }
 
     /// Stop audio by handle
@@ -628,14 +615,7 @@ impl Soloud {
     /// Set max active voice count
     pub fn set_max_active_voice_count(&mut self, count: u32) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret = ffi::Soloud_setMaxActiveVoiceCount(self._inner, count);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_setMaxActiveVoiceCount(self._inner, count))
     }
 
     /// Set inaudible behaviour
@@ -682,14 +662,11 @@ impl Soloud {
         speed: f32,
     ) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret = ffi::Soloud_setRelativePlaySpeed(self._inner, voice_handle.0, speed);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_setRelativePlaySpeed(
+            self._inner,
+            voice_handle.0,
+            speed
+        ))
     }
 
     /// Set whether an audio source has protect voice
@@ -855,14 +832,10 @@ impl Soloud {
     /// Destroy a voice group
     pub fn destroy_voice_group(&self, voice_group_handle: Handle) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret = ffi::Soloud_destroyVoiceGroup(self._inner, voice_group_handle.0);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_destroyVoiceGroup(
+            self._inner,
+            voice_group_handle.0
+        ))
     }
 
     /// Add a voice handle to a voice group
@@ -872,15 +845,11 @@ impl Soloud {
         voice_handle: Handle,
     ) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret =
-                ffi::Soloud_addVoiceToGroup(self._inner, voice_group_handle.0, voice_handle.0);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_addVoiceToGroup(
+            self._inner,
+            voice_group_handle.0,
+            voice_handle.0
+        ))
     }
 
     /// Check whether a handle is of a voice group
@@ -904,14 +873,7 @@ impl Soloud {
     /// Set 3D sound speed
     pub fn set_3d_sound_speed(&self, speed: f32) -> Result<(), SoloudError> {
         assert!(!self._inner.is_null());
-        unsafe {
-            let ret = ffi::Soloud_set3dSoundSpeed(self._inner, speed);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Soloud_set3dSoundSpeed(self._inner, speed))
     }
 
     /// Get 3d sound speed

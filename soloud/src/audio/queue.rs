@@ -9,14 +9,7 @@ pub struct Queue {
 impl Queue {
     /// Play audio
     pub fn play<T: AudioExt>(&self, sound: &T) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = ffi::Queue_play(self._inner, sound.inner());
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Queue_play(self._inner, sound.inner()))
     }
 
     /// Get queue count
@@ -34,37 +27,19 @@ impl Queue {
         &mut self,
         sound: &AS,
     ) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = ffi::Queue_setParamsFromAudioSource(self._inner, sound.inner());
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Queue_setParamsFromAudioSource(
+            self._inner,
+            sound.inner()
+        ))
     }
 
     /// Set params of the queue
     pub fn set_params(&mut self, samplerate: f32) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = ffi::Queue_setParams(self._inner, samplerate);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Queue_setParams(self._inner, samplerate))
     }
 
     /// Set params of the queue adding channels
     pub fn set_params_ex(&mut self, samplerate: f32, channels: u32) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = ffi::Queue_setParamsEx(self._inner, samplerate, channels);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(ffi::Queue_setParamsEx(self._inner, samplerate, channels))
     }
 }

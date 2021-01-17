@@ -18,14 +18,7 @@ pub struct EchoFilter {
 impl EchoFilter {
     /// Set filter params
     pub fn set_params(&mut self, delay: f32) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = soloud_sys::soloud::EchoFilter_setParams(self._inner, delay);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(soloud_sys::soloud::EchoFilter_setParams(self._inner, delay))
     }
 
     /// Set filter params with extra args
@@ -35,13 +28,11 @@ impl EchoFilter {
         decay: f32,
         filter: f32,
     ) -> Result<(), SoloudError> {
-        unsafe {
-            let ret = soloud_sys::soloud::EchoFilter_setParamsEx(self._inner, delay, decay, filter);
-            if ret != 0 {
-                Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-            } else {
-                Ok(())
-            }
-        }
+        ffi_call!(soloud_sys::soloud::EchoFilter_setParamsEx(
+            self._inner,
+            delay,
+            decay,
+            filter
+        ))
     }
 }
