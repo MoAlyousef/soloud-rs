@@ -17,7 +17,6 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl LoadExt for #name {
             fn load<P: AsRef<Path>>(&mut self, path: P) -> Result<(), SoloudError> {
-                
                 unsafe {
                     let path = std::ffi::CString::new(path.as_ref().to_str().ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?)?;
                     let ret = soloud_sys::soloud::#load(self._inner, path.as_ref().as_ptr());
@@ -29,20 +28,7 @@ pub fn impl_load_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn load_mem(&mut self, data: &[u8]) -> Result<(), SoloudError> {
-                
-                unsafe {
-                    let ret = soloud_sys::soloud::#loadMemEx(self._inner, data.as_ptr(), data.len() as u32, 0, 0);
-                    if ret != 0 {
-                        Err(SoloudError::Internal(SoloudErrorKind::from_i32(ret)))
-                    } else {
-                        Ok(())
-                    }
-                }
-            }
-
-            unsafe fn load_mem_ex(&mut self, data: &[u8], copy: bool, take_ownership: bool) -> Result<(), SoloudError> {
-                
+            unsafe fn _load_mem_ex(&mut self, data: &[u8], copy: bool, take_ownership: bool) -> Result<(), SoloudError> {
                 unsafe {
                     let ret = soloud_sys::soloud::#loadMemEx(self._inner, data.as_ptr(), data.len() as u32, copy as i32, take_ownership as i32);
                     if ret != 0 {

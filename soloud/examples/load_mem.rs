@@ -7,7 +7,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let bytes = std::fs::read("sample.wav")?;
 
-    wav.load_mem(&bytes)?;
+    wav.load_mem(bytes)?;
 
     sl.play(&wav);
     while sl.voice_count() > 0 {
