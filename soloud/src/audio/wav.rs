@@ -2,6 +2,7 @@ use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 use std::path::Path;
 
+/// Wav audio type
 #[derive(Debug, AudioExt, LoadExt)]
 pub struct Wav {
     _inner: *mut ffi::Wav,

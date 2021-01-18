@@ -1,3 +1,5 @@
+//! Audio filters
+
 mod bass;
 mod biquad;
 mod dc;
@@ -20,10 +22,14 @@ pub use lofi::*;
 pub use robotize::*;
 pub use waveshaper::*;
 
+/// The associated parameter types
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 pub enum ParamType {
+    /// Floating-point parameter type
     Float = 0,
+    /// Integral parameter type
     Int,
+    /// Boolean parameter type
     Bool,
 }

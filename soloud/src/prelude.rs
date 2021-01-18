@@ -5,11 +5,16 @@ use std::os::raw::*;
 use std::path::Path;
 use std::{fmt, io};
 
+/// Soloud error types
 #[derive(Debug)]
 pub enum SoloudError {
+    /// i/o error
     IoError(io::Error),
+    /// Mull value error in the read memory
     NullError(std::ffi::NulError),
+    /// Internal soloud error
     Internal(SoloudErrorKind),
+    /// Unknown error
     Unknown(String),
 }
 
@@ -17,22 +22,31 @@ pub enum SoloudError {
 #[repr(i32)]
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum SoloudErrorKind {
-    InvalidParameter = 1, // Some parameter is invalid
-    FileNotFound = 2,     // File not found
-    FileLoadFailed = 3,   // File found, but could not be loaded
-    DllNotFound = 4,      // DLL not found, or wrong DLL
-    OutOfMemory = 5,      // Out of memory
-    NotImplemented = 6,   // Feature not implemented
-    UnknownError = 7,     // Other error
+    /// Some parameter is invalid
+    InvalidParameter = 1,
+    /// File not found
+    FileNotFound = 2,
+    /// File found, but could not be loaded
+    FileLoadFailed = 3,
+    /// DLL not found, or wrong DLL
+    DllNotFound = 4,
+    /// Out of memory
+    OutOfMemory = 5,
+    /// Feature not implemented
+    NotImplemented = 6,
+    /// Other error   
+    UnknownError = 7,
 }
 
 impl SoloudErrorKind {
+    /// Get a Soloud error from the returned i32 error code
     pub fn from_i32(val: i32) -> SoloudErrorKind {
         unsafe { std::mem::transmute(val) }
     }
 }
 
 impl std::error::Error for SoloudError {
+    /// Get the source of the Soloud Error
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             SoloudError::IoError(err) => Some(err),
@@ -66,49 +80,70 @@ impl From<std::ffi::NulError> for SoloudError {
 }
 
 bitflags! {
+    /// Soloud flags
     pub struct SoloudFlag: i32 {
+        /// Clip roundoff
         const ClipRoundoff = 1;
+        /// Enable visualization
         const EnableVisualization = 2;
+        /// Left handed 3D
         const LeftHanded3D = 4;
+        /// No Fpu register change
         const NoFpuRegisterChange = 8;
     }
 }
 
+/// Waveform types
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
 pub enum WaveForm {
+    /// Square waveform
     Square = 0,
+    /// Saw waveform
     Saw,
+    /// Sin waveform
     Sin,
+    /// Triangle waveform
     Triangle,
+    /// Bounce waveform
     Bounce,
+    /// Jaws waveform
     Jaws,
+    /// Humps waveform
     Humps,
+    /// Fsquare waveform
     FSquare,
+    /// Fsaw waveform
     FSaw,
 }
 
+/// Resampler types
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
 pub enum Resampler {
+    /// Point resampler
     Point,
+    /// Linear resampler
     Linear,
+    /// Catmullrom resampler
     Catmullrom,
 }
 
+/// Attenuation models
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
 pub enum AttenuationModel {
-    // No attenuation
+    /// No attenuation
     NoAttenuation = 0,
-    // Inverse distance attenuation model
+    /// Inverse distance attenuation model
     InverseDistance = 1,
-    // Linear distance attenuation model
+    /// Linear distance attenuation model
     LinearDistance = 2,
-    // Exponential distance attenuation model
+    /// Exponential distance attenuation model
     ExponentialDistance = 3,
 }
 
+/// Methods shared by all audio sources
 pub unsafe trait AudioExt {
     /// Creates a default initialized object
     fn default() -> Self;
@@ -149,6 +184,7 @@ pub unsafe trait AudioExt {
     unsafe fn inner(&self) -> *mut *mut c_void;
 }
 
+/// Methods for initializing sound sources from memory
 pub unsafe trait LoadExt {
     /// Load audio from a file
     fn load<P: AsRef<Path>>(&mut self, path: P) -> Result<(), SoloudError>;
@@ -184,6 +220,7 @@ pub unsafe trait LoadExt {
     ) -> Result<(), SoloudError>;
 }
 
+/// Filter creation and setting methods
 pub unsafe trait FilterExt {
     /// Creates a default initialized object
     fn default() -> Self;
@@ -203,11 +240,13 @@ pub unsafe trait FilterExt {
     unsafe fn inner(&self) -> *mut *mut c_void;
 }
 
+/// A trait applicable to all filter attributes
 pub trait FilterAttr {
     /// Convert a filter attribute to a u32
     fn to_u32(self) -> u32;
 }
 
+/// A trait defining methods of initializing audio sources from a path or memory
 pub unsafe trait FromExt: Sized {
     /// Loads an audio source from path
     fn from_path<P: AsRef<Path>>(p: P) -> Result<Self, SoloudError>;

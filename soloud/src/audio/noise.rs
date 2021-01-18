@@ -1,16 +1,22 @@
 use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 
+/// Noise types
 #[repr(i32)]
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd)]
 pub enum NoiseType {
+    /// White noise
     White = 0,
+    /// Pink noise
     Pink,
+    /// Brownish noise
     Brownish,
+    /// Blueish noise
     Blueish,
 }
 
-#[derive(AudioExt)]
+/// Noise audio type
+#[derive(Debug, AudioExt)]
 pub struct Noise {
     _inner: *mut ffi::Noise,
 }

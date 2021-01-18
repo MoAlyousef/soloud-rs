@@ -1,18 +1,27 @@
 use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 
+/// Klatt wave forms
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
 pub enum KlattWaveForm {
+    /// Saw wave
     Saw = 0,
+    /// Triangle wav
     Triangle,
+    /// Sin wave
     Sin,
+    /// Square wave
     Square,
+    /// Pulse wave
     Pulse,
+    /// Noise wave
     Noise,
+    /// Warble wave
     Warble,
 }
 
+/// Speech audio source
 #[derive(Debug, AudioExt)]
 pub struct Speech {
     _inner: *mut ffi::Speech,

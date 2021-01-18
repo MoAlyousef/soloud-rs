@@ -134,6 +134,7 @@
 
 #![allow(unused_unsafe)]
 #![allow(non_upper_case_globals)]
+#![warn(missing_docs)]
 
 /// FFI function call with error handling
 ///
@@ -147,8 +148,11 @@ macro_rules! ffi_call {
     };
 }
 
+/// Audio module containing all audio types
 pub mod audio;
+/// Filter module containing all filter types and attributes
 pub mod filter;
+/// prelude module containing all traits and error codes
 pub mod prelude;
 // pub mod effects;
 
@@ -164,19 +168,26 @@ pub use prelude::*;
 
 use soloud_sys::soloud as ffi;
 
+/// A wrapper around the raw handle of the audio object  
+/// which can be used to adjust the parameters of the sound while it's playing
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Handle(u32);
 
 impl Handle {
+    /// Create a handle from a raw value
+    /// # Safety
+    /// The value must be a valid handle
     pub unsafe fn from_raw(raw: u32) -> Self {
         Self(raw)
     }
 
+    /// Retrieve the raw value of the handle
     pub fn raw(&self) -> u32 {
         self.0
     }
 }
 
+/// Wrapper around the Soloud native object
 #[derive(Debug)]
 pub struct Soloud {
     _inner: *mut ffi::Soloud,

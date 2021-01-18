@@ -1,6 +1,7 @@
 use super::ParamType;
 use crate::prelude::*;
 
+/// Freeverb filter
 #[derive(Debug, FilterExt)]
 pub struct FreeverbFilter {
     _inner: *mut soloud_sys::soloud::FreeverbFilter,

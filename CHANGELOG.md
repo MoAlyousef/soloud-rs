@@ -2,17 +2,20 @@
 
 ## [0.3.1] - 2020-01-18
 ### Changes
+- [BREAKING] Wrap Handle type in a struct to avoid misuse. Thanks @toyboot4e.
+- [BREAKING] backend_string now returns a String instead of a &str.
+- [BREAKING] BiquadResonantFilterAttr::Frequence renamed to Freq as with all filter attributes.
+- [BREAKING] Rename unsafe LoadExt::load_mem_ex to _load_mem_ex and marked interal.
 - Fix docs.
 - Add missing backends to CMakeLists.
 - Fix builds with coreaudio framework.
-
-## [0.3.0] - 2020-01-17
-### Changes
-- [BREAKING] Wrap Handle type in a struct to avoid misuse. Thanks @toyboot4e.
-- [BREAKING] backend_string now returns a String instead of a &str.
 - Refactor boilerplate ffi handling by using a macro. Thanks @toyboot4e.
 - Support more backends in soloud-rs via feature flags.
+- Fix memory leak with LoadExt::load_mem and FromExt::from_path and add explicit methods to the LoadExt and FromExt traits which allows loading audio from memory. Thanks @toyboot4e.
+    - load_mem_weak and from_mem_weak
+    - load_mem_weak_unsafe and from_mem_weak_unsafe
 - Update deps.
+- Add missing docs.
 
 ## [0.2.4] - 2020-12-27
 ### Changes

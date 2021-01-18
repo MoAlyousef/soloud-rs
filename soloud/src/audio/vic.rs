@@ -1,23 +1,33 @@
 use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 
+/// Vic model
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
 pub enum VicModel {
+    /// Pal model
     Pal = 0,
+    /// Ntsc model
     Ntsc,
 }
 
+/// Vic register
 #[repr(u8)]
 #[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
 pub enum VicRegister {
+    /// Bass register
     Bass = 0,
+    /// Alto register
     Alto,
+    /// Soprano register
     Soprano,
+    /// Noise register
     Noise,
+    /// Max regs register
     MaxRegs,
 }
 
+/// Vic-20 emulator audio type
 #[derive(Debug, AudioExt)]
 pub struct Vic {
     _inner: *mut ffi::Vic,

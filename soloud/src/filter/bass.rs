@@ -1,13 +1,17 @@
 use super::ParamType;
 use crate::prelude::*;
 
+/// Bass boost filter attribute
 #[repr(u32)]
 #[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub enum BassBoostFilterAttr {
+    /// Wet attribute
     Wet = 0,
+    /// Boost attribute
     Boost = 1,
 }
 
+/// Bass boost filter
 #[derive(Debug, FilterExt)]
 pub struct BassboostFilter {
     _inner: *mut soloud_sys::soloud::BassboostFilter,

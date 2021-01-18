@@ -1,18 +1,27 @@
 use crate::prelude::*;
 use soloud_sys::soloud as ffi;
 
+/// Sfxr presets
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq, PartialOrd)]
 pub enum SfxrPreset {
+    /// Coin preset
     Coin = 0,
+    /// Laser preset
     Laser = 1,
+    /// Explosion preset
     Explosion = 2,
+    /// PowerUp preset
     PowerUp = 3,
+    /// Hurt preset
     Hurt = 4,
+    /// Jump preset
     Jump = 5,
+    /// Blip preset
     Blip = 6,
 }
 
+/// Sfxr audio type
 #[derive(AudioExt)]
 pub struct Sfxr {
     _inner: *mut ffi::Sfxr,

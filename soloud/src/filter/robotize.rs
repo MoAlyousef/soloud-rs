@@ -1,14 +1,19 @@
 use super::ParamType;
 use crate::prelude::*;
 
+/// Robotize filter attributes
 #[repr(u32)]
 #[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub enum RobotizeFilterAttr {
+    /// Wet attribute
     Wet = 0,
+    /// Frequency attribute
     Freq = 1,
+    /// Wave attribute
     Wave = 2,
 }
 
+/// Robotize filter
 #[derive(Debug, FilterExt)]
 pub struct RobotizeFilter {
     _inner: *mut soloud_sys::soloud::RobotizeFilter,

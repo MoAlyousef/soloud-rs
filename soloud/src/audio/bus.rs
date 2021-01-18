@@ -1,6 +1,7 @@
 use crate::{prelude::*, Handle};
 use soloud_sys::soloud as ffi;
 
+/// Bus audio type
 #[derive(Debug, AudioExt)]
 pub struct Bus {
     _inner: *mut ffi::Bus,

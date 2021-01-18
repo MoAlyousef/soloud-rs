@@ -1,14 +1,19 @@
 use super::ParamType;
 use crate::prelude::*;
 
+/// Lofi filter attributes
 #[repr(u32)]
 #[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub enum LofiFilterAttr {
+    /// Wet attribute
     Wet = 0,
+    /// Samplerate attribute
     Samplerate = 1,
+    /// Bitdepth attribute
     BitDepth = 2,
 }
 
+/// Lofi filter
 #[derive(Debug, FilterExt)]
 pub struct LofiFilter {
     _inner: *mut soloud_sys::soloud::LofiFilter,

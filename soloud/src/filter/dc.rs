@@ -1,6 +1,7 @@
 use super::ParamType;
 use crate::prelude::*;
 
+/// DC removal filter
 #[derive(Debug, FilterExt)]
 pub struct DCRemovalFilter {
     _inner: *mut soloud_sys::soloud::DCRemovalFilter,
