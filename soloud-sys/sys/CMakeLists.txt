@@ -68,7 +68,7 @@ elseif (WITH_PORTAUDIO)
     set(BACKEND_SRCS ${BACKEND_DIR}/portaudio/soloud_portaudio.cpp ${BACKEND_DIR}/portaudio/soloud_portaudio_dll.c)
     add_definitions("-DWITH_PORTAUDIO")
 elseif (WITH_COREAUDIO)
-    set(BACKEND_SRCS ${BACKEND_DIR}/coreaudio/soloud_coreaudio.cpp
+    set(BACKEND_SRCS ${BACKEND_DIR}/coreaudio/soloud_coreaudio.cpp)
     add_definitions("-DWITH_COREAUDIO")
 elseif (WITH_JACK)
     set(BACKEND_SRCS ${BACKEND_DIR}/jack/soloud_jack.cpp)

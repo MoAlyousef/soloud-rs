@@ -173,10 +173,6 @@ fn main() {
         println!("cargo:rustc-link-lib=OpenSLES");
     }
 
-    if cfg!(feature = "coreaudio") {
-        println!("cargo:rustc-link-lib=coreaudio");
-    }
-
     if cfg!(feature = "jack") {
         println!("cargo:rustc-link-lib=jack");
     }
