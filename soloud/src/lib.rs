@@ -4,7 +4,6 @@
 //!
 //! Supported formats: wav, mp3, ogg. The library also comes with a speech synthesizer.
 //!
-//! Still pre-alpha.
 //!
 //! - The official soloud [website](https://!sol.gfxile.net/soloud/index.html)
 //! - The official soloud [repo](https://!github.com/jarikomppa/soloud)
@@ -112,11 +111,11 @@
 //! ```
 //! This also assumes that those libraries headers are in your include path where CMake can find them, otherwise you can set it via the command line (posix):
 //! ```ignore
-//! $ export CXXFLAGS=-I /path/to/include
+//! $ export CXXFLAGS="-I /path/to/include"
 //! ```
 //! or for Windows:
 //! ```ignore
-//! $ set CXXFLAGS=-I C:\\path\\to\\include
+//! $ set CXXFLAGS="-I C:\\path\\to\\include"
 //! ```
 //! ### Supported backends:
 //! - miniaudio
@@ -253,7 +252,7 @@ impl Soloud {
         unsafe { ffi::Soloud_getBackendId(self._inner) }
     }
 
-    /// Gets the backend name, it's MINIAUDIO for now!
+    /// Gets the backend name
     pub fn backend_string(&self) -> String {
         assert!(!self._inner.is_null());
         unsafe { 

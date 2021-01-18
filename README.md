@@ -121,7 +121,7 @@ You will need to have valid "sample.wav" and "Recording.mp3" audio files in the 
 There is also a demo gui application (using fltk) [here](https://github.com/MoAlyousef/fltk-rs-demos/tree/master/musicplayer).
 
 ## Dependencies
-A Rust compiler, C++ compiler, Cargo, CMake and git (all these need to be in your PATH). This crate uses the miniaudio backend which assumes default sound drivers are functional.
+A Rust compiler, C++ compiler, Cargo, CMake and git (all these need to be in your PATH). This crate uses the miniaudio backend by default which assumes default sound drivers are functional.
 
 ## Backends
 The default backend is miniaudio, however Soloud supports several backends to varying degrees. To enable support of a certain backend, alsa for example:
@@ -131,11 +131,11 @@ soloud = { version = "0.3", default-features = false, features = ["alsa"] }
 ```
 This also assumes that those libraries headers are in your include path where CMake can find them, otherwise you can set it via the command line (posix):
 ```
-$ export CXXFLAGS=-I /path/to/include
+$ export CXXFLAGS="-I /path/to/include"
 ```
 or for Windows:
 ```
-$ set CXXFLAGS=-I C:\\path\\to\\include
+$ set CXXFLAGS="-I C:\\path\\to\\include"
 ```
 
 ### Supported backends:

@@ -1,6 +1,12 @@
 # Changelog
 
+## [0.3.1] - 2020-01-18
+### Changes
+- Fix docs.
+- Add missing backends to CMakeLists.
+
 ## [0.3.0] - 2020-01-17
+### Changes
 - [BREAKING] Wrap Handle type in a struct to avoid misuse. Thanks @toyboot4e.
 - [BREAKING] backend_string now returns a String instead of a &str.
 - Refactor boilerplate ffi handling by using a macro. Thanks @toyboot4e.
