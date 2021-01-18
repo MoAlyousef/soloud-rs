@@ -110,11 +110,11 @@
 //! soloud = { version = "0.3", default-features = false, features = ["alsa"] }
 //! ```
 //! This also assumes that those libraries headers are in your include path where CMake can find them, otherwise you can set it via the command line (posix):
-//! ```ignore
+//! ```sh
 //! $ export CXXFLAGS="-I /path/to/include"
 //! ```
 //! or for Windows:
-//! ```ignore
+//! ```sh
 //! $ set CXXFLAGS="-I C:\\path\\to\\include"
 //! ```
 //! ### Supported backends:
@@ -131,7 +131,6 @@
 //! - opensles
 //! - coreaudio
 //! - jack
-
 
 #![allow(unused_unsafe)]
 #![allow(non_upper_case_globals)]
@@ -255,7 +254,7 @@ impl Soloud {
     /// Gets the backend name
     pub fn backend_string(&self) -> String {
         assert!(!self._inner.is_null());
-        unsafe { 
+        unsafe {
             let ptr = ffi::Soloud_getBackendString(self._inner);
             assert!(!ptr.is_null());
             std::ffi::CStr::from_ptr(ptr).to_string_lossy().to_string()

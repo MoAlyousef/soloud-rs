@@ -1,8 +1,9 @@
 // pub use crate::effects::*;
+use std::borrow::Cow;
 use std::convert::From;
 use std::os::raw::*;
-use std::{fmt, io};
 use std::path::Path;
+use std::{fmt, io};
 
 #[derive(Debug)]
 pub enum SoloudError {
@@ -151,12 +152,31 @@ pub unsafe trait AudioExt {
 pub unsafe trait LoadExt {
     /// Load audio from a file
     fn load<P: AsRef<Path>>(&mut self, path: P) -> Result<(), SoloudError>;
-    /// Load audio from memory
-    fn load_mem(&mut self, data: &[u8]) -> Result<(), SoloudError>;
-    /// Load audio from memory with options to copy and/or take ownership
+    /// Load audio from memory. Prefer `load_mem_weak` when possible like when using
+    /// `'static &[u8]`
+    fn load_mem<'a>(&mut self, data: impl Into<Cow<'a, [u8]>>) -> Result<(), SoloudError> {
+        // take the ownership of the data or clone
+        let data = data.into().into_owned();
+        let res = unsafe { self._load_mem_ex(&data, false, true) };
+        // move the ownership to SoLoud
+        std::mem::forget(data);
+        res
+    }
+    /// Load audio from memory. The data will be weakly referenced by SoLoud
+    fn load_mem_weak<'a, 'b: 'a>(&'a mut self, data: &'b [u8]) -> Result<(), SoloudError> {
+        unsafe { self._load_mem_ex(data, false, false) }
+    }
+    /// Load audio from memory. The data will be weakly referenced by SoLoud without any lifetime
+    /// validation
+    /// # Safety
+    /// The audio source must not be invalidated
+    unsafe fn load_mem_weak_unsafe(&mut self, data: &[u8]) -> Result<(), SoloudError> {
+        self._load_mem_ex(data, false, false)
+    }
+    /// (Internal) load audio from memory with options to copy and/or take ownership
     /// # Safety
     /// The audio source should not be invalidated
-    unsafe fn load_mem_ex(
+    unsafe fn _load_mem_ex(
         &mut self,
         data: &[u8],
         copy: bool,
@@ -189,10 +209,16 @@ pub trait FilterAttr {
 }
 
 pub unsafe trait FromExt: Sized {
-    /// Helper methods for loading an audio source from a path
+    /// Loads an audio source from path
     fn from_path<P: AsRef<Path>>(p: P) -> Result<Self, SoloudError>;
-    /// Helper methods for loading an audio source from memory
-    fn from_mem(data: &[u8]) -> Result<Self, SoloudError>;
+    /// Loads an audio source from memory. Prefer [`LoadExt::load_mem`] when possible like when
+    /// using `'static &[u8]`
+    fn from_mem<'a>(data: impl Into<Cow<'a, [u8]>>) -> Result<Self, SoloudError>;
+    /// Load audio from memory. The data will be weakly referenced by SoLoud without any lifetime
+    /// validation
+    /// # Safety
+    /// The audio source must not be invalidated
+    unsafe fn from_mem_weak_unsafe(data: &[u8]) -> Result<Self, SoloudError>;
 }
 
 unsafe impl<T: AudioExt + LoadExt> FromExt for T {
@@ -202,9 +228,15 @@ unsafe impl<T: AudioExt + LoadExt> FromExt for T {
         Ok(x)
     }
 
-    fn from_mem(data: &[u8]) -> Result<Self, SoloudError> {
+    fn from_mem<'a>(data: impl Into<Cow<'a, [u8]>>) -> Result<Self, SoloudError> {
         let mut x = Self::default();
         x.load_mem(data)?;
+        Ok(x)
+    }
+
+    unsafe fn from_mem_weak_unsafe(data: &[u8]) -> Result<Self, SoloudError> {
+        let mut x = Self::default();
+        x.load_mem_weak_unsafe(data)?;
         Ok(x)
     }
 }
