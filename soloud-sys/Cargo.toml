@@ -22,7 +22,6 @@ libc = "0.2.82"
 cmake = { version = "^0.1.45", git = "https://github.com/moalyousef/cmake-rs" }
 
 [features]
-default = ["miniaudio"]
 use-ninja = []
 miniaudio = []
 sdl2 = []
