@@ -1,6 +1,9 @@
 # Changelog
 
-## [0.3.2] - 2020-01-19
+## [0.3.3] - 2021-01-20
+- Fix default features for soloud-sys.
+
+## [0.3.2] - 2021-01-19
 ### Changes
 - [BREAKING] Wrap Handle type in a struct to avoid misuse. Thanks @toyboot4e.
 - [BREAKING] backend_string now returns a String instead of a &str.
