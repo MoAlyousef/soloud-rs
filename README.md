@@ -137,6 +137,7 @@ or for Windows:
 ```
 $ set CXXFLAGS="-I C:\\path\\to\\include"
 ```
+The same can be done for CFLAGS if needed.
 
 ### Supported backends:
 - miniaudio
