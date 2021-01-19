@@ -1,11 +1,12 @@
 # Changelog
 
-## [0.3.1] - 2020-01-18
+## [0.3.2] - 2020-01-19
 ### Changes
 - [BREAKING] Wrap Handle type in a struct to avoid misuse. Thanks @toyboot4e.
 - [BREAKING] backend_string now returns a String instead of a &str.
 - [BREAKING] BiquadResonantFilterAttr::Frequence renamed to Freq as with all filter attributes.
 - [BREAKING] Rename unsafe LoadExt::load_mem_ex to _load_mem_ex and marked interal.
+- [BREAKING] Add backend parameter when initializing the soloud engine.
 - Fix docs.
 - Add missing backends to CMakeLists.
 - Fix builds with coreaudio framework.

@@ -187,6 +187,42 @@ impl Handle {
     }
 }
 
+/// Backends supported by the Soloud crate
+#[repr(u32)]
+#[derive(Debug, Clone, Copy)]
+pub enum Backend {
+/// Autoselection by Soloud
+Auto = 0,
+/// Sdl2
+Sdl2 = 2,
+/// Portaudio
+Portaudio = 3,
+/// Winmm
+Winmm = 4,
+/// Xaudio2
+Xaudio2 = 5,
+/// Wasapi
+Wasapi = 6,
+/// Alsa
+Alsa = 7,
+/// Jack
+Jack = 8,
+/// Oss
+Oss = 9,
+/// OpenAL
+OpenAL = 10,
+/// Coreaudio
+CoreAudio = 11,
+/// OpenSLES
+OpenSLES = 12,
+/// Miniaudio
+Miniaudio = 14,
+/// Nosound
+Nosound = 15,
+/// Null driver
+Null = 16,
+}
+
 /// Wrapper around the Soloud native object
 #[derive(Debug)]
 pub struct Soloud {
@@ -224,6 +260,7 @@ impl Soloud {
     pub fn init_ex(
         &mut self,
         flags: SoloudFlag,
+        backend: Backend,
         samplerate: u32,
         buf_size: u32,
         channels: u32,
@@ -232,7 +269,7 @@ impl Soloud {
         ffi_call!(ffi::Soloud_initEx(
             self._inner,
             flags.bits() as u32,
-            0,
+            backend as u32,
             samplerate,
             buf_size,
             channels,
@@ -242,12 +279,13 @@ impl Soloud {
     /// Creates a default initialized instance of soloud
     pub fn new(
         flags: SoloudFlag,
+        backend: Backend,
         samplerate: u32,
         buf_size: u32,
         channels: u32,
     ) -> Result<Self, SoloudError> {
         let mut temp = unsafe { Soloud::default_uninit().assume_init() };
-        temp.init_ex(flags, samplerate, buf_size, channels)?;
+        temp.init_ex(flags, backend, samplerate, buf_size, channels)?;
         Ok(temp)
     }
 
