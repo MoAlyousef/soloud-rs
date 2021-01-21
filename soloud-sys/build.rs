@@ -7,8 +7,10 @@ fn main() {
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let mut dst = cmake::Config::new("sys");
     let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
-
-    println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-env-changed=CC");
+    println!("cargo:rerun-if-env-changed=CXX");
+    println!("cargo:rerun-if-env-changed=CFLAGS");
+    println!("cargo:rerun-if-env-changed=CXXFLAGS");
     println!("cargo:rerun-if-changed=sys/CMakeLists.txt");
     println!("cargo:rerun-if-changed=sys/soloud_new.cpp");
     println!("cargo:rerun-if-changed=sys/soloud_derives.h");
