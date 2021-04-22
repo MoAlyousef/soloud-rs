@@ -96,7 +96,7 @@ fn main() {
         .args(&["reset", "--hard"])
         .current_dir(manifest_dir.join("sys").join("soloud"))
         .status()
-        .expect("Git is needed to retrieve the fltk source files!");
+        .expect("Git is needed to retrieve the soloud source files!");
 
     println!(
         "cargo:rustc-link-search=native={}",
