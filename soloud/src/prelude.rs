@@ -1,5 +1,4 @@
 // pub use crate::effects::*;
-use std::borrow::Cow;
 use std::convert::From;
 use std::os::raw::*;
 use std::path::Path;
@@ -190,9 +189,7 @@ pub unsafe trait LoadExt {
     fn load<P: AsRef<Path>>(&mut self, path: P) -> Result<(), SoloudError>;
     /// Load audio from memory. Prefer `load_mem_weak` when possible like when using
     /// `'static &[u8]`
-    fn load_mem<'a>(&mut self, data: impl Into<Cow<'a, [u8]>>) -> Result<(), SoloudError> {
-        // take the ownership of the data or clone
-        let data = data.into().into_owned();
+    fn load_mem(&mut self, data: Vec<u8>) -> Result<(), SoloudError> {
         let res = unsafe { self._load_mem_ex(&data, false, true) };
         // move the ownership to SoLoud
         std::mem::forget(data);
@@ -252,7 +249,7 @@ pub unsafe trait FromExt: Sized {
     fn from_path<P: AsRef<Path>>(p: P) -> Result<Self, SoloudError>;
     /// Loads an audio source from memory. Prefer [`LoadExt::load_mem`] when possible like when
     /// using `'static &[u8]`
-    fn from_mem<'a>(data: impl Into<Cow<'a, [u8]>>) -> Result<Self, SoloudError>;
+    fn from_mem<'a>(data: Vec<u8>) -> Result<Self, SoloudError>;
     /// Load audio from memory. The data will be weakly referenced by SoLoud without any lifetime
     /// validation
     /// # Safety
@@ -267,7 +264,7 @@ unsafe impl<T: AudioExt + LoadExt> FromExt for T {
         Ok(x)
     }
 
-    fn from_mem<'a>(data: impl Into<Cow<'a, [u8]>>) -> Result<Self, SoloudError> {
+    fn from_mem<'a>(data: Vec<u8>) -> Result<Self, SoloudError> {
         let mut x = Self::default();
         x.load_mem(data)?;
         Ok(x)

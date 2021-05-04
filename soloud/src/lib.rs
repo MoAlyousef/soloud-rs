@@ -154,7 +154,7 @@ macro_rules! ffi_call {
 pub mod audio;
 /// Filter module containing all filter types and attributes
 pub mod filter;
-/// prelude module containing all traits and error codes
+/// Prelude module containing all traits and error codes
 pub mod prelude;
 // pub mod effects;
 
@@ -170,12 +170,15 @@ pub use prelude::*;
 
 use soloud_sys::soloud as ffi;
 
-/// A wrapper around the raw handle of the audio object  
-/// which can be used to adjust the parameters of the sound while it's playing
+/// A wrapper around the raw handle of the audio object which can be used to adjust the parameters
+/// of the sound while it's playing
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Handle(u32);
 
 impl Handle {
+    /// Primary bus
+    pub const PRIMARY: Self = Self(0);
+
     /// Create a handle from a raw value
     /// # Safety
     /// The value must be a valid handle
@@ -193,36 +196,36 @@ impl Handle {
 #[repr(u32)]
 #[derive(Debug, Clone, Copy)]
 pub enum Backend {
-/// Autoselection by Soloud
-Auto = 0,
-/// Sdl2
-Sdl2 = 2,
-/// Portaudio
-Portaudio = 3,
-/// Winmm
-Winmm = 4,
-/// Xaudio2
-Xaudio2 = 5,
-/// Wasapi
-Wasapi = 6,
-/// Alsa
-Alsa = 7,
-/// Jack
-Jack = 8,
-/// Oss
-Oss = 9,
-/// OpenAL
-OpenAL = 10,
-/// Coreaudio
-CoreAudio = 11,
-/// OpenSLES
-OpenSLES = 12,
-/// Miniaudio
-Miniaudio = 14,
-/// Nosound
-Nosound = 15,
-/// Null driver
-Null = 16,
+    /// Autoselection by Soloud
+    Auto = 0,
+    /// Sdl2
+    Sdl2 = 2,
+    /// Portaudio
+    Portaudio = 3,
+    /// Winmm
+    Winmm = 4,
+    /// Xaudio2
+    Xaudio2 = 5,
+    /// Wasapi
+    Wasapi = 6,
+    /// Alsa
+    Alsa = 7,
+    /// Jack
+    Jack = 8,
+    /// Oss
+    Oss = 9,
+    /// OpenAL
+    OpenAL = 10,
+    /// Coreaudio
+    CoreAudio = 11,
+    /// OpenSLES
+    OpenSLES = 12,
+    /// Miniaudio
+    Miniaudio = 14,
+    /// Nosound
+    Nosound = 15,
+    /// Null driver
+    Null = 16,
 }
 
 /// Wrapper around the Soloud native object
@@ -493,9 +496,9 @@ impl Soloud {
     }
 
     /// Play in the background
-    pub fn play_background<AS: AudioExt>(&self, sound: &AS) -> u32 {
+    pub fn play_background<AS: AudioExt>(&self, sound: &AS) -> Handle {
         assert!(!self._inner.is_null());
-        unsafe { ffi::Soloud_playBackground(self._inner, sound.inner()) }
+        Handle(unsafe { ffi::Soloud_playBackground(self._inner, sound.inner()) })
     }
 
     /// Play in the background with extra args
