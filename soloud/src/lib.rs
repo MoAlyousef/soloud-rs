@@ -176,6 +176,9 @@ use soloud_sys::soloud as ffi;
 pub struct Handle(u32);
 
 impl Handle {
+    /// Primary bus
+    pub const PRIMARY: Self = Self(0);
+
     /// Create a handle from a raw value
     /// # Safety
     /// The value must be a valid handle
@@ -493,9 +496,9 @@ impl Soloud {
     }
 
     /// Play in the background
-    pub fn play_background<AS: AudioExt>(&self, sound: &AS) -> u32 {
+    pub fn play_background<AS: AudioExt>(&self, sound: &AS) -> Handle {
         assert!(!self._inner.is_null());
-        unsafe { ffi::Soloud_playBackground(self._inner, sound.inner()) }
+        Handle(unsafe { ffi::Soloud_playBackground(self._inner, sound.inner()) })
     }
 
     /// Play in the background with extra args
