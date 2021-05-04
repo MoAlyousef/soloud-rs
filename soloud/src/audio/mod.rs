@@ -1,5 +1,3 @@
-//! Audio sources
-
 mod ay;
 mod bus;
 mod monotone;

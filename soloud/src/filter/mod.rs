@@ -1,5 +1,3 @@
-//! Audio filters
-
 mod bass;
 mod biquad;
 mod dc;
