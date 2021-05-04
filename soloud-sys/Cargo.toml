@@ -1,6 +1,6 @@
 [package]
 name = "soloud-sys"
-version = "0.3.4"
+version = "0.4.0"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 build = "build.rs"
@@ -16,10 +16,10 @@ readme = "../README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-libc = "0.2.82"
+libc = "0.2.94"
 
 [build-dependencies]
-cmake = { version = "^0.1.45", git = "https://github.com/moalyousef/cmake-rs" }
+cmake = "^0.1.45"
 
 [features]
 use-ninja = []

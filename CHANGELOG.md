@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.0] - 2021-05-04
+- Replace Cow with movable/Clonable `Vec<u8>`.
+- Fix expect() message in build script.
+- Update deps.
+
 ## [0.3.3] - 2021-01-20
 - Fix default features for soloud-sys.
 
