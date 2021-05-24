@@ -5,8 +5,8 @@
 //! Supported formats: wav, mp3, ogg. The library also comes with a speech synthesizer.
 //!
 //!
-//! - The official soloud [website](https://!sol.gfxile.net/soloud/index.html)
-//! - The official soloud [repo](https://!github.com/jarikomppa/soloud)
+//! - The official soloud [website](https://sol.gfxile.net/soloud/index.html)
+//! - The official soloud [repo](https://github.com/jarikomppa/soloud)
 //!
 //! ## Usage
 //! ```toml
