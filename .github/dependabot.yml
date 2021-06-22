@@ -1,6 +1,14 @@
 version: 2
 updates:
-  - package-ecosystem: "cargo" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "cargo"
+    directory: "/soloud"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "cargo"
+    directory: "/soloud-derive"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "cargo"
+    directory: "/soloud-sys"
     schedule:
       interval: "daily"
