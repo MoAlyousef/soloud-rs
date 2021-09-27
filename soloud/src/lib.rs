@@ -1174,14 +1174,18 @@ impl Soloud {
         unsafe { ffi::Soloud_set3dSourceDopplerFactor(self._inner, voice_handle.0, doppler_factor) }
     }
 
-    #[allow(dead_code)]
-    fn mix(&mut self, buffer: &mut [f32]) {
+    /// The back-end can call the mix function to request a number of stereo
+    /// samples from SoLoud. The samples will be in float format, and the
+    /// back-end is responsible for converting them to the desired output
+    /// format.
+    pub fn mix(&mut self, buffer: &mut [f32]) {
         assert!(!self._inner.is_null());
         unsafe { ffi::Soloud_mix(self._inner, buffer.as_mut_ptr(), buffer.len() as u32) }
     }
 
-    #[allow(dead_code)]
-    fn mix_signed_16(&mut self, buffer: &mut [i16]) {
+    /// Since so many back-ends prefer 16 bit signed data instead of float
+    /// data, SoLoud also provides a mix call that outputs signed 16 bit data.
+    pub fn mix_signed_16(&mut self, buffer: &mut [i16]) {
         assert!(!self._inner.is_null());
         unsafe { ffi::Soloud_mixSigned16(self._inner, buffer.as_mut_ptr(), buffer.len() as u32) }
     }

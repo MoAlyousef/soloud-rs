@@ -118,7 +118,7 @@ $ cargo run --example load_mem
 ```
 You will need to have valid "sample.wav" and "Recording.mp3" audio files in the project root. Or you can change the paths to point to any supported audio file.
 
-There is also a demo gui application (using fltk) [here](https://github.com/MoAlyousef/fltk-rs-demos/tree/master/musicplayer).
+There is also a demo gui application (using fltk) [here](https://github.com/fltk-rs/demos/tree/master/musicplayer).
 
 ## Dependencies
 A Rust compiler, C++ compiler, Cargo, CMake and git (all these need to be in your PATH). This crate uses the miniaudio backend by default which assumes default sound drivers are functional.
