@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.2] - 2021-09-28
+- Make Soloud::mix and mix_signed_16 public.
+- Update docs.
+
 ## [0.4.0] - 2021-05-04
 - Replace Cow with movable/Clonable `Vec<u8>`.
 - Fix expect() message in build script.

@@ -16,7 +16,7 @@ Supported formats: wav, mp3, ogg, flac. The library also comes with a speech syn
 ## Usage
 ```toml
 [dependencies]
-soloud = "0.3"
+soloud = "0.4"
 ```
 
 Or to use the git repo:
@@ -127,7 +127,7 @@ A Rust compiler, C++ compiler, Cargo, CMake and git (all these need to be in you
 The default backend is miniaudio, however Soloud supports several backends to varying degrees. To enable support of a certain backend, alsa for example:
 ```toml
 [dependencies]
-soloud = { version = "0.3", default-features = false, features = ["alsa"] }
+soloud = { version = "0.4", default-features = false, features = ["alsa"] }
 ```
 This also assumes that those libraries headers are in your include path where CMake can find them, otherwise you can set it via the command line (posix):
 ```
