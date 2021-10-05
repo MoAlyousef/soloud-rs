@@ -2,10 +2,12 @@ use super::ParamType;
 use crate::prelude::*;
 
 /// Freeverb filter
-#[derive(Debug, FilterExt)]
+#[derive(Debug)]
 pub struct FreeverbFilter {
-    _inner: *mut soloud_sys::soloud::FreeverbFilter,
+    inner: *mut soloud_sys::soloud::FreeverbFilter,
 }
+
+crate::macros::filter::impl_filter_ext!(FreeverbFilter);
 
 impl FreeverbFilter {
     /// Set filter params
@@ -17,7 +19,7 @@ impl FreeverbFilter {
         width: f32,
     ) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::FreeverbFilter_setParams(
-            self._inner,
+            self.inner,
             mode,
             room_size,
             damp,

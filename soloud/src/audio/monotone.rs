@@ -3,15 +3,18 @@ use soloud_sys::soloud as ffi;
 use std::path::Path;
 
 /// Monotone audio type
-#[derive(Debug, AudioExt, LoadExt)]
+#[derive(Debug)]
 pub struct Monotone {
-    _inner: *mut ffi::Monotone,
+    inner: *mut ffi::Monotone,
 }
+
+crate::macros::load::impl_load_ext!(Monotone);
+crate::macros::audio::impl_audio_ext!(Monotone);
 
 impl Monotone {
     /// Set monotone parameters
     pub fn set_params(&mut self, hardware_channel: i32) -> Result<(), SoloudError> {
-        ffi_call!(ffi::Monotone_setParams(self._inner, hardware_channel))
+        ffi_call!(ffi::Monotone_setParams(self.inner, hardware_channel))
     }
 
     /// Set monotone parameters specifying the wave form
@@ -21,7 +24,7 @@ impl Monotone {
         wave_form: WaveForm,
     ) -> Result<(), SoloudError> {
         ffi_call!(ffi::Monotone_setParamsEx(
-            self._inner,
+            self.inner,
             hardware_channel,
             wave_form as i32
         ))

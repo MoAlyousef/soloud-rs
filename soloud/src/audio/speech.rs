@@ -22,21 +22,23 @@ pub enum KlattWaveForm {
 }
 
 /// Speech audio source
-#[derive(Debug, AudioExt)]
+#[derive(Debug)]
 pub struct Speech {
-    _inner: *mut ffi::Speech,
+    inner: *mut ffi::Speech,
 }
+
+crate::macros::audio::impl_audio_ext!(Speech);
 
 impl Speech {
     /// set speech text
     pub fn set_text(&mut self, txt: &str) -> Result<(), SoloudError> {
         let txt = std::ffi::CString::new(txt)?;
-        ffi_call!(ffi::Speech_setText(self._inner, txt.as_ptr()))
+        ffi_call!(ffi::Speech_setText(self.inner, txt.as_ptr()))
     }
 
     /// Set speech params
     pub fn set_params(&mut self) -> Result<(), SoloudError> {
-        ffi_call!(ffi::Speech_setParams(self._inner))
+        ffi_call!(ffi::Speech_setParams(self.inner))
     }
 
     /// Set speech params
@@ -48,7 +50,7 @@ impl Speech {
         base_waveform: KlattWaveForm,
     ) -> Result<(), SoloudError> {
         ffi_call!(ffi::Speech_setParamsEx(
-            self._inner,
+            self.inner,
             base_freq,
             base_speed,
             base_declination,

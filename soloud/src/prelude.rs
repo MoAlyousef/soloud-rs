@@ -78,7 +78,7 @@ impl From<std::ffi::NulError> for SoloudError {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Soloud flags
     pub struct SoloudFlag: i32 {
         /// Clip roundoff

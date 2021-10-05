@@ -3,7 +3,7 @@ use crate::prelude::*;
 
 /// Robotize filter attributes
 #[repr(u32)]
-#[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub enum RobotizeFilterAttr {
     /// Wet attribute
     Wet = 0,
@@ -14,14 +14,17 @@ pub enum RobotizeFilterAttr {
 }
 
 /// Robotize filter
-#[derive(Debug, FilterExt)]
+#[derive(Debug)]
 pub struct RobotizeFilter {
-    _inner: *mut soloud_sys::soloud::RobotizeFilter,
+    inner: *mut soloud_sys::soloud::RobotizeFilter,
 }
+
+crate::macros::filter::impl_filter_ext!(RobotizeFilter);
+crate::macros::filter::impl_filter_type!(RobotizeFilterAttr);
 
 impl RobotizeFilter {
     /// Set filter params
     pub fn set_params(&mut self, freq: f32, wave_form: WaveForm) {
-        unsafe { soloud_sys::soloud::RobotizeFilter_setParams(self._inner, freq, wave_form as i32) }
+        unsafe { soloud_sys::soloud::RobotizeFilter_setParams(self.inner, freq, wave_form as i32) }
     }
 }

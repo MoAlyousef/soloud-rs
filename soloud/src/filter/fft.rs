@@ -2,7 +2,9 @@ use super::ParamType;
 use crate::prelude::*;
 
 /// FFT Filter
-#[derive(Debug, FilterExt)]
+#[derive(Debug)]
 pub struct FFTFilter {
-    _inner: *mut soloud_sys::soloud::FFTFilter,
+    inner: *mut soloud_sys::soloud::FFTFilter,
 }
+
+crate::macros::filter::impl_filter_ext!(FFTFilter);

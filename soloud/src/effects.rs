@@ -3,7 +3,7 @@ use std::os::raw::*;
 
 #[derive(Debug)]
 pub struct AudioSourceInstance3dData {
-    _inner: *mut ffi::AudioSourceInstance3dData,
+    inner: *mut ffi::AudioSourceInstance3dData,
 }
 
 impl AudioSourceInstance3dData {
@@ -12,26 +12,26 @@ impl AudioSourceInstance3dData {
         unsafe {
             let ptr = ffi::AudioSourceInstance3dData_new(engine.inner());
             assert!(!ptr.is_null());
-            AudioSourceInstance3dData { _inner: ptr }
+            AudioSourceInstance3dData { inner: ptr }
         }
     }
 
     unsafe fn from_ptr(ptr: *mut c_void) -> Self {
         assert!(!ptr.is_null());
-        AudioSourceInstance3dData { _inner: ptr }
+        AudioSourceInstance3dData { inner: ptr }
     }
 }
 
 impl Drop for AudioSourceInstance3dData {
     fn drop(&mut self) {
-        unsafe { ffi::AudioSourceInstance3dData_delete(self._inner) }
+        unsafe { ffi::AudioSourceInstance3dData_delete(self.inner) }
     }
 }
 
 #[derive(Debug)]
 /// Audio Collider struct
 pub struct AudioCollider {
-    _inner: ffi::AudioCollider,
+    inner: ffi::AudioCollider,
 }
 
 impl AudioCollider {
@@ -40,7 +40,7 @@ impl AudioCollider {
         unsafe {
             let ptr = ffi::AudioCollider_new();
             assert!(!ptr.is_null());
-            AudioCollider { _inner: ptr }
+            AudioCollider { inner: ptr }
         }
     }
 
@@ -87,7 +87,7 @@ impl AudioCollider {
                     arg4: *mut c_void,
                 ) -> f32,
             > = Some(shim);
-            ffi::AudioCollider_set_handler(self._inner, callback, data);
+            ffi::AudioCollider_set_handler(self.inner, callback, data);
         }
     }
 
@@ -95,20 +95,20 @@ impl AudioCollider {
     /// # Safety
     /// The inner pointer should be modified with care!
     pub unsafe fn inner(&self) -> ffi::AudioCollider {
-        self._inner
+        self.inner
     }
 }
 
 impl Drop for AudioCollider {
     fn drop(&mut self) {
-        unsafe { ffi::AudioCollider_delete(self._inner) }
+        unsafe { ffi::AudioCollider_delete(self.inner) }
     }
 }
 
 /// Audio Attenuator struct
 #[derive(Debug)]
 pub struct AudioAttenuator {
-    _inner: ffi::AudioAttenuator,
+    inner: ffi::AudioAttenuator,
 }
 
 impl AudioAttenuator {
@@ -117,14 +117,14 @@ impl AudioAttenuator {
         unsafe {
             let ptr = ffi::AudioAttenuator_new();
             assert!(!ptr.is_null());
-            AudioAttenuator { _inner: ptr }
+            AudioAttenuator { inner: ptr }
         }
     }
 
     /// Override the attenuate method
     /// attenuate(aDistance, aMinDistance, aMaxDistance, aRolloffFactor)
     pub fn attenuate(&mut self, cb: Box<dyn FnMut(f32, f32, f32, f32) -> f32>) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
                 arg1: f32,
@@ -156,7 +156,7 @@ impl AudioAttenuator {
                     data: *mut c_void,
                 ) -> f32,
             > = Some(shim);
-            ffi::AudioAttenuator_set_handler(self._inner, callback, data);
+            ffi::AudioAttenuator_set_handler(self.inner, callback, data);
         }
     }
 
@@ -164,12 +164,12 @@ impl AudioAttenuator {
     /// # Safety
     /// The inner pointer should be modified with care!
     pub unsafe fn inner(&self) -> ffi::AudioAttenuator {
-        self._inner
+        self.inner
     }
 }
 
 impl Drop for AudioAttenuator {
     fn drop(&mut self) {
-        unsafe { ffi::AudioAttenuator_delete(self._inner) }
+        unsafe { ffi::AudioAttenuator_delete(self.inner) }
     }
 }

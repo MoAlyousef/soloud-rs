@@ -16,15 +16,17 @@ pub enum NoiseType {
 }
 
 /// Noise audio type
-#[derive(Debug, AudioExt)]
+#[derive(Debug)]
 pub struct Noise {
-    _inner: *mut ffi::Noise,
+    inner: *mut ffi::Noise,
 }
+
+crate::macros::audio::impl_audio_ext!(Noise);
 
 impl Noise {
     /// Set noise type
     pub fn set_type(&mut self, typ: NoiseType) {
-        unsafe { ffi::Noise_setType(self._inner, typ as i32) }
+        unsafe { ffi::Noise_setType(self.inner, typ as i32) }
     }
 
     /// Set the octave scale
@@ -43,7 +45,7 @@ impl Noise {
     ) {
         unsafe {
             ffi::Noise_setOctaveScale(
-                self._inner,
+                self.inner,
                 oct_0,
                 oct_1,
                 oct_2,

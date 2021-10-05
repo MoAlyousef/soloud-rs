@@ -3,10 +3,13 @@ use soloud_sys::soloud as ffi;
 use std::path::Path;
 
 /// Wav audio type
-#[derive(Debug, AudioExt, LoadExt)]
+#[derive(Debug)]
 pub struct Wav {
-    _inner: *mut ffi::Wav,
+    inner: *mut ffi::Wav,
 }
+
+crate::macros::load::impl_load_ext!(Wav);
+crate::macros::audio::impl_audio_ext!(Wav);
 
 impl Wav {
     /// Load raw wav data of precise bits
@@ -14,7 +17,7 @@ impl Wav {
     /// The data must be valid
     pub unsafe fn load_raw_wav_8(&mut self, data: &[u8]) -> Result<(), SoloudError> {
         ffi_call!(ffi::Wav_loadRawWave8(
-            self._inner,
+            self.inner,
             data.as_ptr() as *mut _,
             data.len() as u32
         ))
@@ -30,7 +33,7 @@ impl Wav {
         channels: u32,
     ) -> Result<(), SoloudError> {
         ffi_call!(ffi::Wav_loadRawWave8Ex(
-            self._inner,
+            self.inner,
             data.as_ptr() as *mut _,
             data.len() as u32,
             samplerate,
@@ -43,7 +46,7 @@ impl Wav {
     /// The data must be valid
     pub unsafe fn load_raw_wav_16(&mut self, data: &[i16]) -> Result<(), SoloudError> {
         ffi_call!(ffi::Wav_loadRawWave16(
-            self._inner,
+            self.inner,
             data.as_ptr() as *mut _,
             data.len() as u32
         ))
@@ -59,7 +62,7 @@ impl Wav {
         channels: u32,
     ) -> Result<(), SoloudError> {
         ffi_call!(ffi::Wav_loadRawWave16Ex(
-            self._inner,
+            self.inner,
             data.as_ptr() as *mut _,
             data.len() as u32,
             samplerate,
@@ -72,7 +75,7 @@ impl Wav {
     /// The data must be valid
     pub unsafe fn load_raw_wav(&mut self, data: &[f32]) -> Result<(), SoloudError> {
         ffi_call!(ffi::Wav_loadRawWave(
-            self._inner,
+            self.inner,
             data.as_ptr() as *mut _,
             data.len() as u32
         ))
@@ -90,7 +93,7 @@ impl Wav {
         take_ownership: bool,
     ) -> Result<(), SoloudError> {
         ffi_call!(ffi::Wav_loadRawWaveEx(
-            self._inner,
+            self.inner,
             data.as_ptr() as *mut _,
             data.len() as u32,
             samplerate,
@@ -102,6 +105,6 @@ impl Wav {
 
     /// Get the length of the Wav object
     pub fn length(&self) -> f64 {
-        unsafe { ffi::Wav_getLength(self._inner) }
+        unsafe { ffi::Wav_getLength(self.inner) }
     }
 }

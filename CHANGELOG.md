@@ -1,5 +1,9 @@
 # Changelog
 
+
+## [0.4.2] - 2021-10-05
+- Remove dependence on syn & quote
+
 ## [0.4.2] - 2021-09-28
 - Make Soloud::mix and mix_signed_16 public.
 - Update docs.

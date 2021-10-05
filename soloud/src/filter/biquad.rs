@@ -3,7 +3,7 @@ use crate::prelude::*;
 
 /// Biquad resonant filter attributes
 #[repr(u32)]
-#[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub enum BiquadResonantFilterAttr {
     /// Wet attribute
     Wet = 0,
@@ -17,7 +17,7 @@ pub enum BiquadResonantFilterAttr {
 
 /// Biquad resonant filter types
 #[repr(i32)]
-#[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub enum BiquadResonantFilterType {
     /// Lowpass biquad resonant filter
     LowPass,
@@ -28,10 +28,14 @@ pub enum BiquadResonantFilterType {
 }
 
 /// Biquad resonant filter
-#[derive(Debug, FilterExt)]
+#[derive(Debug)]
 pub struct BiquadResonantFilter {
-    _inner: *mut soloud_sys::soloud::BiquadResonantFilter,
+    inner: *mut soloud_sys::soloud::BiquadResonantFilter,
 }
+
+crate::macros::filter::impl_filter_ext!(BiquadResonantFilter);
+crate::macros::filter::impl_filter_type!(BiquadResonantFilterType);
+crate::macros::filter::impl_filter_type!(BiquadResonantFilterAttr);
 
 impl BiquadResonantFilter {
     /// Set filter params
@@ -42,7 +46,7 @@ impl BiquadResonantFilter {
         resonance: f32,
     ) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::BiquadResonantFilter_setParams(
-            self._inner,
+            self.inner,
             filter_type as i32,
             frequency,
             resonance,

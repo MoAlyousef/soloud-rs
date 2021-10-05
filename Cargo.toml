@@ -2,5 +2,4 @@
 members = [
 	"soloud",
 	"soloud-sys",
-	"soloud-derive",
 ]

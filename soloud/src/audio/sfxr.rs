@@ -22,20 +22,22 @@ pub enum SfxrPreset {
 }
 
 /// Sfxr audio type
-#[derive(AudioExt)]
+#[derive(Debug)]
 pub struct Sfxr {
-    _inner: *mut ffi::Sfxr,
+    inner: *mut ffi::Sfxr,
 }
+
+crate::macros::audio::impl_audio_ext!(Sfxr);
 
 impl Sfxr {
     /// Load preset
     pub fn load_preset(&mut self, preset: SfxrPreset, rand_seed: i32) -> Result<(), SoloudError> {
-        ffi_call!(ffi::Sfxr_loadPreset(self._inner, preset as i32, rand_seed))
+        ffi_call!(ffi::Sfxr_loadPreset(self.inner, preset as i32, rand_seed))
     }
 
     /// Resets parameters
     pub fn reset_params(&mut self) {
-        unsafe { ffi::Sfxr_resetParams(self._inner) }
+        unsafe { ffi::Sfxr_resetParams(self.inner) }
     }
 
     /// Load parameters from a file
@@ -44,13 +46,13 @@ impl Sfxr {
             .to_str()
             .ok_or(SoloudError::Internal(SoloudErrorKind::FileLoadFailed))?;
         let path = std::ffi::CString::new(path)?;
-        ffi_call!(ffi::Sfxr_loadParams(self._inner, path.as_ptr()))
+        ffi_call!(ffi::Sfxr_loadParams(self.inner, path.as_ptr()))
     }
 
     /// Load parameters from memory
     pub fn load_params_mem(&mut self, params: &[u8]) -> Result<(), SoloudError> {
         ffi_call!(ffi::Sfxr_loadParamsMemEx(
-            self._inner,
+            self.inner,
             params.as_ptr() as *mut _,
             params.len() as u32,
             1,

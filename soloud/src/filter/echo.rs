@@ -3,7 +3,7 @@ use crate::prelude::*;
 
 /// Echo filter attributes
 #[repr(u32)]
-#[derive(FilterAttr, Copy, Clone, Debug, PartialOrd, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub enum EchoFilterAttr {
     /// Wet attribute
     Wet = 0,
@@ -16,15 +16,18 @@ pub enum EchoFilterAttr {
 }
 
 /// Echo filter
-#[derive(Debug, FilterExt)]
+#[derive(Debug)]
 pub struct EchoFilter {
-    _inner: *mut soloud_sys::soloud::EchoFilter,
+    inner: *mut soloud_sys::soloud::EchoFilter,
 }
+
+crate::macros::filter::impl_filter_ext!(EchoFilter);
+crate::macros::filter::impl_filter_type!(EchoFilterAttr);
 
 impl EchoFilter {
     /// Set filter params
     pub fn set_params(&mut self, delay: f32) -> Result<(), SoloudError> {
-        ffi_call!(soloud_sys::soloud::EchoFilter_setParams(self._inner, delay))
+        ffi_call!(soloud_sys::soloud::EchoFilter_setParams(self.inner, delay))
     }
 
     /// Set filter params with extra args
@@ -35,7 +38,7 @@ impl EchoFilter {
         filter: f32,
     ) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::EchoFilter_setParamsEx(
-            self._inner,
+            self.inner,
             delay,
             decay,
             filter

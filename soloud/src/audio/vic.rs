@@ -28,29 +28,31 @@ pub enum VicRegister {
 }
 
 /// Vic-20 emulator audio type
-#[derive(Debug, AudioExt)]
+#[derive(Debug)]
 pub struct Vic {
-    _inner: *mut ffi::Vic,
+    inner: *mut ffi::Vic,
 }
+
+crate::macros::audio::impl_audio_ext!(Vic);
 
 impl Vic {
     /// Get the VicModel of the Vic object
     pub fn model(&self) -> VicModel {
-        unsafe { std::mem::transmute(ffi::Vic_getModel(self._inner)) }
+        unsafe { std::mem::transmute(ffi::Vic_getModel(self.inner)) }
     }
 
     /// Set the VicModel of the Vic object
     pub fn set_model(&mut self, model: VicModel) {
-        unsafe { ffi::Vic_setModel(self._inner, model as i32) }
+        unsafe { ffi::Vic_setModel(self.inner, model as i32) }
     }
 
     /// Get the VicRegister of the Vic object
     pub fn register(&self, reg: i32) -> VicRegister {
-        unsafe { std::mem::transmute(ffi::Vic_getRegister(self._inner, reg)) }
+        unsafe { std::mem::transmute(ffi::Vic_getRegister(self.inner, reg)) }
     }
 
     /// Set the VicRegister of the Vic object
     pub fn set_register(&mut self, val: u8, reg: VicRegister) {
-        unsafe { ffi::Vic_setRegister(self._inner, val as i32, reg as u8) }
+        unsafe { ffi::Vic_setRegister(self.inner, val as i32, reg as u8) }
     }
 }
