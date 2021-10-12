@@ -11,7 +11,7 @@
 //! ## Usage
 //! ```toml
 //! [dependencies]
-//! soloud = "0.4"
+//! soloud = "1"
 //! ```
 //!
 //! Or to use the latest developments:
@@ -107,7 +107,7 @@
 //! The default backend is miniaudio, however Soloud supports several backends to varying degrees. To enable support of a certain backend, alsa for example:
 //! ```toml
 //! [dependencies]
-//! soloud = { version = "0.4", default-features = false, features = ["alsa"] }
+//! soloud = { version = "1", default-features = false, features = ["alsa"] }
 //! ```
 //! This also assumes that those libraries headers are in your include path where CMake can find them, otherwise you can set it via the command line (posix):
 //! ```sh
