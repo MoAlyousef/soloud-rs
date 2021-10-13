@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.0.0] - 2021-10-15
+- Enable Android builds.
+- Enable passing utf-8 paths on Windows.
+
 ## [0.4.4] - 2021-10-05
 - Remove dependence on syn & quote.
 - Don't depend on libc.
