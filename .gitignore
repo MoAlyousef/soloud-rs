@@ -4,3 +4,4 @@ temp.*
 .clangd
 *.wav
 *.mp3
+*.exe
