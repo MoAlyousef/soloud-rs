@@ -189,9 +189,7 @@ pub unsafe trait LoadExt {
     fn load<P: AsRef<Path>>(&mut self, path: P) -> Result<(), SoloudError>;
     /// Load audio from memory.
     fn load_mem(&mut self, data: &[u8]) -> Result<(), SoloudError> {
-        let res = unsafe { self._load_mem_ex(&data, false, false) };
-        // move the ownership to SoLoud
-        res
+        unsafe { self._load_mem_ex(&data, false, false) }
     }
     #[doc(hidden)]
     /// (Internal) load audio from memory with options to copy and/or take ownership
