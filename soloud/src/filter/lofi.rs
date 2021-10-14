@@ -26,9 +26,7 @@ impl LofiFilter {
     /// Set filter params
     pub fn set_params(&mut self, samplerate: f32, bit_depth: f32) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::LofiFilter_setParams(
-            self.inner,
-            samplerate,
-            bit_depth
+            self.inner, samplerate, bit_depth
         ))
     }
 }

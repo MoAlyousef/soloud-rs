@@ -154,10 +154,10 @@ macro_rules! ffi_call {
 pub mod audio;
 /// Filter module containing all filter types and attributes
 pub mod filter;
-/// Prelude module containing all traits and error codes
-pub mod prelude;
 /// Internal macros
 mod macros;
+/// Prelude module containing all traits and error codes
+pub mod prelude;
 
 pub use audio::*;
 pub use filter::*;
@@ -337,13 +337,7 @@ impl Soloud {
         z: f32,
     ) -> Result<(), SoloudError> {
         assert!(!self.inner.is_null());
-        ffi_call!(ffi::Soloud_setSpeakerPosition(
-            self.inner,
-            channel,
-            x,
-            y,
-            z
-        ))
+        ffi_call!(ffi::Soloud_setSpeakerPosition(self.inner, channel, x, y, z))
     }
 
     /// Get the speaker position
@@ -353,11 +347,7 @@ impl Soloud {
         let mut y = 0.0;
         let mut z = 0.0;
         ffi_call!(ffi::Soloud_getSpeakerPosition(
-            self.inner,
-            channel,
-            &mut x,
-            &mut y,
-            &mut z
+            self.inner, channel, &mut x, &mut y, &mut z
         ))?;
         Ok((x, y, z))
     }
@@ -373,14 +363,7 @@ impl Soloud {
     ) -> Handle {
         assert!(!self.inner.is_null());
         Handle(unsafe {
-            ffi::Soloud_playEx(
-                self.inner,
-                sound.inner(),
-                volume,
-                pan,
-                paused as i32,
-                bus.0,
-            )
+            ffi::Soloud_playEx(self.inner, sound.inner(), volume, pan, paused as i32, bus.0)
         })
     }
 
@@ -979,16 +962,7 @@ impl Soloud {
         assert!(!self.inner.is_null());
         unsafe {
             ffi::Soloud_set3dListenerParameters(
-                self.inner,
-                pos_x,
-                pos_y,
-                pos_z,
-                at_x,
-                at_y,
-                at_z,
-                up_x,
-                up_y,
-                up_z,
+                self.inner, pos_x, pos_y, pos_z, at_x, at_y, at_z, up_x, up_y, up_z,
             )
         }
     }
@@ -1012,19 +986,8 @@ impl Soloud {
         assert!(!self.inner.is_null());
         unsafe {
             ffi::Soloud_set3dListenerParametersEx(
-                self.inner,
-                pos_x,
-                pos_y,
-                pos_z,
-                at_x,
-                at_y,
-                at_z,
-                up_x,
-                up_y,
-                up_z,
-                velocity_x,
-                velocity_y,
-                velocity_z,
+                self.inner, pos_x, pos_y, pos_z, at_x, at_y, at_z, up_x, up_y, up_z, velocity_x,
+                velocity_y, velocity_z,
             )
         }
     }
@@ -1050,9 +1013,7 @@ impl Soloud {
     /// Set 3D listener velocity
     pub fn set_3d_listener_velocity(&mut self, velocity_x: f32, velocity_y: f32, velocity_z: f32) {
         assert!(!self.inner.is_null());
-        unsafe {
-            ffi::Soloud_set3dListenerVelocity(self.inner, velocity_x, velocity_y, velocity_z)
-        }
+        unsafe { ffi::Soloud_set3dListenerVelocity(self.inner, velocity_x, velocity_y, velocity_z) }
     }
 
     /// Set 3D source parameters

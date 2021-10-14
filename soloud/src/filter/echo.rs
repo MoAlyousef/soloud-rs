@@ -38,10 +38,7 @@ impl EchoFilter {
         filter: f32,
     ) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::EchoFilter_setParamsEx(
-            self.inner,
-            delay,
-            decay,
-            filter
+            self.inner, delay, decay, filter
         ))
     }
 }

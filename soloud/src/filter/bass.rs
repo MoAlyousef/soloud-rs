@@ -24,8 +24,7 @@ impl BassboostFilter {
     /// Set filter params
     pub fn set_params(&mut self, delay: f32) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::BassboostFilter_setParams(
-            self.inner,
-            delay
+            self.inner, delay
         ))
     }
 }

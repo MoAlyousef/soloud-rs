@@ -19,11 +19,7 @@ impl FreeverbFilter {
         width: f32,
     ) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::FreeverbFilter_setParams(
-            self.inner,
-            mode,
-            room_size,
-            damp,
-            width,
+            self.inner, mode, room_size, damp, width,
         ))
     }
 }

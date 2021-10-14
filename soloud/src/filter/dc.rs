@@ -18,8 +18,7 @@ impl DCRemovalFilter {
     /// Set filter params with extra args
     pub fn set_params_ex(&mut self, delay: f32) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::DCRemovalFilter_setParamsEx(
-            self.inner,
-            delay
+            self.inner, delay
         ))
     }
 }

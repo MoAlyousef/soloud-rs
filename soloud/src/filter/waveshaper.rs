@@ -24,8 +24,7 @@ impl WaveShaperFilter {
     /// Set filter params
     pub fn set_params(&mut self, amount: f32) -> Result<(), SoloudError> {
         ffi_call!(soloud_sys::soloud::WaveShaperFilter_setParams(
-            self.inner,
-            amount
+            self.inner, amount
         ))
     }
 }

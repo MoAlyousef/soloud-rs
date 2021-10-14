@@ -45,17 +45,7 @@ impl Noise {
     ) {
         unsafe {
             ffi::Noise_setOctaveScale(
-                self.inner,
-                oct_0,
-                oct_1,
-                oct_2,
-                oct_3,
-                oct_4,
-                oct_5,
-                oct_6,
-                oct_7,
-                oct_8,
-                oct_9,
+                self.inner, oct_0, oct_1, oct_2, oct_3, oct_4, oct_5, oct_6, oct_7, oct_8, oct_9,
             )
         }
     }
