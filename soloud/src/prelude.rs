@@ -190,9 +190,8 @@ pub unsafe trait LoadExt {
     /// Load audio from memory. Prefer `load_mem_weak` when possible like when using
     /// `'static &[u8]`
     fn load_mem(&mut self, data: Vec<u8>) -> Result<(), SoloudError> {
-        let res = unsafe { self._load_mem_ex(&data, false, true) };
+        let res = unsafe { self._load_mem_ex(&data, true, false) };
         // move the ownership to SoLoud
-        std::mem::forget(data);
         res
     }
     /// Load audio from memory. The data will be weakly referenced by SoLoud
