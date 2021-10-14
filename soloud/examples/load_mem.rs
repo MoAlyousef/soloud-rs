@@ -5,9 +5,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut wav = audio::Wav::default();
 
-    let bytes = std::fs::read("sample.wav")?;
-
-    wav.load_mem(bytes)?;
+    {
+        let bytes = std::fs::read("sample.wav")?;
+        wav.load_mem(&bytes)?;
+    }
 
     sl.play(&wav);
     while sl.voice_count() > 0 {
