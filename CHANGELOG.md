@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.1] - Unreleased
+- Update soloud module.
+
 ## [1.0.0] - 2021-10-15
 - Enable Android builds.
 - Enable passing utf-8 paths on Windows.
