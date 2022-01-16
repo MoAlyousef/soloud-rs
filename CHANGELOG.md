@@ -3,12 +3,12 @@
 
 ## [1.0.1] - 2022-01-16
 - Update soloud module.
-- Remove LoadExt::load_mem_weak().
+- Remove references to LoadExt::load_mem_weak().
 
 ## [1.0.0] - 2021-10-15
 - Enable Android builds.
 - Enable passing utf-8 paths on Windows.
-- Remove 
+- Remove LoadExt::load_mem_weak().
 
 ## [0.4.4] - 2021-10-05
 - Remove dependence on syn & quote.
