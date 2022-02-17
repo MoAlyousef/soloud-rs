@@ -1,6 +1,6 @@
 [package]
 name = "soloud-sys"
-version = "1.0.1"
+version = "1.0.2"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 build = "build/main.rs"
@@ -11,7 +11,8 @@ keywords = ["audio", "playback", "synthesizer"]
 categories = ["multimedia::audio"]
 license = "MIT"
 exclude = ["./examples"]
-readme = "../README.md"
+readme = "README.md"
+links = "soloud"
 
 [build-dependencies]
 cmake = "^0.1.45"
@@ -33,3 +34,6 @@ coreaudio = []
 jack = []
 nosound = []
 null = []
+
+[package.metadata.docs.rs]
+features = ["miniaudio"]
