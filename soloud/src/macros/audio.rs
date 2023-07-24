@@ -130,6 +130,9 @@ macro_rules! impl_audio_ext {
                 }
             }
 
+            unsafe impl Send for $name {}
+            unsafe impl Sync for $name {}
+
             impl Drop for $name {
                 fn drop(&mut self) {
                     unsafe {
