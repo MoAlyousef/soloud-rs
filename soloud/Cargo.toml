@@ -1,6 +1,6 @@
 [package]
 name = "soloud"
-version = "1.0.4"
+version = "1.0.5"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the soloud audio engine"
@@ -13,7 +13,7 @@ exclude = ["./examples"]
 readme = "README.md"
 
 [dependencies]
-soloud-sys = { path = "../soloud-sys", version = "=1.0.4" }
+soloud-sys = { path = "../soloud-sys", version = "=1.0.5" }
 bitflags = "^2"
 paste = "1"
 
