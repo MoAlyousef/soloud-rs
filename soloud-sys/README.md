@@ -9,7 +9,7 @@ soloud-sys = { version = "1", features = ["miniaudio"] }
 ```
 
 Example code:
-```rust
+```rust,no_run
 use soloud_sys::soloud::*;
 
 fn main() {

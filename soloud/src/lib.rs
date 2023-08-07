@@ -1,142 +1,9 @@
-//! # soloud
-//!
-//! Rust bindings for the soloud audio engine library.
-//!
-//! Supported formats: wav, mp3, ogg. The library also comes with a speech synthesizer.
-//!
-//!
-//! - The official soloud [website](https://sol.gfxile.net/soloud/index.html)
-//! - The official soloud [repo](https://github.com/jarikomppa/soloud)
-//!
-//! ## Usage
-//! ```toml
-//! [dependencies]
-//! soloud = "1"
-//! ```
-//!
-//! Or to use the latest developments:
-//! ```toml
-//! [dependencies]
-//! soloud = { git = "https://!github.com/moalyousef/soloud-rs" }
-//! ```
-//!
-//! To play audio:
-//! ```no_run
-//! use soloud::*;
-//!
-//! fn main() -> Result<(), Box<dyn std::error::Error>> {
-//!     let mut sl = Soloud::default()?;
-//!
-//!     let mut wav = audio::Wav::default();
-//!
-//!     wav.load(&std::path::Path::new("sample.wav"))?;
-//!
-//!     sl.play(&wav);
-//!     while sl.voice_count() > 0 {
-//!         std::thread::sleep(std::time::Duration::from_millis(100));
-//!     }
-//!
-//!     wav.load(&std::path::Path::new("Recording.mp3"))?;
-//!
-//!     sl.play(&wav);
-//!     while sl.voice_count() > 0 {
-//!         std::thread::sleep(std::time::Duration::from_millis(100));
-//!     }
-//!
-//!     Ok(())
-//! }
-//! ```
-//!
-//! To play speech:
-//! ```no_run
-//! use soloud::*;
-//!
-//! fn main() -> Result<(), Box<dyn std::error::Error>> {
-//!     let mut sl = Soloud::default()?;
-//!
-//!     let mut speech = audio::Speech::default();
-//!
-//!     speech.set_text("Hello World")?;
-//!
-//!     sl.play(&speech);
-//!     while sl.active_voice_count() > 0 {
-//!         std::thread::sleep(std::time::Duration::from_millis(100));
-//!     }
-//!
-//!     speech.set_text("1 2 3")?;
-//!
-//!     sl.play(&speech);
-//!     while sl.active_voice_count() > 0 {
-//!         std::thread::sleep(std::time::Duration::from_millis(100));
-//!     }
-//!
-//!     speech.set_text("Can you hear me?")?;
-//!
-//!     sl.play(&speech);
-//!     while sl.active_voice_count() > 0 {
-//!         std::thread::sleep(std::time::Duration::from_millis(100));
-//!     }
-//!
-//!     Ok(())
-//! }
-//! ```
-//!
-//! To add a filter:
-//! ```no_run
-//! use soloud::*;
-//!
-//! fn main() -> Result<(), Box<dyn std::error::Error>> {
-//!     let mut sl = Soloud::default()?;
-//!
-//!     let mut wav = audio::Wav::default();
-//!     let mut filt = filter::EchoFilter::default();
-//!     filt.set_params(0.2)?;
-//!
-//!     wav.load(&std::path::Path::new("sample.wav"))?;
-//!     wav.set_filter(0, Some(&filt));
-//!
-//!     sl.play(&wav);
-//!     while sl.voice_count() > 0 {
-//!         std::thread::sleep(std::time::Duration::from_millis(100));
-//!     }
-//!
-//!     Ok(())
-//! }
-//! ```
-//! ## Backends
-//! The default backend is miniaudio, however Soloud supports several backends to varying degrees. To enable support of a certain backend, alsa for example:
-//! ```toml
-//! [dependencies]
-//! soloud = { version = "1", default-features = false, features = ["alsa"] }
-//! ```
-//! This also assumes that those libraries headers are in your include path where CMake can find them, otherwise you can set it via the command line (posix):
-//! ```sh
-//! $ export CXXFLAGS="-I /path/to/include"
-//! ```
-//! or for Windows:
-//! ```sh
-//! $ set CXXFLAGS="-I C:\\path\\to\\include"
-//! ```
-//! The same can be done for CFLAGS if needed.
-//!
-//! ### Supported backends:
-//! - miniaudio
-//! - oss
-//! - alsa
-//! - sdl2
-//! - sdl2-static
-//! - portaudio
-//! - openal
-//! - xaudio2
-//! - winmm
-//! - wasapi
-//! - opensles
-//! - coreaudio
-//! - jack
+#![doc = include_str!("../README.md")]
 
 #![allow(unused_unsafe)]
 #![allow(non_upper_case_globals)]
 #![warn(missing_docs)]
+#![allow(clippy::too_many_arguments)]
 
 /// FFI function call with error handling
 ///
@@ -235,7 +102,9 @@ unsafe impl Sync for Soloud {}
 
 impl Soloud {
     /// Creates an uninitialized instance of a Soloud engine
-    pub fn default_uninit() -> std::mem::MaybeUninit<Self> {
+    /// # Safety
+    /// Creates an uninitialized instance of Soloud
+    pub unsafe fn default_uninit() -> std::mem::MaybeUninit<Self> {
         unsafe {
             let ptr = ffi::Soloud_create();
             assert!(!ptr.is_null());
@@ -244,16 +113,21 @@ impl Soloud {
     }
 
     /// initialize an uninitialized instance of Soloud
-    pub fn init(&mut self) -> Result<(), SoloudError> {
+    /// # Safety
+    /// initializes an uninitialized instance of Soloud
+    pub unsafe fn init(&mut self) -> Result<(), SoloudError> {
         assert!(!self.inner.is_null());
         ffi_call!(ffi::Soloud_init(self.inner))
     }
 
     /// Creates a default initialized instance of soloud
+    #[allow(clippy::should_implement_trait)]
     pub fn default() -> Result<Self, SoloudError> {
-        let mut temp = unsafe { Soloud::default_uninit().assume_init() };
-        temp.init()?;
-        Ok(temp)
+        unsafe { 
+            let mut temp = Soloud::default_uninit().assume_init();
+            temp.init()?;
+            Ok(temp)
+        }
     }
 
     /// initialize an uninitialized instance of Soloud with extra args
@@ -512,11 +386,12 @@ impl Soloud {
     }
 
     /// Deinitialize the soloud engine
-    pub(crate) fn deinit(&mut self) {
+    /// # Safety
+    /// Deinitializing will require correct reinitialization
+    pub unsafe fn deinit(&mut self) {
         assert!(!self.inner.is_null());
         unsafe {
             ffi::Soloud_deinit(self.inner);
-            self.inner = std::ptr::null_mut();
         }
     }
 
@@ -1249,7 +1124,10 @@ impl Soloud {
 impl Drop for Soloud {
     fn drop(&mut self) {
         if !self.inner.is_null() {
-            self.deinit()
+            unsafe { 
+                self.deinit();
+                ffi::Soloud_destroy(self.inner); 
+            }
         }
     }
 }

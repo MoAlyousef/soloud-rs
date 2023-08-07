@@ -26,7 +26,7 @@ soloud = { git = "https://github.com/moalyousef/soloud-rs" }
 ```
 
 To play audio:
-```rust
+```rust,no_run
 use soloud::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -53,7 +53,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 To play speech:
-```rust
+```rust,no_run
 use soloud::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -87,7 +87,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 To add a filter:
-```rust
+```rust,no_run
 use soloud::*;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -110,11 +110,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 ```
 
 The examples can be found in the soloud/examples directory. They can be run using:
-```
-$ cargo run --example simple
-$ cargo run --example speech
-$ cargo run --example filter
-$ cargo run --example load_mem
+```bash
+cargo run --example simple
+cargo run --example speech
+cargo run --example filter
+cargo run --example load_mem
 ```
 You will need to have valid "sample.wav" and "Recording.mp3" audio files in the project root. Or you can change the paths to point to any supported audio file.
 
@@ -130,12 +130,12 @@ The default backend is miniaudio, however Soloud supports several backends to va
 soloud = { version = "1", default-features = false, features = ["alsa"] }
 ```
 This also assumes that those libraries headers are in your include path where CMake can find them, otherwise you can set it via the command line (posix):
-```
-$ export CXXFLAGS="-I /path/to/include"
+```bash
+export CXXFLAGS="-I /path/to/include"
 ```
 or for Windows:
-```
-$ set CXXFLAGS="-I C:\\path\\to\\include"
+```bash
+set CXXFLAGS="-I C:\\path\\to\\include"
 ```
 The same can be done for CFLAGS if needed.
 

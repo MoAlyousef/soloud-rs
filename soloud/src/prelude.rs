@@ -143,6 +143,8 @@ pub enum AttenuationModel {
 }
 
 /// Methods shared by all audio sources
+/// # Safety
+/// These traits aren't meant to be implemented manually, and are subject to possible change
 pub unsafe trait AudioExt {
     /// Creates a default initialized object
     fn default() -> Self;
@@ -184,12 +186,14 @@ pub unsafe trait AudioExt {
 }
 
 /// Methods for initializing sound sources from memory
+/// # Safety
+/// These traits aren't meant to be implemented manually, and are subject to possible change
 pub unsafe trait LoadExt {
     /// Load audio from a file
     fn load<P: AsRef<Path>>(&mut self, path: P) -> Result<(), SoloudError>;
     /// Load audio from memory.
     fn load_mem(&mut self, data: &[u8]) -> Result<(), SoloudError> {
-        unsafe { self._load_mem_ex(&data, false, false) }
+        unsafe { self._load_mem_ex(data, false, false) }
     }
     #[doc(hidden)]
     /// (Internal) load audio from memory with options to copy and/or take ownership
@@ -204,6 +208,8 @@ pub unsafe trait LoadExt {
 }
 
 /// Filter creation and setting methods
+/// # Safety
+/// These traits aren't meant to be implemented manually, and are subject to possible change
 pub unsafe trait FilterExt {
     /// Creates a default initialized object
     fn default() -> Self;
@@ -230,6 +236,8 @@ pub trait FilterAttr {
 }
 
 /// A trait defining methods of initializing audio sources from a path or memory
+/// # Safety
+/// These traits aren't meant to be implemented manually, and are subject to possible change
 pub unsafe trait FromExt: Sized {
     /// Loads an audio source from path
     fn from_path<P: AsRef<Path>>(p: P) -> Result<Self, SoloudError>;

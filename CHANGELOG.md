@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.0.4] - 2023-08-08
+- Fix memory leak in Soloud initialization.
+
+## [1.0.3] - 2023-07-24
+- Update Soloud submodule.
+
+## [1.0.2] - 2022-02-17
+- Add scrape examples to docs.rs.
+
 ## [1.0.1] - 2022-01-16
 - Update soloud module.
 - Remove references to LoadExt::load_mem_weak().
