@@ -13,7 +13,7 @@ exclude = ["./examples"]
 readme = "README.md"
 
 [dependencies]
-soloud-sys = { path = "../soloud-sys", version = "=1.0.3" }
+soloud-sys = { path = "../soloud-sys", version = "=1.0.4" }
 bitflags = "^2"
 paste = "1"
 
