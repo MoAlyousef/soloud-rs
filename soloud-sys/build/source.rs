@@ -1,6 +1,6 @@
-use std::{env, path::Path, process::Command};
+use std::{env, path::Path};
 
-pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
+pub fn build(target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-env-changed=CC");
     println!("cargo:rerun-if-env-changed=CXX");
     println!("cargo:rerun-if-env-changed=CFLAGS");
@@ -9,12 +9,6 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=sys/soloud_new.cpp");
     println!("cargo:rerun-if-changed=sys/soloud_derives.h");
     println!("cargo:rerun-if-changed=sys/soloud_derives.cpp");
-
-    Command::new("git")
-        .args(&["submodule", "update", "--init"])
-        .current_dir(&manifest_dir)
-        .status()
-        .expect("Git is needed to retrieve the soloud source files!");
 
     if target_triple.contains("android") {
         crate::android::build(out_dir, target_triple);
@@ -64,7 +58,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
     
         let _dst = dst
-            .profile("Release")
+            .profile("Debug")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .build();
     }
