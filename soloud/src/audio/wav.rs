@@ -12,6 +12,35 @@ crate::macros::load::impl_load_ext!(Wav);
 crate::macros::audio::impl_audio_ext!(Wav);
 
 impl Wav {
+    /// Create immutable Wav instance with already loaded music
+    ///
+    /// # Examples
+    ///
+    /// use soloud::*;
+    /// 
+    /// fn main() -> Result<(), Box<dyn std::error::Error>> {
+    ///     let sl = Soloud::default()?;
+    ///
+    ///     let wav = audio::Wav::default_with_load("sample.wav")?;
+    ///
+    ///     sl.play(&wav);
+    ///     while sl.voice_count() > 0 {
+    ///         std::thread::sleep(std::time::Duration::from_millis(100));
+    ///     }
+    ///
+    ///     Ok(())
+    /// }
+    /// 
+    pub fn default_with_load<P: AsRef<Path>>(path: P) -> Result<Self, SoloudError> {
+        let ptr = unsafe { ffi::Wav_create() };
+        assert!(!ptr.is_null());
+        let mut wav = Wav { inner: ptr };
+        match wav.load(path) {
+            Ok(_)    => Ok(wav),
+            Err(err) => Err(err)
+        }
+    }
+
     /// Load raw wav data of precise bits
     /// # Safety
     /// The data must be valid
