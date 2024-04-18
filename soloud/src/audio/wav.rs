@@ -15,7 +15,7 @@ impl Wav {
     /// Create immutable Wav instance with already loaded music
     ///
     /// # Examples
-    ///
+    /// ```
     /// use soloud::*;
     /// 
     /// fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -30,7 +30,8 @@ impl Wav {
     ///
     ///     Ok(())
     /// }
-    /// 
+    /// ```
+    ///
     pub fn default_with_load<P: AsRef<Path>>(path: P) -> Result<Self, SoloudError> {
         let ptr = unsafe { ffi::Wav_create() };
         assert!(!ptr.is_null());
