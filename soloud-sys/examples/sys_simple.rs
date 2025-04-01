@@ -5,11 +5,11 @@ fn main() {
         let sl = Soloud_create();
         Soloud_init(sl);
         Soloud_setGlobalVolume(sl, 3.0);
-    
+
         let wav = Wav_create();
-    
+
         let ret = Wav_load(wav, "覆.mp3\0".as_ptr() as _);
-    
+
         dbg!(ret);
 
         Soloud_play(sl, wav);

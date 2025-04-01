@@ -18,7 +18,7 @@ pub fn build(target_triple: &str, out_dir: &Path) {
         if cfg!(feature = "use-ninja") || has_program("ninja") {
             dst.generator("Ninja");
         }
-    
+
         if cfg!(feature = "miniaudio") {
             dst.define("WITH_MINIAUDIO", "ON");
         } else if cfg!(feature = "alsa") {
@@ -52,11 +52,11 @@ pub fn build(target_triple: &str, out_dir: &Path) {
         } else {
             panic!("Unsupported backend!");
         }
-    
+
         if let Ok(toolchain) = env::var("SOLOUD_TOOLCHAIN") {
             dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
         }
-    
+
         let _dst = dst
             .profile("Debug")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")

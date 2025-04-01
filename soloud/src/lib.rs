@@ -1,9 +1,9 @@
-#![doc = include_str!("../README.md")]
-
 #![allow(unused_unsafe)]
 #![allow(non_upper_case_globals)]
 #![warn(missing_docs)]
 #![allow(clippy::too_many_arguments)]
+#![allow(clippy::needless_doctest_main)]
+#![doc = include_str!("../README.md")]
 
 /// FFI function call with error handling
 ///
@@ -123,7 +123,7 @@ impl Soloud {
     /// Creates a default initialized instance of soloud
     #[allow(clippy::should_implement_trait)]
     pub fn default() -> Result<Self, SoloudError> {
-        unsafe { 
+        unsafe {
             let mut temp = Soloud::default_uninit().assume_init();
             temp.init()?;
             Ok(temp)
@@ -1119,15 +1119,14 @@ impl Soloud {
     //         inner: ptr as *mut ffi::Soloud,
     //     }
     // }
-}
 
-impl Drop for Soloud {
-    fn drop(&mut self) {
-        if !self.inner.is_null() {
-            unsafe { 
-                self.deinit();
-                ffi::Soloud_destroy(self.inner); 
-            }
+    /// Deletes the Soloud instance
+    /// # Safety
+    /// Calling this before any wav instance are dropped will cause memory violation
+    pub unsafe fn delete(mut this: Soloud) {
+        unsafe {
+            this.deinit();
+            ffi::Soloud_destroy(this.inner);
         }
     }
 }

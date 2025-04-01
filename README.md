@@ -1,6 +1,5 @@
 # soloud-rs
 
-
 [![Documentation](https://docs.rs/soloud/badge.svg)](https://docs.rs/soloud)
 [![Crates.io](https://img.shields.io/crates/v/soloud.svg)](https://crates.io/crates/soloud)
 [![License](https://img.shields.io/crates/l/soloud.svg)](https://github.com/MoAlyousef/soloud-rs/blob/master/LICENSE)
@@ -16,7 +15,7 @@ Supported formats: wav, mp3, ogg, flac. The library also comes with a speech syn
 ## Usage
 ```toml
 [dependencies]
-soloud = "1"
+soloud = "1.1"
 ```
 
 Or to use the git repo:

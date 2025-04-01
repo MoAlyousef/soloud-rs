@@ -14,8 +14,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             std::thread::sleep(std::time::Duration::from_millis(100));
         }
     } else {
-        for i in 1..strings.len() {
-            speech.set_text(&strings[i])?;
+        for i in strings.iter().skip(1) {
+            speech.set_text(i)?;
 
             sl.play(&speech);
             while sl.active_voice_count() > 0 {

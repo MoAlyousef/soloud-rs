@@ -1,7 +1,6 @@
 use std::path::Path;
 
 pub fn link(out_dir: &Path) {
-    
     if cfg!(feature = "alsa") {
         println!("cargo:rustc-link-lib=dylib=asound");
     } else if cfg!(feature = "sdl2-static") {

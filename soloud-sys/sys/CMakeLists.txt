@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.15)
 project(soloud)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)

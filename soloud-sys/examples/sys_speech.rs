@@ -6,11 +6,11 @@ fn main() {
         Soloud_init(sl);
         std::thread::sleep(std::time::Duration::from_millis(100));
         Soloud_setGlobalVolume(sl, 3.0);
-    
+
         let speech = Speech_create();
-    
+
         let ret = Speech_setText(speech, "Hello World\0".as_ptr() as _);
-    
+
         dbg!(ret);
 
         Soloud_play(sl, speech);
