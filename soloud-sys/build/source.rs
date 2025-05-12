@@ -57,8 +57,14 @@ pub fn build(target_triple: &str, out_dir: &Path) {
             dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
         }
 
+        let profile = match std::env::var("PROFILE").unwrap().as_str() {
+            "debug" => "Debug",
+            "release" => "Release",
+            _ => "Release",
+        };
+
         let _dst = dst
-            .profile("Debug")
+            .profile(profile)
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .build();
     }
