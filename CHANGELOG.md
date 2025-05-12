@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.1.1] - 2025-05-13
+- Building SoLoud with the same profile cargo uses by @Ekranos.
 
 ## [1.0.4] - 2023-08-08
 - Fix memory leak in Soloud initialization.
