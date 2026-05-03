@@ -21,26 +21,23 @@ pub fn link(out_dir: &Path) {
         println!("cargo:rustc-link-lib=oss");
     } else if cfg!(feature = "opensles") {
         println!("cargo:rustc-link-lib=OpenSLES");
+    } else if cfg!(feature = "coreaudio") {
+        println!("cargo:rustc-link-lib=framework=AudioToolbox");
     } else if cfg!(feature = "jack") {
         println!("cargo:rustc-link-lib=jack");
     } else {
         // nothing to link
     }
 
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("build").display()
-    );
-
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib").display()
-    );
-
-    println!(
-        "cargo:rustc-link-search=native={}",
-        out_dir.join("lib").join("Release").display()
-    );
+    for dir in [
+        out_dir.join("build"),
+        out_dir.join("lib"),
+        out_dir.join("lib").join("Release"),
+    ] {
+        if dir.exists() {
+            println!("cargo:rustc-link-search=native={}", dir.display());
+        }
+    }
 
     println!("cargo:rustc-link-lib=static=soloud");
 }
